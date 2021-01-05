@@ -1,0 +1,211 @@
+/*左边内容为最热博客*/
+.leftbody{
+
+    float: left;
+    width: 69%;
+    height: 82%;
+    border: rgba(216,215,215,1.00) solid 1px;
+    background-color:white;
+    font-size: medium;
+    z-index: 1;
+    position: relative;
+    margin-left: 1%;
+    top:10%;
+
+
+}
+
+
+
+/*技术分类*/
+.catalog{
+    width: 100%;
+    height: 14%;
+    padding:1px ;
+    margin:1px ;
+
+
+}
+
+.section{
+
+    width: 93%;
+    height: 83%;
+    margin: 6px;
+    padding-left: 20px;
+    border:rgba(223,219,219,1.00) 1px solid;
+}
+
+.section li{
+    float: left;
+    list-style-type: none;
+    margin: 3px 10px 3px 10px;
+    padding: 1px 1px 1px 1px;
+
+
+}
+
+.section li a{
+
+    text-decoration:none;
+    font-size: 22px;
+    color: black;
+
+}
+
+.section li a:hover{
+
+    color: crimson;
+    font-weight: 600;
+
+}
+
+/*最受欢迎博客*/
+.best_blog{
+
+    border:rgba(223,219,219,1.00) 1px solid;
+    width: 99%;
+    height: 84%;
+    padding:1px ;
+    margin:0 ;
+
+}
+.recommend_left{
+    font-size: 20px;
+    text-align: center;
+    border-bottom: #f5ecff solid 1px;
+
+}
+.blogs{
+    height: 15%;
+    margin: 5px 1px 5px 1px; ;
+    padding: 5px 10px 5px 10px;
+    border-bottom: 1px solid rgba(223,219,219,1.00);
+
+}
+
+.blogs:hover{
+    background-color:rgba(243,243,243,1.00);
+
+}
+.blogs li{
+    list-style-type: none;
+
+}
+.blogs .title{
+    float: left;
+    font-size: 25px;
+    font-weight: 500;
+    color: black;
+    width: 100%;
+    height: 45%;
+
+
+}
+.blogs li a{
+    text-decoration:none;
+    color: black;
+}
+
+.blogs li a:hover{
+    color: red;
+
+}
+
+.blogs .preview{
+    color:gray;
+    float: left;
+    width: 45%;
+    height: 50%;
+    margin-left: 15px;
+
+}
+.blogs .author{
+    text-align: center;
+    padding-top: 10px;
+    width: 15%;
+    float: left;
+    height: 50%;
+    font-size: 16px;
+}
+
+.blogs .author img{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    vertical-align: middle;
+
+}
+
+
+.blogs .views{
+
+    float: left;
+    height: 50%;
+    width: 10%;
+    margin-left: 2px;
+
+
+}
+
+ .views img{
+    /*margin-top: 10px;*/
+    width: 25px;
+    height: 25px;
+   vertical-align: middle;
+}
+
+.blogs .like{
+    color:blue;
+    float: left;
+    width: 10%;
+    margin-left: 2px;
+
+
+}
+
+
+.like a{
+    color: black;
+    text-decoration: none;
+}
+
+.like img{
+   /* margin-top: 10px;*/
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+}
+
+/*鼠标经过点赞图片效果*/
+.blogs .like img:hover{
+
+	content: url("/common/system_icon/good_hover.png");
+
+}
+
+.blogs .comment_counts img:hover{
+    content: url("/common/system_icon/comments_hover.png");
+}
+
+.blogs .views img:hover{
+
+    content: url("/common/system_icon/views_hover.png");
+
+}
+
+
+.blogs .comment_counts{
+    float: left;
+    width: 10%;
+    margin-left: 2px;
+    vertical-align: middle;
+}
+
+ .comment_counts img{
+   /* margin-top: 10px;*/
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+
+}

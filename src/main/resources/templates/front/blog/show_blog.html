@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${blog.title+'-'+blog.user.username}"></title>
+    <link rel="short icon"  href="/common/system_icon/favicon.ico"/>
+    <link href="/css/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/header.css" rel="stylesheet" type="text/css">
+    <link href="/css/blogshow.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="editor/css/editormd.css" type="text/css">
+
+</head>
+<body>
+<div id="particles-js">
+    <div th:replace="/front/component/page::header">
+    </div>
+    <div class="author_info">
+        <div class="aside_profile">
+            <div class="pimage">
+                <img th:src="@{/common/getImage(image=${blog.user.image})}">
+            </div>
+            <div class="pother">
+                <a href="" th:text="${blog.user.username}"></a><br>
+                <hr style="margin: 0">
+                <a href="" th:text="${'码龄:'+blogPageuser.codeage+'年'}"></a>
+            </div>
+        </div>
+        <div class="aside_rank">
+            <div class="userblognum"><a href="" th:text="${'原创:'+blogPageuser.userblogcount}"></a></div>
+            <div class="userrank"><a href="" th:text="${'排名:'+blogPageuser.userblogcount}"></a></div>
+            <div class="usergrade"><a href="" th:text="${'等级:'+blogPageuser.userblogcount}"></a></div>
+        </div>
+        <div class="line"></div>
+        <div class="aside_fgc">
+            <div class="usergoodcounts"><a href="" th:text="${'点赞数:'+blogPageuser.usergoodcounts}"></a></div>
+            <div class="userviews"><a href="" th:text="${'浏览量:'+blogPageuser.userviews}"></a></div>
+            <div class="usercomments"><a href="" th:text="${'评论数:'+blogPageuser.usercomments}"></a></div>
+            <div class="usercollections"><a href="" th:text="${'收藏:'+blogPageuser.usercollections}"></a></div>
+        </div>
+
+    </div>
+    <div class="blog_info">
+        <div class="title">
+        <span th:text="${blog.title}"></span>
+        </div>
+        <div class="blog_detail">
+            <div class="detailone">
+                <div class="profile" >
+                    <img th:if="${blog.isoriginal==1}" title="原创" src="/common/system_icon/original_o.png">
+                    <img th:if="${blog.isoriginal==0}" title="转载" src="/common/system_icon/Reprinted.png">
+                    <a href="" th:text="${blog.user.username}"></a>
+                </div>
+                <div class="publishdate">
+                    <a href="javascript:void(0)" th:text="${'发布时间:'+#dates.format(blog.publish_time,'yyyy-MM-dd HH:mm')}"></a>
+                </div>
+                <div class="viewcount">
+                <a href="" th:text="${'浏览量:'+blog.views}"></a>
+                </div>
+                <div class="edit">
+                    <a th:href="@{'/myblog/modPage?blogId='+${blog.id}}">编辑</a>
+                </div>
+            </div>
+            <div class="detailtwo">
+                <div class="blogclass">
+                    <div class="classhead">
+                        <a href="javascript:void(0)">分类专栏:</a>
+                    </div>
+                    <div class="class">
+                        <a href="" th:text="${blog.classification.name}"></a>
+                    </div>
+                </div>
+                <div class="blogtag">
+                    <div class="taghead">
+                        <a href="javascript:void(0)">分类标签:</a>
+                    </div>
+                    <div class="tag">
+                        <a href="" th:text="${blog.tag.name}"></a>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+    <div class="blog_content" id="content">
+            <textarea id="appendcontent" style="display:none;" th:text="${blog.content}"></textarea>
+    </div>
+
+    <div th:replace="/front/component/page::footer">
+    </div>
+
+</div>
+</body>
+<script src="js/plugin/jquery.js"></script>
+<script src="editor/editormd.js"></script>
+<script src="editor/lib/marked.min.js"></script>
+<script src="editor/lib/prettify.min.js"></script>
+<script src="editor/lib/raphael.min.js"></script>
+<script src="editor/lib/underscore.min.js"></script>
+<script src="editor/lib/sequence-diagram.min.js"></script>
+<script src="editor/lib/flowchart.min.js"></script>
+<script src="editor/lib/jquery.flowchart.min.js"></script>
+
+<script src="particles/particles.js"></script>
+<script src="particles/app.js"></script>
+
+<script type="text/javascript">
+    /*前端解析md*/
+    $(document).ready(function () {
+        editormd.markdownToHTML("content", {
+            htmlDecode: "style,script,iframe", //可以过滤标签解码
+            emoji: true,
+            taskList:true,
+            tex: true,               // 默认不解析
+            flowChart:true,         // 默认不解析
+            sequenceDiagram:true,  // 默认不解析
+        });
+    })
+
+    /*头悬浮栏*/
+    $(document).on("mouseover",".current_user_section",function () {
+        $("#user_menu").css("display","block");
+    })
+    $(document).on("mouseout",".current_user_section",function () {
+        $("#user_menu").css("display","none");
+    })
+
+    $(document).on("mouseout","#user_menu",function () {
+        $("#user_menu").css("display","none");
+    })
+</script>
+</html>

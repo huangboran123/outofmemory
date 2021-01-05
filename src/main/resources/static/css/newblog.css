@@ -1,0 +1,264 @@
+.blog_title{
+    float: left;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 6%;
+    text-align: center;
+    top:7%
+}
+.blog_titlediv{
+
+    float: left;
+    height: 100%;
+    width: 50%;
+    text-align: right;
+    font-size: x-large;
+
+
+}
+.blog_title_input{
+    position: relative;
+    float: left;
+    height: 100%;
+    width: 15%;
+    text-align: left;
+    margin: 0 0 0 1%;
+
+
+}
+.original{
+    position: relative;
+    float: left;
+    height: 98%;
+    width: 25%;
+    text-align: left;
+    margin: 0.2% 0 0 1%;
+}
+#original{
+    vertical-align: middle;
+    margin-bottom: 6px;
+}
+#not_original{
+    vertical-align: middle;
+    margin-bottom:6px;
+}
+.blog_title_input input{
+    /*父级要有position，若父级没有就再取父级直到找到有position的父级*/
+    position: absolute;
+    float: left;
+    top: 10%;
+    left: 1%;
+}
+
+/*文章分类标签标题*/
+.blog_classfy{
+    float: left;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 6%;
+    top:7%
+
+}
+
+.blog_tag{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 6%;
+    float: left;
+    position: relative;
+    z-index: 1;
+    top:7%;
+
+
+}
+
+.classfy_left{
+    margin: 0;
+    padding: 0;
+    width: 50%;
+    height: 100%;
+    float: left;
+    text-align: right;
+    font-size: x-large;
+
+}
+
+
+.classfy_right{
+    margin: 0 0 0 1%;
+
+    padding: 0;
+    width: 49%;
+    height: 100%;
+    float: left;
+    text-align: left;
+    font-size: medium;
+}
+.tag_left{
+    width: 50%;
+    height: 100%;
+    float: left;
+    text-align: right;
+    margin: 0;
+    padding: 0;
+    font-size: x-large;
+}
+.tag_right{
+    margin: 0 0 0 1%;
+    padding: 0;
+    width: 49%;
+    height: 100%;
+    float: left;
+    text-align: left;
+    font-size: medium;
+}
+
+/*博客分类*/
+.ul_classifications{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.classify{
+    background-color: white;
+    border: solid 1px black;
+    float: left;
+    margin: 1%;
+    padding: 0;
+}
+.classify:hover{
+    background-color: rgba(243,243,243,1.00);
+    border: solid 1px red;
+}
+
+
+.classify a{
+    color: black;
+    text-decoration: none;
+
+}
+.classify a:hover{
+    color: red;
+
+}
+/*标签*/
+.ul_tag{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+}
+.li_tag{
+    background-color: white;
+    border: solid 1px black;
+    float: left;
+    margin: 1%;
+    padding: 0;
+}
+
+.li_tag:hover{
+    background-color: rgba(243,243,243,1.00);
+    border: solid 1px red;
+}
+
+
+.li_tag a{
+    color: black;
+    text-decoration: none;
+
+}
+.li_tag a:hover{
+    color: red;
+
+}
+/*markdown主要内容*/
+#md-content{
+    margin: 0;
+    padding: 0;
+    float: left;
+    position: relative;
+    left: 7%;
+    top: 7%;
+
+}
+
+.info_window{
+    position: fixed;
+    z-index: 9999;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    visibility: hidden;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    pointer-events: none;
+    transition: opacity .5s;
+
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.info_window:target{
+    visibility: visible;
+    opacity: 1;
+    /*响应鼠标事件*/
+    pointer-events: auto;
+}
+.info_window:target>div{
+    transform: translateY(30%) scale(0.9);
+    transition-timing-function: cubic-bezier(0.8, 0, 0, 1.5);
+    opacity: 1;
+}
+
+.info_window>div{
+    /*子元素的相对位置*/
+    position: relative;
+    top:-10%;
+    width: 300px;
+    height: 150px;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: medium;
+    transition: .25s;
+}
+.no_message{
+    position: relative;
+    top:10%;
+    float: left;
+    width: 300px;
+    height: 120px;
+    text-align: center;
+
+}
+.no_message a{
+    font-size: x-large;
+    color: black;
+}
+.no_confirm{
+    position: relative;
+    float: left;
+    left: 50%;
+    bottom: 10%;
+    width: 50px;
+    height: 30px;
+}
+.no_confirm a{
+    font-size: large;
+    color: black;
+}
+.no_confirm a:hover{
+    color: red;
+}

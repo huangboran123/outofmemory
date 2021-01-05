@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新建博客</title>
+    <link rel="short icon"  href="/common/system_icon/favicon.ico"/>
+
+    <link href="/css/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/header.css" rel="stylesheet" type="text/css">
+    <link href="/css/newblog.css" rel="stylesheet" type="text/css">
+    <link href="particles/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="editor/css/editormd.css">
+
+</head>
+<body>
+
+<div id="particles-js">
+    <!--类型缺失虚拟框-->
+    <div class="info_window" id="noclassMessage">
+        <div>
+            <div class="no_message"><a href="javascript:void(0)">请选者您的博客分类</a></div>
+            <div class="no_confirm"><a href="#">确认</a></div>
+        </div>
+    </div>
+    <!--标签缺失虚拟框-->
+    <div class="info_window" id="notagMessage">
+        <div>
+            <div class="no_message"><a href="javascript:void(0)">请选者您标签分类</a></div>
+            <div class="no_confirm"><a href="#">确认</a></div>
+        </div>
+    </div>
+    <!--标题缺失虚拟框-->
+    <div class="info_window" id="notitleMessage">
+        <div>
+            <div class="no_message"><a href="javascript:void(0)">请输入标题</a></div>
+            <div class="no_confirm"><a href="#">确认</a></div>
+        </div>
+    </div>
+    <!--博客发布成功虚拟框-->
+    <div class="info_window" id="blogpubsuccess">
+        <div>
+            <div class="no_message"><a href="javascript:void(0)">博客发布成功</a></div>
+            <div class="no_confirm"><a href="#">确认</a></div>
+        </div>
+    </div>
+    <!--博客发布失败虚拟框-->
+    <div class="info_window" id="blogpubfail">
+        <div>
+            <div class="no_message"><a href="javascript:void(0)">博客发布失败</a></div>
+            <div class="no_confirm"><a href="#">确认</a></div>
+        </div>
+    </div>
+    <!--博客是否原创虚拟框-->
+    <div class="info_window" id="blogisoriginal">
+        <div>
+            <div class="no_message"><a href="javascript:void(0)">请选择文章发表类型</a></div>
+            <div class="no_confirm"><a href="#">确认</a></div>
+        </div>
+    </div>
+    <div th:replace="/front/component/page::header">
+    </div>
+
+
+        <div class="blog_classfy">
+            <div class="classfy_left"><span>博客分类:</span></div>
+            <div class="classfy_right">
+                <ul class="ul_classifications">
+                    <li class="classify"  th:each="c : ${Classifications}"><a href="javascript:void(0)" th:text="${c.name}" ></a></li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="blog_tag">
+
+            <div class="tag_left"><span>文章标签:</span></div>
+            <div class="tag_right">
+                <ul class="ul_tag">
+                    <li class="li_tag"  th:each="t : ${blogTagsList}"><a href="javascript:void(0)" th:text="${t.name}" ></a></li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="blog_title">
+            <div class="blog_titlediv">
+                <span>文章标题:</span>
+            </div>
+            <div class="blog_title_input">
+                <input type="text" id="blog_title" name="title">
+            </div>
+            <div class="original">
+                <span>原创:</span>
+                <input type="radio" id="original" name="isoriginal" value="1" checked>
+                <span>转载:</span>
+                <input type="radio" id="not_original" name="isoriginal" value="0">
+
+            </div>
+
+        </div>
+        <!--引入markdown-->
+        <div id="md-content" style=" z-index: 1 !important;">
+            <textarea placeholder="博客内容" name="content" id="content" style="display:none;" ></textarea>
+            <!--第二个隐藏文本域，用来构造生成的HTML代码，方便表单或者ajaxPOST提交，使用form这里的name可以任意取，后台接受时以这个name键为准 -->
+            <!--<textarea class="editormd-html-textarea" name="text" id="htmlContent"></textarea>-->
+        </div>
+
+
+
+
+
+    <div th:replace="/front/component/page::footer">
+    </div>
+
+</div>
+
+
+<script src="js/plugin/jquery.js"></script>
+<script  src="editor/editormd.js"></script>
+<script src="particles/particles.js"></script>
+<script src="particles/app.js"></script>
+<script type="text/javascript">
+
+    /*实现博客分类栏选择互斥*/
+    $(".classify").on("click",function () {
+        var elements=$(".classify");
+        for(var i=0;i<elements.length;i++){
+            var e=elements[i];
+            if(e.firstElementChild.getAttribute("id")==="blog_classify"){
+
+                //若是当前已选中则取消css
+                //设置元素标签style可以通过setAttribute来实现
+                if(this===e){
+                    var current1=this.firstElementChild;
+                    current1.removeAttribute("id");
+                    this.removeAttribute("style");
+                    current1.removeAttribute("style");
+                    return 0;
+                }
+                //若是其它已选中，则取消其它css渲染，给当前元素渲染css
+                else{
+                    //取消其它
+                    var past=e.firstElementChild;
+                    past.removeAttribute("id");
+                    e.removeAttribute("style");
+                    past.removeAttribute("style");
+                    //渲染当前
+                    var current2=this.firstElementChild;
+                    current2.setAttribute("id","blog_classify");
+                    this.style.border="solid 1px red";
+                    this.style.backgroundColor="rgba(243,243,243,1.00)";
+                    current2.style.color="red";
+                    return 0;
+
+                }
+
+            }
+        }
+
+        //其它都没有选中，这个地方用this表示当前元素，而使用$(this)表示当前class的元素集合
+        var current=this.firstElementChild;
+        current.setAttribute("id","blog_classify");
+        this.style.border="solid 1px red";
+        this.style.backgroundColor="rgba(243,243,243,1.00)";
+        current.style.color="red";
+        return 0;
+
+    })
+
+    /*实现博客标签栏选择互斥*/
+    $(".li_tag").on("click",function () {
+        var elements=$(".li_tag");
+        for(var i=0;i<elements.length;i++){
+            var e=elements[i];
+            if(e.firstElementChild.getAttribute("id")==="blog_tag"){
+
+                //若是当前已选中则取消css
+                //设置元素标签style可以通过setAttribute来实现
+                if(this===e){
+                    var current1=this.firstElementChild;
+                    current1.removeAttribute("id");
+                    this.removeAttribute("style");
+                    current1.removeAttribute("style");
+                    return 0;
+                }
+                //若是其它已选中，则取消其它css渲染，给当前元素渲染css
+                else{
+                    //取消其它
+                    var past=e.firstElementChild;
+                    past.removeAttribute("id");
+                    e.removeAttribute("style");
+                    past.removeAttribute("style");
+                    //渲染当前
+                    var current2=this.firstElementChild;
+                    current2.setAttribute("id","blog_tag");
+                    this.style.border="solid 1px red";
+                    this.style.backgroundColor="rgba(243,243,243,1.00)";
+                    current2.style.color="red";
+                    return 0;
+
+                }
+
+            }
+        }
+
+        //其它都没有选中，这个地方用this表示当前元素，而使用$(this)表示当前class的元素集合
+        var current=this.firstElementChild;
+        current.setAttribute("id","blog_tag");
+        this.style.border="solid 1px red";
+        this.style.backgroundColor="rgba(243,243,243,1.00)";
+        current.style.color="red";
+        return 0;
+
+    })
+
+
+
+    /*头悬浮栏*/
+    $(".current_user_section").mouseover(function () {
+        $("#user_menu").css("display","block");
+    })
+    $(".current_user_section").mouseout(function () {
+        $("#user_menu").css("display","none");
+    })
+
+    $("#user_menu").mouseout(function () {
+        $("#user_menu").css("display","none");
+    })
+
+
+    // 初始化MarkDown编辑器
+    var contentEditor;
+    $(function() {
+        contentEditor = editormd("md-content", {
+            width: "85%",
+            height: 560,
+            syncScrolling: "single",
+
+            path: "editor/lib/",
+            saveHTMLToTextarea : true, // 保存 HTML 到 Textarea
+            watch:true,  //实时预览
+            emoji : true,//表情
+            taskList : true,//代办
+            toolbarAutoFixed:true,//工具栏自动固定定位的开启与禁用
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            // 上传图片的请求接口
+            imageUploadURL: "/common/article/upload",
+            // 工具栏图标的设置，大家可以自定义。比如 publish就是自定义的。
+            toolbarIcons: function () {
+                return ["undo", "redo", "|", "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|", "h1", "h2", "h3", "h4", "h5", "h6", "|", "list-ul", "list-ol", "hr", "|", "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime", "emoji", "html-entities", "pagebreak", "|", "goto-line", "watch", "preview", "fullscreen", "clear", "search", "|", "help", "info", "||", "publish"];
+            },
+            // 自定义图标后，定义图标对应的文字
+            toolbarIconTexts: {
+                publish: "<span bgcolor='gray'>发布</span>"
+            },
+            // 自定义图标的触发
+            toolbarHandlers: {
+                publish: function (cm, icon, cursor, selection) {
+                    var tag=$("#blog_tag").text();
+                    var classify=$("#blog_classify").text();
+                    var title=$("#blog_title").val();
+                    var content=$("#content").val();
+                    var isoriginal=$("input[name='isoriginal']:checked").val();
+                    if(title===""||title==null){
+                        document.location.href="#notitleMessage";
+                        return 0;
+                    }
+                    if(classify===""||classify==null){
+                        document.location.href="#noclassMessage";
+                        return 0;
+                    }
+                    if(tag===""||tag==null){
+                        document.location.href="#notagMessage";
+                        return 0;
+                    }
+                    if(isoriginal===""||isoriginal==null){
+                        document.location.href="#blogisoriginal";
+                        return 0;
+                    }
+                    //新建博客post请求
+                    $.post('/newBlog',
+                        {
+                           'title':title,
+                          'content':content,
+                            'tag':tag,
+                            'classify':classify,
+                            'isoriginal':isoriginal
+
+                        },function (msg) {
+                        if(msg==="发布成功"){
+                            document.location.href="#blogpubsuccess";
+                            return 0;
+                        }
+                        else{
+                            document.location.href="#blogpubfail";
+                            return 0;
+
+                        }
+
+                        }
+                    )
+
+
+                }
+            }
+        });
+    })
+
+</script>
+</body>
+</html>

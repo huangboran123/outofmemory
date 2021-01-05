@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link rel="short icon"  href="/common/system_icon/favicon.ico"/>
+    <link href="/css/header.css" rel="stylesheet" type="text/css">
+    <link href="/css/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/login.css" rel="stylesheet" type="text/css">
+    <link href="particles/style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div id="particles-js">
+    <div th:replace="/front/component/page::header">
+    </div>
+    <!--<span class="register_info"  th:text="${register_info}"></span>-->
+
+    <div class="login_box">
+            <div id="login_title"> <span>登录</span></div>
+
+            <form class="login_form" method="post">
+
+                <!--//输入-->
+                <div class="input_item">
+                    <label for="login_name">
+                        <img id="loginname_icon"  src="/common/system_icon/loginname.png" alt="" />
+                        <span>登录名:</span>
+                        <input type="text" id="login_name" name="loginname" placeholder="电话/邮箱" />
+                    </label>
+                    <span id="lr"></span>
+                </div>
+
+                <div class="input_item">
+                    <label for="passwordid">
+                        <img id="password_icon"  src="/common/system_icon/password.png" alt="" />
+                        <span>密码:</span>
+                        <input type="password" name="password" id="passwordid" placeholder="密码"/>
+                    </label>
+                    <span id="pr"></span>
+                </div>
+                <div class="input_item">
+                    <label for="Verification_code">
+                        <img id="Verification_icon"  src="/common/system_icon/verification_icon.png" alt="" />
+                        <span>验证码:</span>
+                        <input type="text" id="Verification_code"  name="code" />
+                    </label >
+                    <div>
+                        <span style="font-size: small">点击切换</span>
+                        <img src="/common/code"  alt="" onclick="changecode()" id="code_img">
+                        <span id="cr" ></span>
+                    </div>
+
+                </div>
+
+                <div id="submit">
+                    <div id="autologin">
+                        <span>免登录:</span><input type="checkbox" name="autologin" class="auto_login" >
+                    </div>
+
+                    <div id="login">
+                        <img id="login_icon" alt="" onclick="UserLogin()"  src="/common/system_icon/login_btn.png">
+                    </div>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+
+    <div th:replace="/front/component/page::footer"></div>
+
+
+</div>
+
+
+
+</body>
+
+<script src="/js/plugin/jquery.js" type="text/javascript"></script>
+<script src="/particles/particles.js"></script>
+<script src="/particles/app.js"></script>
+<script type="text/javascript">
+
+    //登录事件基于表单
+    function UserLogin(){
+        $('.login_form').submit();
+
+    }
+
+    //免登录
+    $('.auto_login').on('click', function () {
+        if (this.checked === true) {
+            this.value = 1;
+
+        } else this.val = 0;
+
+
+    })
+
+    //登录事件
+    $('.login_form').on('submit', function () {
+        var data = $(this).serialize();//获取整个表单的所有参数
+        $.post('/login', data, function (msg) {
+            if (msg === "登录成功") {
+                //页面跳转，前台首页
+                window.location.href = "/";
+            }
+            if(msg==="用户名错误"){
+
+                //四秒后清除文本
+                $("#lr").text(msg);
+                setTimeout(resetL,4000);
+            }
+            if(msg==="密码错误"){
+
+                $("#pr").text(msg);
+                setTimeout(resetP,4000);
+
+
+            }
+            if(msg==="验证码输入有误"){
+
+                $("#cr").text(msg);
+                setTimeout(resetC,4000);
+            }
+        })
+        return false;
+    })
+
+    //清除登录反馈信息
+    function resetL() {
+
+        $("#lr").text("");
+    }
+    function resetP() {
+
+        $("#pr").text("");
+    }
+    function resetC() {
+
+        $("#cr").text("");
+    }
+
+
+    //点击切换验证码
+    function changecode(){
+        var $code=$("#code_img");
+        //改变img标签的src属性，末尾加一个随机数，
+        //浏览器发现请求没有变化，不会向服务器发送请求，所有如果src属性一直不变，无法实现更换图片
+        $code.attr("src","/common/code?"+Math.random());
+
+    }
+
+
+
+</script>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册用户</title>
+    <link rel="short icon"  href="/common/system_icon/favicon.ico"/>
+    <link href="/css/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/header.css" rel="stylesheet" type="text/css">
+    <link href="/css/register.css" rel="stylesheet" type="text/css">
+    <link href="particles/style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div id="particles-js">
+    <div th:replace="/front/component/page::header">
+    </div>
+
+        <div class="register_box">
+            <div id="register_title"> <span>注册</span></div>
+
+
+            <form class="user_form" method="post" th:action="@{/register}" th:object="${user}"
+                  enctype="multipart/form-data">
+
+                <!--//输入-->
+                <div class="input_item">
+                    <label th:for="*{username}">
+                        <img id="name_icon"  src="/common/system_icon/nick_name.png" alt="" />
+                        <span>昵称:</span>
+                        <input type="text" th:field="*{username}" th:class="${#fields.hasErrors('username')}? 'error'"/>
+                        <span class="error_item" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                    </label>
+                </div>
+                <div class="input_item">
+                    <label th:for="*{sex}">
+                        <img id="sex_icon"  src="/common/system_icon/sex_icon.png" alt="" />
+                        <span>性别:</span>
+                        <select th:field="*{sex}">
+                            <option  value="男">男</option>
+                            <option value="女">女</option>
+                            <option value="保密">保密</option>
+                        </select>
+                    </label >
+                </div>
+                <div class="input_item">
+                    <label for="str_birthday"><span>
+                    <img id="birthday_icon"  src="/common/system_icon/birthday_icon.png" alt="" />
+                    生日:</span>
+                        <input type="date" id="str_birthday"  name="str_birthday">
+                    </label>
+                    <span id="birthday_info" th:text="${birthday}"></span>
+                </div>
+                <div class="input_item">
+                    <label th:for="*{phone}">
+                        <img id="phone_icon"  src="/common/system_icon/phone_icon.png" alt="" />
+                        <span>电话:</span>
+                        <input type="text" th:field="*{phone}" th:class="${#fields.hasErrors('phone')}? 'error'"/>
+                        <span class="error_item" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                    </label>
+                </div>
+                <div class="input_item">
+                    <label th:for="*{email}">
+                        <img id="email_icon"  src="/common/system_icon/email_icon.png" alt="" />
+                        <span>Email:</span>
+                        <input type="text" th:field="*{email}" placeholder="可选" th:class="${#fields.hasErrors('email')}? 'error'"/>
+                        <span class="error_item" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                    </label>
+                </div>
+                <div class="input_item">
+
+                    <label th:for="*{qq_number}">
+                        <img id="qq_icon"  src="/common/system_icon/qq_icon.png" alt="" />
+                        <span>QQ号:</span>
+                        <input type="text" th:field="*{qq_number}" placeholder="可选" value="" th:class="${#fields.hasErrors('qq_number')}? 'error'"/>
+                    </label>
+                </div>
+
+                <div class="input_item">
+                    <label th:for="*{address}">
+                        <img id="address_icon"  src="/common/system_icon/addres_icon.png" alt="" />
+                        <span>地址:</span>
+                        <input type="text" th:field="*{address}" placeholder="可选" value="" th:class="${#fields.hasErrors('address')}? 'error'" >
+                    </label>
+                </div>
+                <div class="input_item">
+                    <label th:for="*{password}">
+                        <img id="password_icon"  src="/common/system_icon/password.png" alt="" />
+                        <span>密码:</span>
+                        <input type="password" th:field="*{password}" th:class="${#fields.hasErrors('password')}? 'error'"/>
+                        <span class="error_item" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                    </label>
+                </div>
+
+                <div class="input_item">
+                    <label>
+                        <img id="confirmpassword_icon"  src="/common/system_icon/confirmpassword_icon.png" alt="" />
+                        <span>确认密码:</span>
+                        <input type="password" name="confirmpassword" />
+                    </label>
+                    <span class="match_info" th:text="${password_dismatch}"></span>
+                </div>
+
+                <div class="input_item">
+                    <label >
+                        <img id="profile_icon"  src="/common/system_icon/profile_icon.png" alt="" />
+                        <span id="profile_char">个人头像:</span><img src="" alt="" id="preview">
+                        <input type="file" id="profile_image" onchange="Preview(this)" placeholder="不选则为默认"  name="profilepicture" accept="image/jpeg,image/png,image/gif"/>
+                    </label >
+                </div>
+
+                <div class="input_item">
+                    <label for="Verification_code">
+                        <img id="Verification_icon"  src="/common/system_icon/verification_icon.png" alt="" />
+                        <span>验证码:</span>
+                        <input type="text" id="Verification_code"  name="code" />
+                    </label >
+                    <img src="/common/code"  alt="" onclick="changecode()" id="code_img">
+                    <span class="match_info" th:text="${code_dismatch}"></span>
+                </div>
+
+
+
+                <div id="submit">
+                    <img id="submit_icon" alt="" onclick="SubMitUser()"  src="/common/system_icon/submitbig.png" >
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+
+    <div th:replace="/front/component/page::footer">
+    </div>
+
+</div>
+
+
+</body>
+<script src="/js/plugin/jquery.js" type="text/javascript"></script>
+<script src="/particles/particles.js"></script>
+<script src="/particles/app.js"></script>
+<script type="text/javascript">
+
+    function SubMitUser() {
+        $(".user_form").submit();
+    }
+
+    //预览图以及判断图片大小和类型
+    function Preview(f) {
+        var file=f.files[0];
+        if(file.size/1024/1024>4){
+            alert("上传文件不能大于4MB");
+            return f.value="";
+        }
+        if(file.type!=="image/png"&&file.type!=="image/jpeg"&&file.type!=="image/gif"){
+            alert("图片格式只能为png、jpg、gif");
+            return f.value="";
+        }
+        var fileReader=new FileReader();
+        var $img=$("#preview");
+        fileReader.readAsDataURL(file);
+        fileReader.onload=function (e) {
+            $img.get(0).src = e.target.result;
+
+        }
+        $img.css('display',"inherit");
+
+    }
+
+    //点击切换验证码
+    function changecode(){
+        var $code=$("#code_img");
+        //改变img标签的src属性，末尾加一个随机数，
+        //浏览器发现请求没有变化，不会向服务器发送请求，所有如果src属性一直不变，无法实现更换图片
+        $code.attr("src","/common/code?"+Math.random());
+
+    }
+
+    //uuid固定长度和进制
+    function getUuid() {
+        var len = 32;//32长度
+        var radix = 16;//16进制
+        var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+        var uuid = [], i;
+        radix = radix || chars.length;
+        if(len) {
+            for(i = 0; i < len; i++)uuid[i] = chars[0 | Math.random() * radix];
+        } else {
+            var r;
+            uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+            uuid[14] = '4';
+            for(i = 0; i < 36; i++) {
+                if(!uuid[i]) {
+                    r = 0 | Math.random() * 16;
+                    uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+                }
+            }
+        }
+        return uuid.join('');
+    }
+
+    //可设置长度和进制
+    function getUUID(len, radix) {
+        var uuid;
+        var chars, i, r, uuid;
+        chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+        uuid = [];
+        i = void 0;
+        radix = radix || chars.length;
+        if (len) {
+            i = 0;
+            while (i < len) {
+                uuid[i] = chars[0 | Math.random() * radix];
+                i++;
+            }
+
+        } else {
+            r = void 0;
+            uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+            uuid[14] = '4';
+            i = 0;
+            while (i < 36) {
+                if (!uuid[i]) {
+                    r = 0 | Math.random() * 16;
+                    uuid[i] = chars[i === 19 ? r & 0x3 | 0x8 : r];
+                }
+                i++;
+            }
+        }
+
+        return uuid.join('');
+    }
+
+</script>
+</html>

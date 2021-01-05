@@ -1,0 +1,30 @@
+.myfooter {
+    z-index: 1;
+    background-color:white;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 1% ;
+    padding-bottom:1% ;
+    height: 3vh;
+    float: left;
+    width: 100%;
+    position: absolute;
+    font-size: medium;
+    bottom: 0;
+}
+
+.myfooter p {
+    text-align: center;
+}
+
+.myfooter p span {
+    margin-right: 20px;
+    color: #999;
+}
+
+.myfooter a {
+    color: #999;
+    margin-right: 10px;
+}
+.myfooter p a:hover{
+    color: darkred;
+}

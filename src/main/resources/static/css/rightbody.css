@@ -1,0 +1,182 @@
+/*右边为推荐牛人与根据用户兴趣推荐的博客*/
+.rightbody{
+
+
+    float: left;
+    width: 24%;
+    height: 82%;
+    border: rgba(216,215,215,1.00) solid 1px;
+    margin-left: 2%;
+    margin-right: 1%;
+    background-color:white;
+    z-index: 1;
+    position: relative;
+    top:10%;
+}
+
+
+/*推荐大佬*/
+.recommend_dalao{
+    width: 95%;
+    height: 40%;
+    margin: 5px;
+    font-size:15px;
+
+
+}
+
+.recommend_blog{
+    width: 95%;
+    height: 40%;
+    margin: 5px;
+    font-size:15px;
+
+
+}
+
+
+
+.recommend_right{
+    width: 95%;
+    height: 8%;
+    text-align: center;
+    font-size: 20px;
+    border-bottom: #f5ecff solid 1px;
+    border-top: #f5ecff solid 1px;
+    margin: 5px;
+    padding-top: 5px;
+
+}
+.recommend_right p{
+    margin: 10px;
+
+}
+
+/*个人*/
+.dalao{
+   border:lightgray solid 1px;
+    width: 95%;
+    height: 30%;
+    padding-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+.dalao:hover{
+     background-color:rgba(243,243,243,1.00);;
+}
+
+.dalao li p a{
+    text-decoration: none;
+}
+.dalao li p a:hover{
+
+    color: darkred;
+}
+
+
+/*大佬名字*/
+.dalao_name{
+    width: 37%;
+    height: 50%;
+    margin: 0;
+    padding-top: 5px;
+    float: left;
+    list-style-type: none;
+    text-align: center;
+}
+
+
+.dalao_name a{
+    color: black;
+    text-decoration: none;
+}
+
+.dalao_name a:hover{
+    color: darkred;
+}
+/*大佬头像*/
+.dalao_name img{
+    width:25px;
+    height: 25px;
+    border-radius: 50%;
+    vertical-align: middle;
+
+
+}
+
+/*大佬关注量*/
+.dalao_folows{
+    width: 30%;
+    height: 50%;
+    margin: 0;
+    padding:0 ;
+    float: left;
+    list-style-type: none;
+}
+
+
+/*大佬博客数*/
+.dalao_blog_count{
+    width: 30%;
+    height: 50%;
+    margin: 0;
+    padding:0 ;
+    float: left;
+    list-style-type: none;
+}
+
+/*大佬誉称*/
+.dalao_reputation{
+    width: 100%;
+    height: 30%;
+    margin: 0;
+    padding:0 ;
+    float: left;
+    list-style-type: none;
+    text-align: center;
+
+}
+.dalao  li p a{
+    color: black;
+}
+
+.dalao_reputation p{
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.blog_right{
+    border:lightgray solid 1px;
+    width: 80%;
+    height: 90%;
+    padding-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    margin-left: 15px;
+}
+.blog_right li{
+    list-style-image: url("/common/system_icon/dot_small.png");
+}
+
+.blog_right li:hover{
+    list-style-image: url("/common/system_icon/dot_big.png");
+    font-size: 25px;
+
+
+}
+
+
+.br_title{
+    margin: 4px 10px 2px 20px;
+
+}
+.blog_right p a{
+    color: black;
+    text-decoration: none;
+
+}
+.blog_right p a:hover{
+    color: darkred;
+
+}

@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="ch">
+
+<body>
+<div class="header" th:fragment="header">
+    <div class="headert" th:if="${session.user==null}" >
+        <div class="logo"><a href="/"><img src="/common/system_icon/logo_outofmemory.png" ></a></div>
+        <div class="keyword_search">
+            <input type="text" placeholder="Python爬取马宝国视频">
+            <img src="/common/system_icon/search.png" alt="搜索" title="搜索关键字">
+        </div>
+        <div class="login"><a href="/front/loginPage"><img src="/common/system_icon/login.png" alt="登录" title="登录"></a></div>
+        <div class="register"><a href="/front/registerPage"><img src="/common/system_icon/register.png" alt="注册" title="注册"></a></div>
+    </div>
+
+    <div class="headert" th:if="${session.user!=null}" >
+        <div class="logo"><a href="/"><img src="/common/system_icon/logo_outofmemory.png" ></a></div>
+        <div class="keyword_search">
+            <input type="text" placeholder="Python爬取马宝国视频">
+            <img src="/common/system_icon/search.png" alt="搜索" title="搜索关键字">
+        </div>
+
+
+        <div class="current_user_section">
+            <a href="">
+                <img id="user_profile" th:src="@{/common/getImage(image=${session.user.image})}" alt="image" title="头像">
+            </a>
+            <ul id="user_menu">
+                <li><a href="">我的主页</a></li>
+                <li><a href="/myblog">我的博客</a></li>
+                <li><a href="">我的关注</a></li>
+                <li><a href="">我的消息</a></li>
+                <li><a href="/front/loginout">退出登录</a></li>
+            </ul>
+
+        </div>
+        <div class="current_user_name">
+
+        <a href=""><span th:text="${session.user.username}"></span></a>
+        </div>
+        <div class="new_blog">
+            <a href="/newBlogPage">
+                <span>创作</span>
+            </a>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<div>Content goes here</div>
+
+<div class="myfooter" th:fragment="footer">
+    <p>
+        <a href="#">关于网站</a>
+        <a href="#">合作伙伴</a>
+        <a href="#">营销中心</a>
+        <a href="#">廉正举报</a>
+        <a href="#">联系客服</a>
+        <a href="#">开发平台</a>
+        <a href="#">诚征英才</a>
+        <a href="#">联系我们</a>
+        <a href="#">网站地图</a>
+        <a href="#">知识产权</a><span>|</span>
+        <span>&copy;2020-2021 outofmemory.com 版权所有</span>
+    </p>
+</div>
+</body>
+
+</html>

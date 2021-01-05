@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理博客</title>
+    <link rel="short icon"  href="/common/system_icon/favicon.ico"/>
+    <link href="/css/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/header.css" rel="stylesheet" type="text/css">
+    <link href="/css/myblog.css" rel="stylesheet" type="text/css">
+    <link href="particles/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="particles-js">
+    <div th:replace="/front/component/page::header"></div>
+
+        <!--左边分类专栏-->
+        <div class="classes">
+            <div class="class_text">
+                <span><a href="javascript:void(0)">分类专栏</a></span>
+            </div>
+            <div class="classes_item">
+                <ul>
+                    <li class="li_class" th:each=" c: ${classifyList}" th:id="${c.id}">
+                        <a href="javascript:void(0)" th:text="${c.name}"></a>
+                        <div>
+                            <a href="javascript:void(0)" th:text="${c.counts+'篇'}">
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="new_class">
+                <span><a href="#open_model">新建分类</a></span>
+            </div>
+            <div class="delete_class">
+                <span><a href="#deleteclass_window">删除分类</a></span>
+            </div>
+            <!--新建博客分类模拟框-->
+            <div id="open_model" class="model_window">
+                <div>
+                    <a href="#" class="model_close">关闭</a>
+                    <div class="model_title"><a href="javascript:void(0)">新建分类</a></div>
+                    <div class="model_body">
+                        <span>分类名:</span>
+                            <input name="classify_name" id="classify_name" type="text">
+                        <div class="c_button"><a href="javascript:void(0)">确认</a></div>
+                    </div>
+                    <div class="check_c"><span id="check_classinfo"></span></div>
+                </div>
+            </div>
+            <!--新建删除博客分类模拟框-->
+            <div id="deleteclass_window" class="delete_class_window">
+                <div>
+                   <a href="#" class="delete_class_close">关闭</a>
+                    <div class="delete_class_title">
+                        <div class="top_title"><a href="javascript:void(0)">博客类别删除</a></div>
+                        <div class="title_info"><a href="javascript:void(0)">注:删除博客将移至默认分类</a></div>
+                    </div>
+                    <div class="class_list_div">
+
+                    </div>
+
+
+                    <div class="class_delete_buttons">
+                        <div class="class_delete_cancel"><a href="#">取消</a></div>
+                        <div class="class_delete_confirm"><a href="javascript:void(0)">确认</a></div>
+                    </div>
+                    <div class="class_delete_info"></div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- 所有博客-->
+        <div class="blogs">
+            <div class="order">
+                <div class="order_type">
+                    <div class="order_text"><span>排序:</span></div>
+                    <div class="order_date"><a href="">按发布时间</a></div>
+                    <div class="order_views"><a href="">按访问量</a></div>
+                </div>
+
+            </div>
+            <!--博客删除确认模拟框-->
+            <div id="delete_model" class="model_window_delete">
+                <div>
+                    <a href="#" class="model_close">关闭</a>
+                    <div class="delete_title">删除博客</div>
+                    <div class="delete_body">
+                        <input type="hidden" id="hiddem_del_id">
+                        <div class="cancel_button"><a href="#">取消</a></div>
+                        <div class="confirm_button"><a href="javascript:void(0)">确认</a></div>
+                    </div>
+                    <div class="check_d"><span id="delete_classinfo"></span></div>
+                </div>
+            </div>
+            <!--博客移动模拟框-->
+            <div id="move_model" class="model_window_move">
+                <div>
+                    <input type="hidden" id="movblog_id">
+                    <a href="#" class="move_close">关闭</a>
+                    <div class="move_title">移动博客到分类:</div>
+                    <div class="move_body">
+                        <ul class="ul_move">
+
+
+                        </ul>
+                        <div class="mov_buttons">
+                            <div class="mov_cancel"><a href="#">取消</a></div>
+                            <div class="mov_confirm"><a href="javascript:void(0)">确认</a></div>
+                        </div>
+                    </div>
+                    <div class="move_info"></div>
+
+                </div>
+            </div>
+            <div class="blog_item">
+                <div class="item_div" th:each="b :${allblogList}" >
+
+                    <div class="item_left" th:id="${b.id}">
+                        <input type="hidden" th:value="${b.user.id}">
+                        <ul class="item">
+                            <li class="item_title"><a href="" th:text="${b.title}"></a></li>
+                            <!--thymeleaf 字符串格式化以及日期操作-->
+                            <li class="item_date"><a href="" th:text="${'发布时间:'+#dates.format(b.publish_time,'yyyy-MM-dd HH:mm')}"></a></li>
+                            <li class="item_content"><a href="" th:text="${#strings.substring(b.content,0,5)}"></a></li>
+                            <li class="item_good"><img src="/common/system_icon/good.png" alt="点赞数" title="点赞数"><a href="" th:text="${b.good_count}"></a></li>
+                            <li class="item_view"><img src="/common/system_icon/views.png" alt="浏览量" title="浏览量"><a href="" th:text="${b.views}"></a></li>
+                            <li class="item_comment"><img src="/common/system_icon/comments.png" alt="评论数" title="评论数"><a href="" th:text="${b.comments}"></a></li>
+                        </ul>
+                    </div>
+                    <div class="item_right">
+                        <div class="right_del">
+                            <a href="#delete_model">删除</a>
+                        </div>
+                        <div class="right_mod">
+                            <a th:href="@{'/myblog/modPage?blogId='+${b.id}}">修改</a>
+                        </div>
+                        <div class="right_mov">
+                            <input type="hidden" th:value="${b.id}">
+                            <input type="hidden" th:value="${b.classification.id}">
+                            <a href="#move_model">移动</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+        <div th:replace="/front/component/page::footer"></div>
+
+
+</div>
+</body>
+<script src="js/plugin/jquery.js"></script>
+<script  src="editor/editormd.js"></script>
+<script src="js/plugin/date.js"></script>
+<script src="particles/particles.js"></script>
+<script src="particles/app.js"></script>
+<script type="text/javascript">
+ /*------------------------------------------------------------------------------------------------------*/
+ /* hash 属性是一个可读可写的字符串，该字符串是 URL 的锚部分,去除地址栏锚点部分*/
+ window.onload=function(){
+     if(window.location.hash!==""){
+         window.location.hash="";
+     }
+ }
+
+ /*------------------------------------------------------------------------------------------------------*/
+/*跳转博客浏览页面*/
+ $(".item_left").on("click",function () {
+
+     let blogId=this.getAttribute("id");
+     let userId=this.firstElementChild.value;
+     window.location.href="myblog/viewblog?blogId="+blogId+"&userId="+userId;
+ })
+
+
+ /*------------------------------------------------------------------------------------------------------*/
+    //解决顶级z-index相同而子元素需要虚拟框时的z-index冲突问题。
+    $(document).on("click",'.new_class',function () {
+        $(".classes").css("z-index",2);
+        $(".header").css("z-index",1);
+        $(".blogs").css("z-index",1);
+
+    })
+
+    $(document).on("click",".delete_class",function () {
+        $(".classes").css("z-index",2);
+        $(".header").css("z-index",1);
+        $(".blogs").css("z-index",1);
+
+        /*点击后虚拟框获取博客分类*/
+        $.post("/myblog/classjson",function (msg) {
+
+            if(msg==="[]"){
+
+                $(".class_list_div").text("暂无用户自定义分类")
+                return 0
+            }
+            else {
+                /*处理Json字符串*/
+                var classArray=JSON.parse(msg);
+                var a1=classArray[0];
+                $(".class_list_div").html("");
+                for (var i=0;i<classArray.length;i++){
+                    var c=classArray[i];
+                    $(".class_list_div").html($(".class_list_div").html()+" <div class=\"class_list\">\n" +
+                        "                            <input type=\"checkbox\" id="+c.id+" ><a href=\"javascript:void(0)\">"+c.name+"</a>\n" +
+                        "                        </div>"
+                    )
+                }
+                return 0;
+            }
+
+        })
+       /* 由于页面结构改变需重新设置覆盖优先级*/
+        $(".classes").css("z-index",2);
+        $(".header").css("z-index",1);
+        $(".blogs").css("z-index",1);
+
+    })
+
+
+
+ /*------------------------------------------------------------------------------------------------------*/
+ /*确认删除所选分类*/
+ $(document).on("click",".class_delete_confirm",function () {
+    /* 获取所有*/
+     var classList=$(".class_list");
+     var classDeleteId=[];
+     /*循环将check为true的加入数组*/
+     for(var i=0;i<classList.length;i++){
+         var c=classList[i].firstElementChild;
+         if(c.checked===true){
+             /*相当于集合了*/
+             classDeleteId.push(c.getAttribute("id"))
+         }
+
+     }
+     /*post请求,将删除信息发送给控制器*/
+     $.ajax({
+         /*用户返回数据格式*/
+         dataType: "text",
+         url: "/myblog/deleteclass",
+         type: "post",
+         data: JSON.stringify(classDeleteId),
+         /*用户发送数据格式*/
+         contentType: "application/json;charset=UTF-8",
+         success: function (msg) {
+             $(".class_delete_info").text(msg);
+             setTimeout(setBlankc,1500);
+             setTimeout(closeWindow,1500);
+             setTimeout(jumpToblog,1800);
+             return 0;
+         },
+         error: function (e) {
+             alert("出现错误");
+         }
+     });
+
+
+ })
+
+ function setBlankc(){
+     $(".class_delete_info").text("");
+ }
+ function closeWindow(){
+     /* document本页面跳转*/
+    /* document.location.href=$("delete_class_close").attr("href");*/
+     /*可以简写为:*/
+     document.location.href='#';
+ }
+
+
+
+
+
+ /*------------------------------------------------------------------------------------------------------*/
+/* 博客移动准备，同样将博客id传给移动框*/
+/* 使用document即使dom变化只要class同就生效*/
+ $(document).on("click",'.right_mov',function () {
+     //解决顶级z-index相同而子元素需要虚拟框时的z-index冲突问题。
+     $(".classes").css("z-index", 1);
+     $(".header").css("z-index", 1);
+     $(".blogs").css("z-index", 2);
+
+    /* 将获取的blogid赋给移动框的隐藏域*/
+     var blog_id=this.firstElementChild.value;
+     var blogClassid=this.firstElementChild.nextElementSibling.value;
+      $("#movblog_id").val(blog_id);
+      /*将用户的分类信息显示到移动框*/
+     $.ajax({
+         url:"/myblog/movblog",
+         dataType: "text",
+         method:"post",
+         /*简单字符串参数使用默认即可*/
+        /* 若设涉及到传一个对象推荐使用APPLICATION/JSON格式*/
+        /* contentType: "application/json/plain;charset=UTF-8",*/
+
+         data:{'blogClassid':blogClassid},
+         /*禁用请求缓存*/
+         cache:false,
+         success: function (msg) {
+             if(msg==="请您先创建分类"){
+                 $(".move_info").text(msg);
+                 setTimeout(setBlnakm,1500);
+                 return  0
+             }
+             //解析json
+             var classmov=JSON.parse(msg);
+             $(".ul_move").html("");
+             for(var i=0;i<classmov.length;i++){
+                 var c=classmov[i];
+                 $(".ul_move").html($(".ul_move").html()+"<li><input type=\"radio\" name=\"classSingle\" id='"+c.id+"'><a href=\"javascript:void(0)\">"+c.name+"</a></li>");
+
+
+             }
+                 return 0;
+             },
+         error: function (e) {
+                 alert("出现错误");
+             }
+
+     }
+
+     )
+
+ })
+/*博客移动提交*/
+ $(document).on("click",".mov_confirm",function () {
+     /*获取博客移动参数，博客id,分类id*/
+     var blogId=$("#movblog_id").val();
+     var movchoice="";
+     var ulmovs=$(".ul_move li");
+     for(var i=0;i<ulmovs.length;i++){
+         var m=ulmovs[i].firstElementChild;
+         if(m.checked===true){
+             movchoice=m.getAttribute("id");
+             break;
+         }
+     }
+
+     $.ajax({
+         url:"/myblog/movblog.do",
+         data:{'blogId':blogId,'movchoice':movchoice},
+         dataType:"text",
+         method: "post",
+         cache: false,
+         success:function (msg) {
+             if(msg==="移动成功"){
+                 $(".move_info").text(msg);
+                 setTimeout(setBlnakm,1500);
+                 setTimeout(closeWindow,1500);
+                 setTimeout(jumpToblog,1800);
+                 return 0;
+             }
+             if(msg==="请选中移入分类"){
+                 $(".move_info").text(msg);
+                 setTimeout(setBlnakm,1500);
+             }
+
+         },
+         error:function (msg) {
+             alert(msg);
+
+         }
+     })
+ })
+function setBlnakm(){
+     $(".move_info").text("");
+}
+
+
+
+
+ /*------------------------------------------------------------------------------------------------------*/
+    $(document).on("mouseover",'.current_user_section',function () {
+        //解决顶级z-index相同而子元素需要虚拟框时的z-index冲突问题。
+        $(".classes").css("z-index",1);
+        $(".header").css("z-index",2);
+        $(".blogs").css("z-index",1);
+
+    })
+
+
+
+
+
+/*------------------------------------------------------------------------------------------------------*/
+ /*删除博客将博客id传给删除框*/
+ $(document).on("click",".right_del",function () {
+     //解决顶级z-index相同而子元素需要虚拟框时的z-index冲突问题。
+     $(".classes").css("z-index",1);
+     $(".header").css("z-index",1);
+     $(".blogs").css("z-index",2);
+     /*取当前删除博客的id号传给虚拟框的隐藏域*/
+     var blog_del_id=this.nextElementSibling.nextElementSibling.firstElementChild.getAttribute("value");
+     $("#hiddem_del_id").val(blog_del_id);
+
+ })
+
+ /* 删除博客事件*/
+    $(document).on("click",".confirm_button",function () {
+      /*  获取隐藏域blogid*/
+        var delblogId=$("#hiddem_del_id").val();
+       $.post("/myblog/del",{'delblogId':delblogId},function (msg) {
+
+           if(msg==="删除成功"){
+               $("#delete_classinfo").text(msg+"请稍后");
+               setTimeout(setBlankd,1500);
+               setTimeout(closeWindow,1500);
+               setTimeout(jumpToblog,1800);
+               return 0;
+
+           }
+           else{
+               $("delete_classinfo").text(msg+"稍后再试");
+               setTimeout(setBlankd,1500);
+               setTimeout(closeWindow,1500);
+               setTimeout(jumpToblog,1800);
+               return 0;
+
+           }
+
+       })
+
+    })
+//跳转博客页面
+    function jumpToblog(){
+        window.location.href="/myblog";
+    }
+    //清空域
+ function setBlankd(){
+     $("#delete_classinfo").text("");
+ }
+
+ /*------------------------------------------------------------------------------------------------------*/
+    /*分类创建点击事件*/
+    $(document).on("click",".c_button",function () {
+        var classifyName=$("#classify_name").val();
+        if(classifyName.length===0){
+            $("#check_classinfo").text("输入不能为空");
+            setTimeout(setBlank,1500);
+
+            return 0;
+
+        }
+        if(classifyName.length>20){
+            $("#check_classinfo").text("不能超过20个字符");
+            setTimeout(setBlank,1500);
+            return 0;
+        }
+
+        $.post("/myblog/newClass", {'classifyName':classifyName}, function (msg) {
+                if (msg === "创建分类成功") {
+                    $("#check_classinfo").text(msg);
+                    setTimeout(setBlank,1500);
+                    setTimeout(closeWindow,1500);
+                    setTimeout(jumpToblog,1800);
+                    return 0;
+                }
+                if (msg === "创建分类失败") {
+                    $("#check_classinfo").text(msg);
+                    setTimeout(setBlank,1500);
+                    return 0;
+                }
+            }
+
+        )
+
+    })
+ /*清空反馈域*/
+ function setBlank(){
+     $("#check_classinfo").text("");
+ }
+
+
+ /*------------------------------------------------------------------------------------------------------*/
+    /*分类栏查询事件*/
+    $(document).on("click",".li_class",function () {
+        var classificationId=this.getAttribute("id");
+        $.post("/myblog/classify",{'classificationId':classificationId},function (msg) {
+            //转数组
+            if(msg==="[]") {
+                //空json字符串
+                $(".blog_item").text("暂无文章");
+                return 0;
+            }
+            else{
+
+                /* $(".blog_item").text(msg);*/
+                /*处理json对象数组*/
+                var blogList=JSON.parse(msg);
+                var blog=blogList[0];
+                $(".blog_item").html("");
+                var inneritemBlog="";
+                for(var i=0;i<blogList.length;i++){
+
+
+                    var b=blogList[i];
+                    $(".blog_item").html($(".blog_item").html()+
+                        "            <div class=\"item_div\" id='"+b.id+"'>\n" +
+                        "                <div class=\"item_left\">\n" +
+                        "             <input type='hidden' value='"+b.user.id+"'>"+
+                        "                    <ul class=\"item\">\n" +
+                        "                        <li class=\"item_title\"><a href=\"\">"+b.title+"</a></li>\n" +
+                        "                        <li class=\"item_date\"><a href=\"\">发布时间:"+moment(b.publish_time).format('YYYY-MM-DD HH:mm:ss')+"</a></li>\n" +
+                        "                        <li class=\"item_content\"><a href=\"\">"+b.content.substr(25,38)+"</a></li>\n" +
+                        "                        <li class=\"item_good\"><img src=\"/common/system_icon/good.png\" alt=\"点赞数\" title=\"点赞数\"><a href=\"\">"+b.good_count+"</a></li>\n" +
+                        "                        <li class=\"item_view\"><img src=\"/common/system_icon/views.png\" alt=\"浏览量\" title=\"浏览量\"><a href=\"\">"+b.views+"</a></li>\n" +
+                        "                        <li class=\"item_comment\"><img src=\"/common/system_icon/comments.png\" alt=\"评论数\" title=\"评论数\"><a href=\"\" >"+b.comments+"</a></li>\n" +
+                        "                    </ul>\n" +
+                        "                </div>\n" +
+                        "                <div class=\"item_right\">\n" +
+                        "                    <div class=\"right_del\">\n" +
+                        "                        <a href='#delete_model'>删除</a>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"right_mod\">\n" +
+                        "                        <a href='/myblog/modPage?blogId="+b.id+"'>修改</a>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"right_mov\">\n" +
+                        "                             <input type=\"hidden\" value='"+b.id+"'>\n" +
+                        "                            <input type=\"hidden\" value='"+b.classification.id+"'>\n" +
+                        "                            <a href=\"#move_model\">移动</a>"+
+
+                        "                    </div>\n" +
+                        "                </div>\n" )
+
+
+                }
+
+                /* 由于dom树改变新加入的么有鼠标移入事件需重新加入若设置为document事件就不用*/
+                /*鼠标hover经过blog编辑删除以及移动事件*/
+               /* $(document).on("mouseover",".item_div",function () {
+                    this.firstElementChild.nextElementSibling.setAttribute("style","display:inherit");
+                })
+
+                $(document).on("mouseout",".item_div",function () {
+                    this.firstElementChild.nextElementSibling.setAttribute("style","display:none");
+                })*/
+                /*alert(blog.id);*/
+
+
+                return  0;
+            }
+
+
+        })
+
+
+
+    })
+ /*------------------------------------------------------------------------------------------------------*/
+    /*鼠标hover经过blog编辑删除以及移动事件*/
+    $(document).on("mouseover",".item_div",function () {
+        this.firstElementChild.nextElementSibling.setAttribute("style","display:inherit");
+
+
+    })
+
+    $(document).on("mouseout",".item_div",function () {
+        this.firstElementChild.nextElementSibling.setAttribute("style","display:none");
+
+    })
+ /*------------------------------------------------------------------------------------------------------*/
+    /*头悬浮栏*/
+    $(document).on("mouseover",".current_user_section",function () {
+     $("#user_menu").css("display","block");
+ })
+    $(document).on("mouseout",".current_user_section",function () {
+        $("#user_menu").css("display","none");
+    })
+
+    $(document).on("mouseout","#user_menu",function () {
+     $("#user_menu").css("display","none");
+ })
+
+
+</script>
+</html>

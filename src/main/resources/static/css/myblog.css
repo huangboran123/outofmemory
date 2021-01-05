@@ -1,0 +1,1131 @@
+/*.my_blog{
+    width: 100%;
+    height: 83%;
+    float: left;
+    left: 0;
+    border: rgba(216,215,215,1.00) solid 1px;
+
+
+
+    
+
+}*/
+
+/*左边分类栏*/
+.classes{
+    border: rgba(235,230,230,1.00) solid 1px;
+    background-color: white;
+    width:20% ;
+    height: 75%;
+/*    margin: 2% 2% 0 2%;*/
+    left: 2%;
+    padding: 0;
+    margin-bottom: 2%;
+    float: left;
+    position: relative;
+    z-index: 1;
+    top: 10%;
+}
+.blogs{
+    border: rgba(235,230,230,1.00) solid 1px;
+    background-color: white;
+    padding: 0;
+    width:65% ;
+    height: 75%;
+    float: left;
+    margin-bottom: 2%;
+    position: relative;
+    z-index: 1;
+    left: 10%;
+    top: 10%;
+}
+/*文字*/
+.class_text{
+
+    border: rgba(235,230,230,1.00) solid 1px;
+    margin: 15%;
+    padding: 0;
+    width: 70%;
+    height: 8%;
+    text-align: center;
+    font-size: xx-large;
+}
+.class_text:hover{
+   background-color: rgba(1,1,1,0.48);
+}
+.class_text:hover span a{
+    color: white;
+}
+.class_text span a{
+    text-decoration: none;
+    color: black;
+}
+
+/*左下分类*/
+.classes_item{
+    border: rgba(235,230,230,1.00) solid 1px;
+    margin: 10%;
+    padding: 0;
+    width: 80%;
+    height: 60%;
+    text-align: left;
+    font-size: large;
+    /*超出范围滚动条*/
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+/*滚动条隐藏*/
+.classes_item::-webkit-scrollbar{
+    display: none;
+}
+.classes_item ul{
+    list-style-type: none;
+    margin: 10% 0 0 12%;
+    padding: 0;
+}
+.classes_item ul li{
+    margin:2% 0 2% 0;
+    padding:2% 0 2% 0 ;
+
+}
+
+.classes_item ul li:hover{
+    background-color: whitesmoke;
+}
+
+
+.classes_item ul li:hover a{
+    color: red;
+
+}
+.classes_item ul li a{
+    color: black;
+    text-decoration: none;
+}
+.classes_item ul li div{
+    float:  right;
+    width: 20%;
+    height: 100%;
+}
+.classes_item ul li div a{
+    color: black;
+    text-decoration: none;
+}
+
+/*新建分类*/
+.new_class{
+    border: rgba(235,230,230,1.00) solid 1px;
+    border-radius: 4px;
+    margin: 1% 1% 10% 9%;
+    padding: 0;
+    width: 40%;
+    height: 5%;
+    text-align: center;
+    font-size: x-large;
+    position: relative;
+    float: left;
+}
+
+.new_class:hover{
+    background-color: rgba(0,0,0,0.56);
+}
+/*虚拟按钮1*/
+.new_class:active{
+    background-color: #000000;
+    border: 1px solid #494b41;
+}
+
+.new_class:hover span a{
+
+    color: white;
+}
+
+.new_class span a{
+    text-decoration: none;
+    color: black;
+}
+
+/*删除分类*/
+.delete_class{
+    border: rgba(235,230,230,1.00) solid 1px;
+    border-radius: 4px;
+    margin: 1% 2% 10% 1%;
+    padding: 0;
+    width: 40%;
+    height: 5%;
+    text-align: center;
+    font-size: x-large;
+    position: relative;
+    float: left;
+}
+/*虚拟按钮*/
+.delete_class:hover{
+    background-color: rgba(0,0,0,0.56);
+}
+.delete_class:active{
+    background-color: #000000;
+    border: 1px solid #494b41;
+}
+
+.delete_class:hover span a{
+
+    color: white;
+}
+
+.delete_class span a{
+    text-decoration: none;
+    color: black;
+}
+
+/*右边博客集*/
+.order{
+    border: rgba(235,230,230,1.00) solid 1px;
+    width: 96%;
+    height:5% ;
+    margin: 1% 2% 1% 2%;
+    padding: 0;
+    font-size: medium;
+
+}
+
+/*排序栏*/
+.order_type{
+    float: right;
+    border: rgba(235,230,230,1.00) solid 1px;
+    width: 25%;
+    height: 100%;
+    text-align: left;
+
+}
+.order_text{
+    float: left;
+    width: 20%;
+    height: 100%;
+    margin: 0;
+    padding:0;
+}
+.order_date{
+    float: left;
+    width: 40%;
+    height: 100%;
+    margin: 0;
+    padding:0;
+}
+.order_date a{
+    text-decoration: none;
+    color: black;
+}
+.order_views{
+    float: left;
+    width: 40%;
+    height: 100%;
+    margin: 0;
+    padding:0;
+}
+.order_views a{
+    text-decoration: none;
+    color: black;
+}
+
+.order_type div a:hover{
+    color: red;
+}
+
+/*blog*/
+.blog_item{
+    border: rgba(235,230,230,1.00) solid 1px;
+    width: 100%;
+    height:92% ;
+    margin: 0;
+    padding: 0;
+
+}
+
+.item_div{
+    border: rgba(235,230,230,1.00) solid 1px;
+    width: 100%;
+    height: 13%;
+    margin: 1% 0 1% 0;
+    padding: 0;
+}
+.item_div:hover{
+    background-color:rgba(243,243,243,1.00);
+}
+
+.item_left{
+    padding: 0;
+    margin: 0;
+    width: 90%;
+    height: 100%;
+    float: left;
+}
+.item_right{
+    padding: 0;
+    margin: 0;
+    width: 9%;
+    height: 100%;
+    float: right;
+    border: rgba(235,230,230,1.00) solid 1px;
+    display: none;
+    font-size: large;
+
+
+}
+.item_right div{
+    float: top;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    width: 99%;
+    height: 33%;
+
+}
+.item_right div a{
+ text-decoration: none;
+    color: black;
+}
+.item_right div a:hover{
+
+    color: red;
+}
+ /*单个博客信息*/
+.item{
+    /*border: rgba(235,230,230,1.00) solid 1px;*/
+    width: 100%;
+    height:100% ;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+
+.item li a:hover{
+    color: red;
+}
+
+
+
+.item_title{
+    float: left;
+   /* border: rgba(235,230,230,1.00) solid 1px;*/
+    height: 55%;
+    width: 64%;
+    margin: 0;
+    padding: 0 0 0 1%;
+    font-size: xx-large;
+    text-align: left;
+
+}
+.item_title a{
+    text-decoration: none;
+    color: black;
+}
+.item_date{
+    float: left;
+   /* border: rgba(235,230,230,1.00) solid 1px;*/
+    height: 55%;
+    width: 34%;
+    margin: 0;
+    padding: 0;
+    font-size:large;
+    text-align: center;
+
+}
+.item_date a{
+    text-decoration: none;
+    color: black;
+}
+.item_content{
+    float: left;
+    border-top: rgba(235,230,230,1.00) solid 1px;
+    height: 44%;
+    width: 69%;
+    margin: 0;
+    padding: 1% 0 0 1%;
+    font-size:large;
+    text-align: left;
+
+
+}
+
+.item_content a{
+    color: #b3acac;
+    text-decoration: none;
+}
+.item_good{
+    float: left;
+ /*   border: rgba(235,230,230,1.00) solid 1px;*/
+    height: 44%;
+    width: 9%;
+    margin: 0;
+    padding: 0;
+    font-size:large;
+    text-align: center;
+}
+.item_good a{
+    text-decoration: none;
+    color: black;
+}
+.item_good img{
+    width:30% ;
+    height: 55%;
+}
+.item_good img:hover{
+    content: url("/common/system_icon/good_hover.png");
+}
+
+
+.item_view{
+    float: left;
+  /*  border: rgba(235,230,230,1.00) solid 1px;*/
+    height: 44%;
+    width: 9%;
+    margin: 0;
+    padding: 0;
+    font-size:large;
+    text-align: center;
+}
+.item_view a{
+    text-decoration: none;
+    color: black;
+}
+.item_view img{
+    width:30% ;
+    height: 55%;
+}
+.item_view img:hover{
+    content: url("/common/system_icon/views_hover.png");
+}
+.item_comment{
+    float: left;
+   /* border: rgba(235,230,230,1.00) solid 1px;*/
+    height: 44%;
+    width: 9%;
+    margin: 0;
+    padding: 0;
+    font-size:large;
+    text-align: center;
+}
+.item_comment a{
+    text-decoration: none;
+    color: black;
+}
+.item_comment img{
+    width:30% ;
+    height: 55%;
+}
+.item_comment img:hover{
+    content: url("/common/system_icon/comments_hover.png");
+}
+.item_operation{
+    float: left;
+    border: rgba(235,230,230,1.00) solid 1px;
+    height: 100%;
+    width: 7%;
+    margin: 0;
+    padding: 0;
+}
+
+
+/*--------------------------------------------------------*/
+/*虚拟弹窗*/
+/*1.新建分类*/
+.model_window{
+    /*固定定位*/
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+
+    transition: opacity .5s;
+
+    /*初始隐藏*/
+    visibility: hidden;
+    opacity: 0;
+    /*不响应鼠标事件*/
+    pointer-events: none;
+
+    /*居中*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/*伪元素触发*/
+.model_window:target{
+    visibility: visible;
+    opacity: 1;
+    /*响应鼠标事件*/
+    pointer-events: auto;
+}
+.model_window:target >div{
+ transform: translateX(30%) rotateY(0.9deg);
+ transition-timing-function: cubic-bezier(0.8, 0, 0, 1.5);
+ opacity: 1;
+}
+
+.model_window>div{
+    /*子元素的相对位置*/
+    position: relative;
+    left: -5%;
+    width: 350px;
+    height: 120px;
+    border-radius: 6px;
+    padding: 0;
+    background-color: #ffffff;
+    font-size: medium;
+    transition: .25s;
+}
+
+/*虚拟关闭按钮*/
+.model_close{
+   /* 父元素开启position: relative;则absolute是相当于父元素*/
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #aaaaaa;
+    text-decoration: none;
+    transition: .25s;
+}
+
+.model_close:hover{
+    color: red;
+
+}
+
+.model_title{
+    position: relative;
+    left: 10px;
+    top: 10px;
+    float: left;
+    width: 85%;
+    height:23%;
+    margin: 0;
+    padding: 0;
+}
+.model_title a{
+    color: black;
+    text-decoration: none;
+    font-size: x-large;
+}
+.model_body{
+    position: relative;
+    float: left;
+    width: 90%;
+    height: 30%;
+    margin: 25px 0 0 0;
+    padding: 0;
+    font-size: larger;
+
+
+}
+.model_body span{
+    position: relative;
+    left: 30px;
+    float: left;
+    font-size: large;
+}
+
+
+.model_body input{
+    position: relative;
+    left: 30px;
+    float: left;
+    height: 21px;
+}
+
+.c_button{
+    padding: 0;
+    background-color: white;
+    text-align: center;
+    position: relative;
+    left: 30px;
+    margin-left: 5px;
+    float: left;
+    width: 45px;
+    height: 25px;
+    border-radius: 6px;
+    border: rgba(0,0,0,0.31) solid 1px;
+
+}
+.c_button a{
+    text-decoration: none;
+    color: black;
+    font-size: large;
+
+
+}
+
+
+.c_button:hover{
+    border: solid 1px gray;
+    background-color: rgba(0,0,0,0.56);
+}
+.c_button:hover a{
+   color: white;
+}
+.c_button:active{
+    border: solid 1px gray;
+    background-color: black;
+
+}
+.c_button:active a{
+    color: white;
+}
+.check_c{
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 20%;
+    text-align: center;
+    font-weight: bold;
+}
+/*-------------------------------------------------------*/
+/*2.博客虚拟删除框*/
+.model_window_delete{
+    /*固定定位*/
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+
+    /*初始隐藏*/
+    visibility: hidden;
+    opacity: 0;
+    /*不响应鼠标事件*/
+    pointer-events: none;
+
+  /*  渐入效果*/
+    transition: opacity .5s;
+    /*居中*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.model_window_delete:target{
+    visibility: visible;
+    opacity: 1;
+    /*响应鼠标事件*/
+   /* onclick事件结束后虚拟框便会消失*/
+    pointer-events: auto;
+}
+.model_window_delete:target > div{
+    transform: translateY(30%) scale(0.9);
+    transition-timing-function: cubic-bezier(0.8, 0, 0, 1.5);
+    opacity: 1;
+}
+
+.model_window_delete>div{
+    /*子元素的相对位置*/
+    position: relative;
+    top:-10%;
+    width: 350px;
+    height: 120px;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: medium;
+    transition: .25s;
+}
+.cancel_button{
+    color: black;
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+    border: rgba(0,0,0,0.31) solid 1px;
+    text-align: center;
+    background-color: white;
+    float: left;
+    position: absolute;
+    left: 20%;
+}
+.cancel_button:hover{
+    background-color: rgba(0,0,0,0.51);
+
+}
+.cancel_button:hover a{
+    color: white;
+}
+.cancel_button:active{
+    background-color: black;
+}
+.cancel_button:active a{
+   color: white;
+}
+
+.cancel_button{
+    color: black;
+}
+.cancel_button a{
+    color: black;
+    text-decoration: none;
+    font-size: larger;
+}
+.confirm_button{
+
+    color: black;
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+    border: rgba(0,0,0,0.31) solid 1px;
+    text-align: center;
+    background-color: white;
+    position: absolute;
+    left: 70%;
+    float: left;
+}
+.confirm_button:hover{
+    background-color: rgba(0,0,0,0.51);
+
+}
+.confirm_button:hover a{
+    color: white;
+}
+.confirm_button:active{
+    background-color: black;
+}
+.confirm_button:active a{
+    color: white;
+}
+
+.confirm_button a{
+    color: black;
+    text-decoration: none;
+    font-size: larger;
+}
+.delete_title{
+
+    position: relative;
+    float: left;
+    font-size: x-large;
+    top:10px;
+    left: 10px;
+    width: 83%;
+    height:20% ;
+    margin: 0;
+    padding: 0;
+}
+.delete_body{
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 35%;
+    margin: 30px 0 0 0;
+    text-align: center;
+
+}
+.check_d{
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 18%;
+    text-align: center;
+}
+
+/*------------------------------------------------------------------*/
+/*
+博客类别删除*/
+.delete_class_window{
+    /*基于视口*/
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+
+    /*初始隐藏*/
+    visibility: hidden;
+    opacity: 0;
+    /*不响应鼠标事件*/
+    pointer-events: none;
+
+    /*居中*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity .5s;
+}
+.delete_class_window:target{
+   /* 可见*/
+    visibility: visible;
+    opacity: 1;
+    /*响应鼠标事件*/
+    /* onclick事件结束后虚拟框便会消失*/
+    pointer-events: auto;
+}
+.delete_class_window:target > div{
+    transform: translateY(30%) scale(0.9);
+    transition-timing-function: cubic-bezier(0.8, 0, 0, 1.5);
+    opacity: 1;
+
+}
+.delete_class_window>div{
+    position: relative;
+    top: -10%;
+    width: 350px;
+    height: 400px;
+    background-color: white;
+    border-radius: 6px;
+    font-size: medium;
+    transition: .25s;
+}
+/*虚拟关闭按钮*/
+.delete_class_close{
+    /* 父元素开启position: relative;则absolute是相当于父元素*/
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #aaaaaa;
+    text-decoration: none;
+    transition: .5s;
+}
+.delete_class_close:hover{
+    color: red;
+}
+.delete_class_title{
+    float: left;
+    width: 300px;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    font-size: x-large;
+    text-align: center;
+}
+.top_title{
+    position: relative;
+    width: 300px;
+    height:55px;
+    margin: 0;
+    padding: 0;
+    font-size: x-large;
+    text-align: center;
+}
+
+.top_title a{
+    position: absolute;
+    color: black;
+    left: 30px;
+    bottom: 12px;
+}
+.title_info{
+    position: relative;
+    width: 300px;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+    font-size: medium;
+    text-align: center;
+
+}
+.title_info a{
+    position: absolute;
+    color: red;
+   /* 表示距离父级最右多少*/
+    right: 0;
+
+}
+
+/*类型列表*/
+.class_list_div{
+
+    float: left;
+    width: 350px;
+    height: 230px;
+    margin: 20px 0 0 0;
+    padding: 0;
+    text-align: center;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.class_list_div::-webkit-scrollbar{
+    display: none;
+}
+.class_list{
+    width: 280px;
+    height: 35px;
+    margin: 0;
+    padding: 0;
+    font-size: medium;
+    position: relative;
+
+}
+.class_list a{
+    color: black;
+    position: absolute;
+    left: 75px;
+    font-size: larger;
+    top: 4px;
+}
+.class_list input[type=checkbox]{
+    position: absolute;
+    left: 45px;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+}
+/*按钮区*/
+.class_delete_buttons{
+    position: relative;
+    float: left;
+    width: 350px;
+    height: 40px;
+}
+/*删除按钮*/
+.class_delete_cancel{
+     position: relative;
+     float: left;
+    left: 90px;
+     width: 50px;
+     height: 30px;
+     border-radius: 6px;
+     border: rgba(0,0,0,0.31) solid 1px;
+     text-align: center;
+    background-color: white;
+ }
+.class_delete_cancel:hover{
+    background-color:rgba(0,0,0,0.51);
+}
+.class_delete_cancel:hover a{
+    color: whitesmoke;
+}
+
+.class_delete_cancel:active{
+    background-color: black;
+}
+.class_delete_cancel:active a{
+    color: white;
+}
+.class_delete_cancel a{
+    font-size: larger;
+    color: black;
+}
+
+/*确认按钮*/
+/*浮动可以解决left right等元素造成的margin占满父元素问题*/
+.class_delete_confirm{
+    position: relative;
+    left: 165px;
+
+    float: left;
+    width: 50px;
+    height: 30px;
+    border-radius: 6px;
+    border: rgba(0,0,0,0.31) solid 1px;
+    text-align: center;
+    background-color: white;
+}
+.class_delete_confirm:hover{
+    background-color:rgba(0,0,0,0.51);
+}
+.class_delete_confirm:hover a{
+    color: whitesmoke;
+}
+
+.class_delete_confirm:active{
+    background-color: black;
+}
+.class_delete_confirm:active a{
+    color: white;
+}
+.class_delete_confirm a{
+    font-size: larger;
+    color: black;
+}
+.class_delete_info{
+    position: relative;
+    float: left;
+    height: 30px;
+    width: 350px;
+    text-align: center;
+    font-weight: bold;
+}
+/*------------------------------------------------------------*/
+/*博客移动模拟框*/
+.model_window_move{
+   /* 基于视口*/
+    position: fixed;
+    z-index: 9999;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    /*初始隐藏*/
+    visibility: hidden;
+    opacity: 0;
+    /*不响应鼠标事件*/
+    pointer-events: none;
+    transition: opacity .5s;
+
+   /* 内部组件居中*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.model_window_move:target{
+    /* 可见*/
+    visibility: visible;
+    opacity: 1;
+    /*响应鼠标事件*/
+    pointer-events: auto;
+}
+.model_window_move:target > div{
+    transform: translateY(-30%) scale(0.9) ;
+    transition-timing-function: cubic-bezier(0.8, 0, 0, 1.5);
+    opacity: 1;
+
+}
+
+.model_window_move>div{
+
+    position: relative;
+    top:15%;
+    width: 260px;
+    height: 400px;
+    background-color: white;
+    border-radius: 6px;
+    transition: .25s;
+
+}
+.move_title{
+    position: relative;
+    float: left;
+    top: 10px;
+    left: 10px;
+    width: 200px;
+    height: 45px;
+    font-size: x-large;
+}
+.move_body{
+    position: relative;
+    float: left;
+    width: 260px;
+    height: 320px;
+}
+.ul_move{
+
+    position: relative;
+    float: left;
+    width: 240px;
+    margin: 20px 0 0 0;
+    padding: 0 0 0 15px;
+    height:260px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.ul_move::-webkit-scrollbar{
+    display: none;
+}
+.ul_move li input{
+    height: 20px;
+    width: 20px;
+    margin-bottom: 4px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.ul_move li a{
+    color: black;
+    text-decoration: none;
+    font-size: large;
+}
+.mov_buttons{
+    float: left;
+    position: relative;
+    width: 260px;
+    height: 40px;
+}
+.mov_cancel{
+    float: left;
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    left: 50px;
+    border-radius: 6px;
+    border: rgba(0,0,0,0.31) solid 1px;
+    text-align: center;
+    background-color: white;
+}
+
+.mov_cancel:hover{
+    background-color: rgba(0,0,0,0.51);
+}
+.mov_cancel:hover a{
+    color: white;
+}
+.mov_cancel:active{
+    background-color: black;
+}
+.mov_cancel:active a{
+    color: white;
+}
+.mov_cancel a{
+    color: black;
+    text-decoration: none;
+    font-size: large;
+}
+
+.mov_confirm{
+    float: left;
+    position: absolute;
+    left: 160px;
+    width: 50px;
+    height: 30px;
+    border-radius: 6px;
+    border: rgba(0,0,0,0.31) solid 1px;
+    text-align: center;
+    background-color: white;
+
+}
+.mov_confirm:hover{
+    background-color: rgba(0,0,0,0.51);
+}
+.mov_confirm:hover a{
+    color: white;
+}
+.mov_confirm:active{
+    background-color: black;
+}
+.mov_confirm:active a{
+    color: white;
+}
+.mov_confirm a{
+    color: black;
+    text-decoration: none;
+    font-size: large;
+}
+
+.move_info{
+    position: relative;
+    float: left;
+    width: 260px;
+    height: 37px;
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+
+}
+.move_close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: medium;
+    color: #aaaaaa;
+    text-decoration: none;
+    transition: .25s;
+}
+.move_close:hover{
+
+    color:red;
+
+}
