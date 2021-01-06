@@ -82,9 +82,15 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
             /*粒子效果资源请求路径映射*/
             registry.addResourceHandler("/front/particles/**","/myblog/particles/**","/particles/**").
                     addResourceLocations("classpath:/static/particles/");
-            registry.addResourceHandler("/myblog/editor/**").
+            registry.addResourceHandler("/editor/**","/myblog/editor/**").
                     addResourceLocations("classpath:/static/editor/");
             //jquery映射
+            registry.addResourceHandler("/myblog/js/**","/js/**").
+                    addResourceLocations("classpath:/static/js/");
+            registry.addResourceHandler("/css/**").
+                    addResourceLocations("classpath:/static/css/");
+            registry.addResourceHandler("/common/**").
+                    addResourceLocations("classpath:/static/common/");
             registry.addResourceHandler("/myblog/js/**","/js/**").
                     addResourceLocations("classpath:/static/js/");
         }

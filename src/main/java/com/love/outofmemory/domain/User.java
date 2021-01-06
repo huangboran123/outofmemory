@@ -7,7 +7,7 @@ import javax.validation.constraints.*;
 import java.util.Date;
 
 
-@Data
+@Data 
 public class User {
     private Integer id;
 
