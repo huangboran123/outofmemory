@@ -81,7 +81,7 @@ public interface BlogMapper {
     })
     Blog getblogById(Integer blogId);
 
-    @Select("SELECT COUNT(o_blog.id) AS userblogcount ,SUM(views) AS userviews ,SUM(comments) AS usercomments ,SUM(good_count) AS usergoodcounts,TIMESTAMPDIFF(YEAR,o_user.create_time,NOW()) AS codeage  FROM o_blog INNER JOIN o_user ON o_blog.user_id=o_user.id WHERE o_blog.user_id=#{userId}")
+    @Select("SELECT COUNT(o_blog.id) AS userblogcount ,(select count(*) from o_collection where user_id=#{userId}) AS usercollections, SUM(views) AS userviews ,SUM(comments) AS usercomments ,SUM(good_count) AS usergoodcounts,TIMESTAMPDIFF(YEAR,o_user.create_time,NOW()) AS codeage  FROM o_blog INNER JOIN o_user ON o_blog.user_id=o_user.id WHERE o_blog.user_id=#{userId}")
     @Results(id="usermore",value = {
 
             //(可省略)
