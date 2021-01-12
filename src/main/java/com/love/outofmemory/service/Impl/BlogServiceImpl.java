@@ -1,7 +1,7 @@
 package com.love.outofmemory.service.Impl;
 
 import com.love.outofmemory.domain.Blog;
-import com.love.outofmemory.domain.Classify;
+import com.love.outofmemory.domain.view.Classify;
 import com.love.outofmemory.domain.view.BlogPageUser;
 import com.love.outofmemory.mapper.BlogMapper;
 import com.love.outofmemory.mapper.BlogTagMapper;

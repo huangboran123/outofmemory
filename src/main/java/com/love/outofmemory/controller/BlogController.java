@@ -6,6 +6,7 @@ import com.love.outofmemory.Utills.DateUtil;
 import com.love.outofmemory.Utills.MarkDownUtil;
 import com.love.outofmemory.domain.*;
 import com.love.outofmemory.domain.view.BlogPageUser;
+import com.love.outofmemory.domain.view.Classify;
 import com.love.outofmemory.service.IBlogService;
 import com.love.outofmemory.service.IBlogTagService;
 import com.love.outofmemory.service.IClassificationService;
@@ -210,9 +211,11 @@ public class BlogController {
 
         Blog blog=iBlogService.getblogById(blogId);
         BlogPageUser blogPageUser=iBlogService.getUserMoreById(userId);
+        List<Classify> classlistcount=iBlogService.getClassifyBlogCount(userId);
 
         model.addAttribute("blog",blog);
         model.addAttribute("blogPageuser",blogPageUser);
+        model.addAttribute("classlistcount",classlistcount);
         return "front/blog/show_blog";
     }
 

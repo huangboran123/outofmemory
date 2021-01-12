@@ -30,6 +30,7 @@ public class ClassificationController {
 
 
 
+    /*新建分类*/
     @PostMapping(value = "/myblog/newClass",produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
     public String newClass(String classifyName, HttpSession session){
@@ -45,6 +46,8 @@ public class ClassificationController {
         }
 
     }
+
+    //获取所有自定义分类对象
     @PostMapping(value = "/myblog/classjson",produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
     public String getClass(HttpSession session){
@@ -60,6 +63,7 @@ public class ClassificationController {
         }
 
     }
+    //删除博客分类
     @PostMapping(value = "/myblog/deleteclass",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     //用springmvc @RequestBody注解做提交json字符串自动绑定到pojo入参时，
@@ -80,6 +84,7 @@ public class ClassificationController {
     }
 
     /*produces为返回数据类型*/
+    //移动博客到特定分类（获取要移动的分类）
     @PostMapping(value = "/myblog/movblog",produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
 
@@ -101,6 +106,7 @@ public class ClassificationController {
        return "服务器错误";
     }
 
+  /*  执行移动博客到分类*/
     @PostMapping(value = "/myblog/movblog.do",produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
     public String movBlogSubmit(Integer blogId,Integer movchoice){

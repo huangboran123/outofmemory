@@ -1,4 +1,4 @@
-package com.love.outofmemory.domain;
+package com.love.outofmemory.domain.view;
 
 import lombok.Data;
 

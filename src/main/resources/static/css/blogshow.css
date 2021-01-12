@@ -461,7 +461,7 @@ canvas{
     font-size: medium;
     font-weight: lighter;
 }
-.tag{
+.tag_b{
     height: 72%;
     width: auto;
     position: relative;
@@ -471,12 +471,12 @@ canvas{
     background-color:  rgb(248, 244, 244);
     border: solid 1px grey;
 }
-.tag a{
+.tag_b a{
     color: black;
     font-size: medium;
     font-weight: lighter;
 }
-.tag a:hover{
+.tag_b a:hover{
     color: red;
 }
 
@@ -499,10 +499,88 @@ canvas{
     border-bottom: rgb(203, 203, 203) solid 2px;
 }
 .classSpan a{
-font-size: large;
+    font-size: large;
+    font-weight: lighter;
 
 }
 
 .classShow{
+    left: 5%;
+    position: relative;
+    width: 90%;
+    height: 80%;
+    /*超出滚动隐藏*/
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.classShow::-webkit-scrollbar{
+    display: none;
+}
+.classitem{
+    position: relative;
+    width: 90%;
+    height: 15%;
+    left: 5%;
+}
+.classname{
+    position: relative;
+    float: left;
+    height: 100%;
+    width: 80%;
 
+}
+.classname a{
+    font-weight: lighter;
+}
+.classblogcount{
+    position: relative;
+    float: left;
+    height: 100%;
+    width: 20%;
+    text-align: right;
+}
+.classblogcount a{
+    font-weight: lighter;
+}
+
+/*
+博客目录信息*/
+#my-toc-container{
+
+    width: 18%;
+    height:auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    position:fixed;
+    z-index: 2;
+    top: 8%;
+    right: 1%;
+/*    visibility: hidden;
+    opacity: 0;*/
+    border-radius: 12px;
+   justify-content: center;
+    justify-items: center;
+
+
+}
+
+#my-toc-container::-webkit-scrollbar{
+
+    display: none;
+
+}
+.recomandblog{
+    width: 22%;
+    float: left;
+    height: 30vh;
+    background-color: white;
+    position:absolute;
+    z-index: 1;
+    margin-top: 72vh;
+    margin-left:2%;
+}
+.markdown-toc-list li a{
+    color: white;
+}
+.markdown-toc-list li a:hover{
+    color: yellow;
 }
