@@ -42,11 +42,19 @@
             <div class="no_confirm"><a href="#">确认</a></div>
         </div>
  </div>
+<!-- 是否原创-->
+ <div class="info_window" id="blogisoriginal">
+        <div>
+            <div class="no_message"><a href="javascript:void(0)">请选择文章发表类型</a></div>
+            <div class="no_confirm"><a href="#">确认</a></div>
+        </div>
+    </div>
   <!--blog隐藏域-->
 <input type="hidden" id="blog_id" th:value="${blog.id}">
 <input type="hidden" id="blog_otag" th:value="${blog.tag.name}">
 <input type="hidden" id="blog_class" th:value="${blog.classification.name}">
 <input type="hidden" id="user_id" th:value="${blog.user.id}">
+<input type="hidden" id="blog_isoriginal" th:value="${blog.isoriginal}">
 
     <!--博客分类选择-->
     <div class="blog_classfy">
@@ -78,6 +86,14 @@
         </div>
         <div class="blog_title_input">
             <input type="text" id="blog_title" th:value="${blog.title}" name="title">
+
+        </div>
+        <div class="original">
+            <span>原创:</span>
+            <input type="radio" id="original" name="isoriginal" value="1" checked>
+            <span>转载:</span>
+            <input type="radio" id="not_original" name="isoriginal" value="0">
+
         </div>
     </div>
     <!--引入markdown-->
@@ -105,6 +121,7 @@
        /* 先获取所有的classify*/
         var classes=$(".classify");
         var modclass=$("#blog_class").val();
+
         /*判断与要修改的博客类型相同的并执行选中*/
         for (let i = 0; i <classes.length ; i++) {
             var c=classes[i];
@@ -125,6 +142,10 @@
                 t.click();
             }
         }
+
+        // 设定是否原创
+        let isoriginal=$("#blog_isoriginal").val();
+        $("input:radio[value="+isoriginal+"]").attr('checked','true');
 
     }
 
@@ -274,6 +295,7 @@
                     let classify=$("#blog_classify").text();
                     let title=$("#blog_title").val();
                     let content=$("#content").val();
+                    let isoriginal=$("input[name='isoriginal']:checked").val();
                     if (blogId==null){
                         alert("博客不明!");
                     }
@@ -289,7 +311,11 @@
                         document.location.href="#notagMessage";
                         return 0;
                     }
-                    //新建博客post请求
+                    if(isoriginal===""||isoriginal==null){
+                        document.location.href="#blogisoriginal";
+                        return 0;
+                    }
+                    //修改博客post请求
                     $.post('/myblog/modblog',
                         {
                             'userId':userId,

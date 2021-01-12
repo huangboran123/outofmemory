@@ -554,12 +554,16 @@ canvas{
     z-index: 2;
     top: 8%;
     right: 1%;
-/*    visibility: hidden;
-    opacity: 0;*/
+
+    visibility:hidden;
+    opacity: 0;
+
+    /*不响应鼠标事件*/
+    transition: opacity .5s;
+
     border-radius: 12px;
    justify-content: center;
     justify-items: center;
-
 
 }
 
@@ -568,6 +572,54 @@ canvas{
     display: none;
 
 }
+.markdown-toc-list li a{
+    color: white;
+}
+.markdown-toc-list li a:hover{
+    color: yellow;
+}
+
+/*博客按钮*/
+.catabutton{
+    position: fixed;
+    width: 6%;
+    height: 3%;
+    background-color: rgba(0, 0, 0, 0.6);
+    right: 0;
+    bottom: 5%;
+    z-index: 2;
+    text-align: center;
+
+}
+.catabutton a{
+    color: white;
+}
+
+.catabutton a:hover{
+    color: yellow;
+}
+
+/*回到顶部*/
+.backtotop{
+    position: fixed;
+    width: 6%;
+    height: 3%;
+    background-color: rgba(0, 0, 0, 0.6);
+    right: 0;
+    bottom: 1.5%;
+    z-index: 2;
+    text-align: center;
+
+}
+.backtotop a{
+    color: white;
+}
+
+.backtotop a:hover{
+    color: yellow;
+}
+
+/*推荐博客*/
 .recomandblog{
     width: 22%;
     float: left;
@@ -578,9 +630,34 @@ canvas{
     margin-top: 72vh;
     margin-left:2%;
 }
-.markdown-toc-list li a{
-    color: white;
+.blogSpan{
+    left: 5%;
+    position: relative;
+    width: 90%;
+    height: 20%;
+    border-bottom: rgb(203, 203, 203) solid 2px;
 }
-.markdown-toc-list li a:hover{
-    color: yellow;
+.blogSpan a{
+    font-size: large;
+    font-weight: lighter;
+
+}
+
+.blogShow{
+    left: 5%;
+    position: relative;
+    width: 90%;
+    height: 80%;
+    /*超出滚动隐藏*/
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.blogShow::-webkit-scrollbar{
+    display: none;
+}
+.blogitem{
+    position: relative;
+    width: 90%;
+    height: 15%;
+    left: 5%;
 }

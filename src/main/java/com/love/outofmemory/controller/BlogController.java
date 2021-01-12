@@ -191,9 +191,9 @@ public class BlogController {
     /*修改博客提交*/
     @PostMapping(value = "/myblog/modblog",produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
-    public String modBlog(Integer userId,Integer blogId,String title,String content,String tag,String classify,Integer isorignal ){
+    public String modBlog(Integer userId,Integer blogId,String title,String content,String tag,String classify,Integer isoriginal ){
 
-        int i=iBlogService.updateBlogByid(userId,blogId,title,content,tag,classify,isorignal);
+        int i=iBlogService.updateBlogByid(userId,blogId,title,content,tag,classify,isoriginal);
 
         if(i==1){
             return "博客修改成功";
@@ -207,16 +207,28 @@ public class BlogController {
     @GetMapping(value = "/myblog/viewblog")
     public String viewblogPage(Model model,
                                @RequestParam("blogId") Integer blogId,
-                               @RequestParam("userId") Integer userId){
+                               @RequestParam("userId") Integer userId,
+                               HttpSession session){
 
-        Blog blog=iBlogService.getblogById(blogId);
-        BlogPageUser blogPageUser=iBlogService.getUserMoreById(userId);
-        List<Classify> classlistcount=iBlogService.getClassifyBlogCount(userId);
+        //判断session是否为空
+        if(session.getAttribute("user")!=null){
+            Blog blog=iBlogService.getblogById(blogId);
+            BlogPageUser blogPageUser=iBlogService.getUserMoreById(userId);
+            List<Classify> classlistcount=iBlogService.getClassifyBlogCount(userId);
 
-        model.addAttribute("blog",blog);
-        model.addAttribute("blogPageuser",blogPageUser);
-        model.addAttribute("classlistcount",classlistcount);
-        return "front/blog/show_blog";
+            model.addAttribute("blog",blog);
+            model.addAttribute("blogPageuser",blogPageUser);
+            model.addAttribute("classlistcount",classlistcount);
+            return "front/blog/show_blog";
+
+        }
+        else{
+
+             return "redirect:/";
+        }
+
+
+
     }
 
 
