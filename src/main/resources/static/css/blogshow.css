@@ -479,3 +479,30 @@ canvas{
 .tag a:hover{
     color: red;
 }
+
+/*左边我的博客分类信息*/
+.myclassify{
+    width: 22%;
+    float: left;
+    height: 30vh;
+    background-color: white;
+    position:absolute;
+    z-index: 1;
+    margin-top: 40vh;
+    margin-left:2%;
+}
+.classSpan{
+    left: 5%;
+    position: relative;
+    width: 90%;
+    height: 20%;
+    border-bottom: rgb(203, 203, 203) solid 2px;
+}
+.classSpan a{
+font-size: large;
+
+}
+
+.classShow{
+
+}

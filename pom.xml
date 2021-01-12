@@ -198,6 +198,7 @@
                         <exclude>**/*.yml</exclude>
                         <exclude>**/*.xml</exclude>
                         <exclude>**/*.properties</exclude>
+                        <exclude>**/*.jks</exclude>
                     </excludes>
                     <outputDirectory>${project.build.directory}</outputDirectory>
                 </configuration>
@@ -244,6 +245,7 @@
                                     <filtering>true</filtering>
                                     <includes>
                                         <include>application.yml</include>
+
                                         <!-- 分环境配置文件不用可删除 -->
                                         <!-- <include>application-${profiles.active}.yml</include> -->
                                     </includes>
@@ -256,6 +258,8 @@
                                         <include>templates/**</include>
                                         <include>static/**</include>
                                         <include>ValidationMessages.properties</include>
+                                        <include>*.jks</include>
+
                                     </includes>
                                 </resource>
                             </resources>

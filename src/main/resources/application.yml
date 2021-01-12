@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/outofmemory?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: 709498
+    url: jdbc:mysql://rm-f8zac57xoqum5j7nx0o.mysql.rds.aliyuncs.com:3306/outofmemory?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: huang_root
+    password: Hbr709498
 
   thymeleaf:
     cache: false
@@ -22,10 +22,23 @@ spring:
   servlet:
     multipart:
       enabled: true
-      location: E:/JavaProject/image/
+      location: /home/huang/projectonline/resources/static/common/image_cache/
       max-file-size: 8000000
 server:
-  port: 8080
+  port: 8443
+
+  ssl:
+    key-store: keystore.jks
+    key-alias: tomcat
+    key-store-password: 709498
+    key-store-type: PKCS12
+    enabled: true
+    key-password: 709498
+    trust-store-type: PKCS12
+
+
+
+
 
 
 main:
