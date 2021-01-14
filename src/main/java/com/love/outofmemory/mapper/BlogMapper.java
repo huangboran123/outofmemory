@@ -30,7 +30,7 @@ public interface BlogMapper {
     /*多表连接*/
     @Select("SELECT * , blog_classification.name classificationName,blog_tag.name tagName, blog_classification.id classificationId,blog_tag.id tagId\n" +
             " FROM (o_blog INNER JOIN blog_classification ON o_blog.classification=blog_classification.id AND blog_classification.user_id=#{userId})  INNER JOIN blog_tag ON blog_tag.id=o_blog.tag\n" +
-            "WHERE o_blog.user_id=10 AND o_blog.classification=#{classificationId} ORDER BY publish_time DESC")
+            "WHERE o_blog.user_id=#{userId} AND o_blog.classification=#{classificationId} ORDER BY publish_time DESC")
     @Results(id="blog",value = {
             //classification映射
             @Result(column ="classificationId" ,property = "classification.id"),

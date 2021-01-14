@@ -149,6 +149,7 @@
 .current_user_name a{
     text-decoration: none;
     color: black;
+    font-family: 'Droid Sans Mono', monospace;
 }
 .current_user_name a:hover{
     color: red;

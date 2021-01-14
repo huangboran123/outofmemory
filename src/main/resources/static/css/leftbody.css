@@ -50,6 +50,8 @@
     text-decoration:none;
     font-size: 22px;
     color: black;
+    /*字体不同，css设置的相同的行高可能不一样*/
+   font-family: 'Droid Sans Mono', monospace;
 
 }
 
@@ -128,12 +130,20 @@
     height: 50%;
     font-size: 16px;
 }
+.blogs .author a{
+
+    float: left;
+
+}
 
 .blogs .author img{
     width: 36px;
     height: 36px;
     border-radius: 50%;
     vertical-align: middle;
+    float: left;
+    margin-right: 6px;
+
 
 }
 
