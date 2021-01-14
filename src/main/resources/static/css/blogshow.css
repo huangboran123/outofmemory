@@ -552,8 +552,8 @@ canvas{
     background-color: rgba(0, 0, 0, 0.5);
     position:fixed;
     z-index: 2;
-    top: 8%;
-    right: 1%;
+    bottom: 8%;
+    left: 1%;
 
     visibility:hidden;
     opacity: 0;
@@ -660,4 +660,7 @@ canvas{
     width: 90%;
     height: 15%;
     left: 5%;
+}
+.blogitem a{
+    font-weight: lighter;
 }

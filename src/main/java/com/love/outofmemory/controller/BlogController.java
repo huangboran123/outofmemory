@@ -215,10 +215,13 @@ public class BlogController {
             Blog blog=iBlogService.getblogById(blogId);
             BlogPageUser blogPageUser=iBlogService.getUserMoreById(userId);
             List<Classify> classlistcount=iBlogService.getClassifyBlogCount(userId);
+            List<Blog> recomandblogs=iBlogService.getRecommandblogs();
 
+            /*博客，用户信息查询*/
             model.addAttribute("blog",blog);
             model.addAttribute("blogPageuser",blogPageUser);
             model.addAttribute("classlistcount",classlistcount);
+            model.addAttribute("recomandblogs",recomandblogs);
             return "front/blog/show_blog";
 
         }

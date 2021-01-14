@@ -89,4 +89,14 @@ public class BlogServiceImpl implements IBlogService {
     public BlogPageUser getUserMoreById(Integer userId) {
         return blogMapper.getUserMoreById(userId);
     }
+
+    @Override
+    public List<Blog> getRecommandblogs() {
+        return blogMapper.getRecommandblogs();
+    }
+
+    @Override
+    public List<Blog> getIndexRecommandblogs() {
+        return blogMapper.getIndexRecommandblogs();
+    }
 }

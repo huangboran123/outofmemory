@@ -178,17 +178,17 @@
 }
 
 /*鼠标经过点赞图片效果*/
-.blogs .like img:hover{
+ .like img:hover{
 
 	content: url("/common/system_icon/good_hover.png");
 
 }
 
-.blogs .comment_counts img:hover{
+ .comment_counts img:hover{
     content: url("/common/system_icon/comments_hover.png");
 }
 
-.blogs .views img:hover{
+ .views img:hover{
 
     content: url("/common/system_icon/views_hover.png");
 

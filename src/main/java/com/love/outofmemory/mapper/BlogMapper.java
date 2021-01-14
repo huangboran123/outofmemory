@@ -99,4 +99,13 @@ public interface BlogMapper {
 
     @Update("update o_blog set title=#{title},content=#{content},tag=#{tagId},classification=#{classId},isoriginal=#{isoriginal} where id=#{blogId}")
     int updateblogByid(Integer blogId, String title, String content, Integer tagId, Integer classId,Integer isoriginal);
+
+    @Select("select id,user_id,title,good_count+views+comments AS recommendation from o_blog ORDER BY recommendation DESC LIMIT 0,6")
+    List<Blog> getRecommandblogs();
+
+
+    @Select("select *,good_count+views+comments AS recommendation  , blog_classification.name classificationName,blog_tag.name tagName, blog_classification.id classificationId,blog_tag.id tagId \n" +
+            "from ((o_blog INNER JOIN blog_classification ON o_blog.classification=blog_classification.id)INNER JOIN o_user on o_user.id=o_blog.user_id) INNER JOIN blog_tag ON blog_tag.id=o_blog.tag  ORDER BY recommendation DESC LIMIT 0,6")
+    @ResultMap("blogmore")
+    List<Blog> getIndexRecommandblogs();
 }

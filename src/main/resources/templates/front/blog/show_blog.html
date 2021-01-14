@@ -112,6 +112,9 @@
     <div class="recomandblog">
         <div class="blogSpan"><a href="javascript:void(0)">推荐文章</a></div>
         <div class="blogShow">
+            <div class="blogitem" th:each="r : ${recomandblogs}">
+                <a href="" th:text="${r.title}"></a>
+            </div>
         </div>
     </div>
 
