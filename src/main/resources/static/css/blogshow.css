@@ -117,7 +117,7 @@ canvas{
     left: 25%;
       /*父级高度为auto时，使用%无效*/
     margin-top: 2vh;
-    margin-bottom: 6vh;
+    margin-bottom: 3vh;
 
 
 }
@@ -663,4 +663,44 @@ canvas{
 }
 .blogitem a{
     font-weight: lighter;
+}
+
+/*博客点赞数，评论数，以及收藏*/
+.blog_cgv{
+   position: relative;
+    width: 74vw;
+    height: 6vh;
+    float: left;
+    left: 25vw;
+    margin-bottom: 10vh;
+    background-color: white;
+
+}
+.comment{
+    position: relative;
+    width: 20%;
+    height: 100%;
+    float: left;
+
+}
+.goodcounts{
+    position: relative;
+    width: 20%;
+    height: 100%;
+    float: left;
+
+}
+
+.views{
+    position: relative;
+    width: 20%;
+    height: 100%;
+    float: left;
+}
+/*一键三连*/
+.One_key_three_links{
+    position: relative;
+    width: 40%;
+    height: 100%;
+    float: left;
 }
