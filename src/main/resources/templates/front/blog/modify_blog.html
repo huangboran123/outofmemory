@@ -102,7 +102,7 @@
         <!--第二个隐藏文本域，用来构造生成的HTML代码，方便表单或者ajaxPOST提交，使用form这里的name可以任意取，后台接受时以这个name键为准 -->
         <!--<textarea class="editormd-html-textarea" name="text" id="htmlContent"></textarea>-->
     </div>
-
+    <div class="tocContent"></div>
 
     <div th:replace="/front/component/page::footer">
     </div>
@@ -278,6 +278,11 @@
             imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
             // 上传图片的请求接口
             imageUploadURL: "/common/article/upload",
+            tocm : true,
+            /*tocTitle:"目录",*/
+            // tocDropdown   : true,
+            // 显示目录
+            tocContainer: ".tocContent",
             // 工具栏图标的设置，大家可以自定义。比如 publish就是自定义的。
             toolbarIcons: function () {
                 return ["undo", "redo", "|", "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|", "h1", "h2", "h3", "h4", "h5", "h6", "|", "list-ul", "list-ol", "hr", "|", "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime", "emoji", "html-entities", "pagebreak", "|", "goto-line", "watch", "preview", "fullscreen", "clear", "search", "|", "help", "info", "||", "modify"];

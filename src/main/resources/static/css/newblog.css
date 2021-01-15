@@ -134,6 +134,7 @@
     float: left;
     margin: 1%;
     padding: 0;
+    border-radius: 3px;
 }
 .classify:hover{
     background-color: rgba(243,243,243,1.00);
@@ -166,6 +167,7 @@
     float: left;
     margin: 1%;
     padding: 0;
+    border-radius: 3px;
 }
 
 .li_tag:hover{
@@ -186,12 +188,24 @@
 }
 /*markdown主要内容*/
 #md-content{
-    margin: 0;
+    margin: 0;+
     padding: 0;
     float: left;
     position: relative;
-    left: 7%;
+    left: 2%;
     top: 7%;
+
+}
+.tocContent{
+    position: relative;
+    height: 560px;
+    width: 10%;
+    float: left;
+    left: 3%;
+    top: 7%;
+    background-color: white;
+    border: rgba(0,0,0,0.18) 1px solid;
+    z-index: 1;
 
 }
 
