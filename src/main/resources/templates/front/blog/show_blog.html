@@ -123,10 +123,47 @@
             <textarea id="appendcontent" style="display:none;" th:text="${blog.content}"></textarea>
     </div>
     <div class="blog_cgv">
-        <div class="comment"></div>
-        <div class="goodcounts"></div>
-        <div class="views"></div>
-        <div class="One_key_three_links"></div>
+        <div class="goodcounts">
+            <div class="goodcounts_image">
+                <img src="/common/system_icon/goodcounts_blog.png">
+            </div>
+            <div class="goodcounts_item">
+                <a href="javascript:void(0)" th:text="${'点赞'+blog.good_count}"></a>
+            </div>
+        </div>
+        <div class="comment">
+            <div class="comment_image">
+                <img src="/common/system_icon/comment_blog.png">
+            </div>
+            <div class="comment_item">
+                <a href="javascript:void(0)" th:text="${'评论'+blog.comments}"></a>
+            </div>
+        </div>
+        <div class="views">
+            <div class="views_image">
+                <img src="/common/system_icon/views_blog.png">
+            </div>
+            <div class="views_item">
+                <a href="javascript:void(0)" th:text="${'浏览量'+blog.views}"></a>
+            </div>
+        </div>
+
+        <div class="collections">
+            <div class="collections_image">
+                <img src="/common/system_icon/collections_blog.png">
+            </div>
+            <div class="views_item">
+                <a href="javascript:void(0)" th:text="${'收藏量'+blog.views}"></a>
+            </div>
+
+        </div>
+
+       <!--当前未登录或者是登录用户访问其他用户博客才显示-->
+        <div class="One_key_three_links"  th:if="${session.user.id!=blog.user.id}">
+            <div class="collect"></div>
+            <div class="follow"></div>
+            <div class="three_trigger"></div>
+        </div>
     </div>
 
     <div th:replace="/front/component/page::footer">
