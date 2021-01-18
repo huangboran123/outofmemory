@@ -671,11 +671,11 @@ canvas{
 /*博客点赞数，评论数，以及收藏*/
 .blog_cgv{
    position: relative;
-    width: 74vw;
+    width: 73vw;
     height: 6vh;
     float: left;
     left: 25vw;
-    margin-bottom: 10vh;
+   /* margin-bottom: 3vh;*/
     background-color: white;
     border-top: rgba(0,0,0,0.18) 1px dashed;
     z-index: 1;
@@ -867,4 +867,19 @@ canvas{
     height: 100%;
     float: left;
     margin-left: 2%;
+}
+
+/*
+评论输入区*/
+.comment_input_area{
+    position: relative;
+    width: 74vw;
+    height: 6vh;
+    float: left;
+    left: 25vw;
+    margin-bottom: 10vh;
+    background-color: white;
+    border-top: rgba(0,0,0,0.18) 1px dashed;
+    z-index: 1;
+
 }
