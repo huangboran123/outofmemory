@@ -22,13 +22,13 @@ spring:
   servlet:
     multipart:
       enabled: true
-      location: /home/huang/projectonline/resources/static/common/image_cache/
+      location: /home/huang/outofmemory/resources/static/common/image_cache/
       max-file-size: 8000000
 server:
   port: 8443
 
   ssl:
-    key-store: keystore.jks
+    key-store: keystore.p12
     key-alias: tomcat
     key-store-password: 709498
     key-store-type: PKCS12

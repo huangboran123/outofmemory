@@ -27,9 +27,9 @@ import java.util.UUID;
 public class CommonController {
 
 //    本机测试
-    private String imgPathP = "/home/huang/outofmemory/src/main/resources/static/common/profile_image/";
-    private String imgPathS ="/home/huang/outofmemory/src/main/resources/static/common/blog_image/";
-    private String imgPathC ="/home/huang/outofmemory/src/main/resources/static/common/image_cache/";
+    private String imgPathP = "/home/huang/outofmemory/resources/static/common/profile_image/";
+    private String imgPathS ="/home/huang/outofmemory/resources/static/common/blog_image/";
+    private String imgPathC ="/home/huang/outofmemory/resources/static/common/image_cache/";
 
     /*private String imgPathP = "/home/admin/outofmemory/resources/static/common/profile_image/";
     private String imgPathS ="/home/admin/outofmemory/resources/static/common/blog_image/";
