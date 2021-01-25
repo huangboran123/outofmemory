@@ -873,7 +873,7 @@ canvas{
 评论输入区*/
 .comment_input_area{
     position: relative;
-    width: 74vw;
+    width: 73vw;
     height: 6vh;
     float: left;
     left: 25vw;
@@ -881,5 +881,46 @@ canvas{
     background-color: white;
     border-top: rgba(0,0,0,0.18) 1px dashed;
     z-index: 1;
+
+}
+.commenter{
+    float: left;
+    position: relative;
+    width: 4%;
+    height: 80%;
+    top:12%;
+    margin-left: 2%;
+
+
+
+}
+.commenter img{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+.comment_content{
+    float: left;
+    position: relative;
+    width: 60%;
+    height: 55%;
+    top:15%;
+    border-radius: 8px;
+    border: 1px black solid;
+    margin-left: 2%;;
+    padding-left: 1%;
+    overflow: hidden;
+    outline: none;
+
+}
+.comment_send{
+    float: left;
+    position: relative;
+    width: 10%;
+    height: 55%;
+    top:15%;
+    margin-left: 2%;;
+    border: 1px black solid;
+    border-radius: 8px;
 
 }
