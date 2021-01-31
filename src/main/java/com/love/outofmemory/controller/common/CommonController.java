@@ -22,7 +22,7 @@ import java.util.UUID;
 /**
  * @author huang
  */
-@RequestMapping("/common")
+@RequestMapping("/mycommon")
 @Controller
 public class CommonController {
 
@@ -30,10 +30,10 @@ public class CommonController {
     private String imgPathP = "/home/huang/outofmemory/resources/static/common/profile_image/";
     private String imgPathS ="/home/huang/outofmemory/resources/static/common/blog_image/";
     private String imgPathC ="/home/huang/outofmemory/resources/static/common/image_cache/";
-
-    /*private String imgPathP = "/home/admin/outofmemory/resources/static/common/profile_image/";
-    private String imgPathS ="/home/admin/outofmemory/resources/static/common/blog_image/";
-    private String imgPathC ="/home/admin/outofmemory/resources/static/common/image_cache/";*/
+//   服务器目录
+//    private String imgPathP = "/home/admin/outofmemory/resources/static/common/profile_image/";
+//    private String imgPathS ="/home/admin/outofmemory/resources/static/common/blog_image/";
+//    private String imgPathC ="/home/admin/outofmemory/resources/static/common/image_cache/";
 
     //参数：图片名称 响应图片给客户端
     @RequestMapping("/getImage")

@@ -114,7 +114,7 @@
                         <span>验证码:</span>
                         <input type="text" id="Verification_code"  name="code" />
                     </label >
-                    <img src="/common/code"  alt="" onclick="changecode()" id="code_img">
+                    <img src="/mycommon/code"  alt="" onclick="changecode()" id="code_img">
                     <span class="match_info" th:text="${code_dismatch}"></span>
                 </div>
 
@@ -175,7 +175,7 @@
         var $code=$("#code_img");
         //改变img标签的src属性，末尾加一个随机数，
         //浏览器发现请求没有变化，不会向服务器发送请求，所有如果src属性一直不变，无法实现更换图片
-        $code.attr("src","/common/code?"+Math.random());
+        $code.attr("src","/mycommon/code?"+Math.random());
 
     }
 

@@ -27,7 +27,7 @@
     <div class="author_info">
         <div class="aside_profile">
             <div class="pimage">
-                <img th:src="@{/common/getImage(image=${blog.user.image})}">
+                <img th:src="@{/mycommon/getImage(image=${blog.user.image})}">
             </div>
             <div class="pother">
                 <a href="" th:text="${blog.user.username}"></a><br>
@@ -122,6 +122,7 @@
     <div class="blog_content" id="content">
             <textarea id="appendcontent" style="display:none;" th:text="${blog.content}"></textarea>
     </div>
+   <!-- 博客点赞评论数区域-->
     <div class="blog_cgv">
         <div class="goodcounts">
             <div class="goodcounts_image">
@@ -165,15 +166,22 @@
             <div class="three_trigger"></div>
         </div>
     </div>
+
+    <!--评论输入区域-->
     <div class="comment_input_area">
         <div class="commenter">
-            <img th:src="@{/common/getImage(image=${blog.user.image})}">
+            <img th:src="@{/mycommon/getImage(image=${blog.user.image})}">
         </div>
+        <div class="comment_text"><span>发表评论：</span></div>
+
         <div class="comment_content" contenteditable="true">
 
         </div>
-        <div class="comment_send">
-            <a href="javascript:void(0)"></a>
+        <div class="comment_emoji">
+            <div onClick="showEmoji()" class="showemoji"><a href="javascript:void(0)">插入表情</a></div>
+            <div class="emoji">
+                <div class="emoji-collection"></div>
+            </div>
         </div>
 
     </div>
@@ -184,7 +192,9 @@
 </div>
 </body>
 <script src="js/plugin/jquery.js"></script>
+<!--打字效果引入-->
 <script src="js/plugin/commentTyping.js"></script>
+<!--editormd引入-->
 <script src="editor/editormd.js"></script>
 <script src="editor/lib/marked.min.js"></script>
 <script src="editor/lib/prettify.min.js"></script>
@@ -193,10 +203,14 @@
 <script src="editor/lib/sequence-diagram.min.js"></script>
 <script src="editor/lib/flowchart.min.js"></script>
 <script src="editor/lib/jquery.flowchart.min.js"></script>
-
+<!--粒子效果引入-->
 <script src="particles/particles.js"></script>
 <script src="particles/app.js"></script>
-
+<!--表情包引入-->
+<script src="js/plugin/emoji-lib/emoji-list-with-image.js"></script>
+<script src="js/plugin/emoji-lib/punycode.js"></script>
+<script src="js/plugin/emoji-lib/punycode.min.js"></script>
+<script src="js/plugin/emoji-lib/emoji.js"></script>
 <script type="text/javascript">
     /*前端解析md*/
     $(document).ready(function () {
@@ -225,7 +239,7 @@
         $("#user_menu").css("display","none");
     })
 
-
+/*--------------------------------------------------------------------------*/
     //显示与关闭目录
     $(".catabutton a").on("click",function () {
         if(this.text==="打开目录"){
@@ -244,9 +258,105 @@
         }
 
     })
+/*-----------------------------------------------------------------------------*/
+   /* 评论框点击事件*/
+    $(".comment_content").on("click",function () {
 
+        $(".comment_content").css("border","#03a7ff solid 2px");
+        $(".comment_content").css("height","100px");
 
+    })
+// 评论框失去焦点事件
+    $(".comment_content").on("blur",function () {
 
+        $(".comment_content").css("border","black solid 1px");
+        $(".comment_content").css("height","30px");
 
+    })
+/* -----------------------------------------------------------------------------------*/
+     /*表情包展示*/
+    //点击展示表情
+    function  showEmoji() {
+        let that = this
+        $(".emoji-collection").html("");
+        $(".emoji-collection").stop().toggle();
+        this.renderEmoji();
+        //点击表情将表情添加在emoji中
+        //对每一个表情包绑定点击事件
+        $(".emoji-icon").each(function (k, v) {
+            $(v).click(function () {
+                var code = $(this).attr("unicode16");
+               /* $(".comment_content").append(that.parse("&#" + parseInt(code, 16) + ";"));*/
+                /*光标位置插入表情包*/
+                insertHtmlAtCaret(that.parse("&#" + parseInt(code, 16) + ";"))
+
+            });
+        });
+    }
+
+    //表情列表
+    function renderEmoji () {
+        var emos = getEmojiList()[0];
+        var html = '<ul class="clearfix">';
+        for (var j = 0; j < emos.length; j++) {
+            var emo = emos[j];
+            var data = 'data:image/png;base64,' + emo[2];
+            if (j % 20 == 0) {
+                html += '<li class="">';
+            } else {
+                html += '<li>';
+            }
+            html += '<img style="display: inline;vertical-align: middle;" src="' + data + '"  unicode16="' + emo[1] + '"  class="emoji-icon"  /></li>';
+        }
+        $(".emoji-collection").append(html);
+        $(".emoji-collection").prepend('<p><i class="el-icon-close close" v-on:clock="closeEmoji()"></i></p>');
+    }
+    //表情 通过该方法 可以直接把表情在输入框中显示出来。
+    function parse (arg) {
+        if(typeof ioNull != 'undefined') {
+            return ioNull.emoji.parse(arg);
+        }
+        return '';
+    }
+/*-------------------------------------------------------------------------------------------------------------------*/
+/*点击表情包区域编辑框不失焦点*/
+    $(".comment_emoji").on("mousedown",function (event) {
+    event .preventDefault();
+    return false;
+
+})
+/*-----------------------------------------------------------------------------------------------------*/
+   /* 获取光标并插入*/
+    function insertHtmlAtCaret(html) {
+        var sel, range;
+        if (window.getSelection) {
+            // IE9 and non-IE
+            sel = window.getSelection();
+            if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0);
+                range.deleteContents();
+                // Range.createContextualFragment() would be useful here but is
+                // non-standard and not supported in all browsers (IE9, for one)
+                var el = document.createElement("div");
+                el.innerHTML = html;
+                var frag = document.createDocumentFragment(), node, lastNode;
+                while ((node = el.firstChild)) {
+                    lastNode = frag.appendChild(node);
+                }
+                range.insertNode(frag);
+                // Preserve the selection
+                if (lastNode) {
+                    range = range.cloneRange();
+                    range.setStartAfter(lastNode);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+            }
+        } else if (document.selection && document.selection.type != "Control") {
+            // IE < 9
+            document.selection.createRange().pasteHTML(html);
+        }
+    }
 </script>
 </html>

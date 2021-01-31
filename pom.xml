@@ -198,7 +198,7 @@
                         <exclude>**/*.yml</exclude>
                         <exclude>**/*.xml</exclude>
                         <exclude>**/*.properties</exclude>
-                        <exclude>**/*.jks</exclude>
+                        <exclude>**/*.p12</exclude>
                     </excludes>
                     <outputDirectory>${project.build.directory}</outputDirectory>
                 </configuration>
@@ -258,7 +258,7 @@
                                         <include>templates/**</include>
                                         <include>static/**</include>
                                         <include>ValidationMessages.properties</include>
-                                        <include>*.jks</include>
+                                        <include>*.p12</include>
 
                                     </includes>
                                 </resource>

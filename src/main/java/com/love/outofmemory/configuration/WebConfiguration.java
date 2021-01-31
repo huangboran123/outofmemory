@@ -89,8 +89,8 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
                     addResourceLocations("classpath:/static/js/");
             registry.addResourceHandler("/css/**").
                     addResourceLocations("classpath:/static/css/");
-            registry.addResourceHandler("/common/**").
-                    addResourceLocations("classpath:/static/common/");
+           registry.addResourceHandler("/common/**").
+                  addResourceLocations("classpath:/static/common/");
             registry.addResourceHandler("/myblog/js/**","/js/**").
                     addResourceLocations("classpath:/static/js/");
         }

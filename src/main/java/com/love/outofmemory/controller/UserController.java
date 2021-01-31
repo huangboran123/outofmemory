@@ -30,6 +30,8 @@ import java.util.UUID;
 @Controller
 public class UserController {
 
+    private String imgPathP = "/home/huang/outofmemory/resources/static/common/profile_image/";
+
     @Autowired
     private IUserService iUserService;
 
@@ -93,7 +95,7 @@ public class UserController {
                    //生成图像唯一名
                    unique_Profile_name=UUID.randomUUID().toString().replace("-", "")+"."+houzui[1];
                    //转移图片位置
-                   profilepicture.transferTo(new File("E:/JavaProject/Spring/outofmemory/src/main/resources/static/common/profile_image/"+unique_Profile_name ));
+                   profilepicture.transferTo(new File(imgPathP+unique_Profile_name ));
                } catch (IOException e) {
                    e.printStackTrace();
                }
