@@ -877,7 +877,7 @@ canvas{
     height: auto;
     float: left;
     left: 25vw;
-    margin-bottom: 10vh;
+
     background-color: white;
     border-top: rgba(0,0,0,0.18) 1px dashed;
     z-index: 1;
@@ -927,34 +927,172 @@ canvas{
     font-size: medium;
 
 }
+/*表情包输入*/
 .comment_emoji{
     float: left;
     position: relative;
-    width: 60%;
+    width: 61%;
     height:auto;
     margin-top:5px;
     margin-bottom: 5px;
-    border-radius: 8px;
-    border: 1px black solid;
     margin-left: 15%;;
-    padding-left: 1%;
     overflow: hidden;
     outline: none;
     transition: .3s;
     font-size: medium;
 }
+/*点击显示表情包*/
 .showemoji{
     float: left;
     position: relative;
-    width: 15%;
-    height:20px;
-
-
+    width: 13%;
+    height:22px;
+    border-radius: 4px;
+    border: 1px black solid;
+    text-align: center;
+    padding-bottom: 0.4%;
 
 }
-.emoji{
+
+.showemoji:active{
+background-color: black;
+}
+.showemoji:active a{
+color: white;
+}
+
+.showemoji a{
+    color: black;
 
 }
+
+/*发表评论按钮*/
+.publish_comment{
+    float: left;
+    position: relative;
+    width: 13%;
+    height:22px;
+    border-radius: 4px;
+    border: 1px black solid;
+    left: 73.4%;
+    text-align: center;
+    padding-bottom: 0.4%;
+
+}
+.publish_comment:active{
+    background-color: black;
+}
+.publish_comment:active a{
+    color: white;
+}
+.publish_comment a{
+    color: black;
+
+}
+
+
 .emoji-collection{
+    position: relative;
+    float: left;
+    width: 99.8%;
+    height: auto;
+    margin-top:3px;
+    /*border: rgba(0,0,0,0.26) 1px solid;*/
+    border-radius: 6px;
+    overflow: hidden;
+    outline: none;
+    transition: height .3s;
+    display: block;
 
+
+
+
+}
+.emoji_item{
+
+
+}
+.emoji_item li{
+    float: left;
+    border: 0.3px solid #928d8d;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2px;
+
+
+}
+
+/*评论区*/
+.comment_area{
+    position: relative;
+    width: 73vw;
+    height:60vh;
+    float: left;
+    left: 25vw;
+    margin-bottom: 10vh;
+    background-color: white;
+    border-top: rgba(10, 10, 10, 0.6) 1px dashed;
+    z-index: 1;
+}
+
+
+p {
+    line-height: 1.3125rem;
+}
+.comments {
+    margin: 2.5rem auto 0;
+    max-width: 60.75rem;
+    padding: 0 1.25rem;
+}
+.comment-wrapbox {
+    margin-bottom: 1.25rem;
+    display: table;
+    width: 100%;
+    min-height: 5.3125rem;
+}
+.photo {
+    padding-top: 0.625rem;
+    display: table-cell;
+    width: 3.5rem;
+}
+.photo .avatar {
+    height: 2.25rem;
+    width: 2.25rem;
+    border-radius: 50%;
+    background-size: contain;
+}
+.comment-block {
+    padding: 1rem;
+    background-color: #fff;
+    display: table-cell;
+    vertical-align: top;
+    border-radius: 0.1875rem;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.29);
+}
+.comment-block textarea {
+    width: 100%;
+    max-width: 100%;
+}
+.comment-text {
+    margin-bottom: 1.25rem;
+}
+.bottom-comment {
+    color: #45474b;
+    font-size: 0.875rem;
+}
+.comment-date {
+    float: left;
+}
+.comment-actions {
+    float: right;
+}
+.comment-actions li {
+    display: inline;
+}
+.comment-actions li.complain {
+    padding-right: 0.625rem;
+    border-right: 1px solid #e1e5eb;
+}
+.comment-actions li.reply {
+    padding-left: 0.625rem;
 }
