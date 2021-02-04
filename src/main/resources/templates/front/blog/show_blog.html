@@ -13,7 +13,7 @@
 <body>
 <div id="particles-js">
 <!--   使用模板model, 隐藏参数便于传参-->
-    <input id="userId" type="hidden" th:value="${blog.user.id}">
+    <input id="blogId" type="hidden" th:value="${blog.id}">
 
 
     <div th:replace="/front/component/page::header">
@@ -401,7 +401,7 @@
         }
     }
 
-    //表情列表
+    //动态生成表情列表
     function renderEmoji () {
         var emos = getEmojiList()[0];
         var html = '<ul class="emoji_item">';
@@ -432,14 +432,14 @@
     $(".publish_comment").on("click",function () {
         /*获取评论框的输入内容*/
         let comment=$(".comment_content").text();
-        let userId=$("#userId").val();
+        let blogId=$("#blogId").val();
 
         /*使用ajax*/
         $.ajax({
             dataType: "text",
             url: "",
             type: "post",
-            data: {'comment':comment,'userId':userId},
+            data: {'comment':comment,'blogId':blogId},
             success:function (msg) {
                 alert(msg);
 
