@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://rm-f8zac57xoqum5j7nx0o.mysql.rds.aliyuncs.com:3306/outofmemory?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://rm-f8zac57xoqum5j7nx0o.mysql.rds.aliyuncs.com:3306/outofmemory?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: huang_root
     password: Hbr709498
 

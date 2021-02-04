@@ -210,37 +210,20 @@
                     <div class="bottom-comment">
                         <div class="comment-date">23.5 2014</div>
                         <ul class="comment-actions">
-                            <li class="complain">Complain</li>
-                            <li class="reply">Reply</li>
+                            <li class="reply">回复</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="comment-wrapbox">
-                <div class="photo">
-                    <div class="avatar" th:style="'background-image:'+ 'url('+'/common/profile_image/'+${blog.user.image}+')'"></div>
-                </div>
-                <div class="comment-block">
-                    <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo veniam fuga corporis totam.</p>
-                    <div class="bottom-comment">
-                        <div class="comment-date">22.2 2014</div>
-                        <ul class="comment-actions">
-                            <li class="complain">Complain</li>
-                            <li class="reply">Reply</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="next_comment_page"></div>
 
     </div>
-
+    </div>
     <div th:replace="/front/component/page::footer">
     </div>
 
-</div>
+
 </body>
 <script src="js/plugin/jquery.js"></script>
 <!--打字效果引入-->
@@ -433,24 +416,31 @@
         /*获取评论框的输入内容*/
         let comment=$(".comment_content").text();
         let blogId=$("#blogId").val();
+        if(comment!=null&&comment.replace(/(^s*)|(s*$)/g, "").length !==0){
+            /*使用ajax*/
+            $.ajax({
+                /* 返回数据*/
+                dataType: "text",
+                url: "/comment",
+                type: "post",
+                data: {'comment':comment,'blogId':blogId},
+                success:function (msg) {
+                    alert(msg);
 
-        /*使用ajax*/
-        $.ajax({
-            dataType: "text",
-            url: "",
-            type: "post",
-            data: {'comment':comment,'blogId':blogId},
-            success:function (msg) {
-                alert(msg);
+                },
+                error:function (msg) {
+                    alert(msg);
 
-            },
-            error:function (msg) {
-                alert(msg);
-
-            }
+                }
 
 
-        })
+            })
+        }
+        else{
+            alert("输入评论为空或空串");
+        }
+
+
 
 
 

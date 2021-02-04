@@ -9,6 +9,6 @@ public interface CommentMapper {
 
 
 
-    @Insert("")
+    @Insert("insert into o_comment values(null,#{critic.id},#{comment_time},#{comment_content},#{blog.id})")
     int commitcomment(Comment comment1);
 }

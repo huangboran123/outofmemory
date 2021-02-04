@@ -8,7 +8,9 @@ import com.love.outofmemory.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,7 +21,8 @@ public class CommentController {
 
 
     //提交评论
-    @RequestMapping(value = "/comment")
+    @PostMapping(value = "/comment",produces = {"text/plain;charset=UTF-8"})
+    @ResponseBody
     public String comment(String comment, Integer blogId, HttpSession session){
         User user=(User) session.getAttribute("user");
         if(user!=null){
@@ -39,13 +42,16 @@ public class CommentController {
 
 
            int i=iCommentService.commitcomment(comment1);
+           if(i==1){
+               return "评论提交成功";
+           }
+           else{
+               return "评论提交失败";
+           }
 
         }
 
-
-
-
-        return null;
+        return "请先登录";
 
     }
 
