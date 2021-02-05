@@ -6,6 +6,8 @@ import com.love.outofmemory.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommentImpl implements ICommentService {
     @Autowired
@@ -14,5 +16,10 @@ public class CommentImpl implements ICommentService {
     @Override
     public int commitcomment(Comment comment1) {
         return commentMapper.commitcomment(comment1);
+    }
+
+    @Override
+    public List<Comment> getAllCommentsPageByBlogId(Integer blogId, Integer counts) {
+        return commentMapper.getAllCommentsPageByBlogId(blogId,counts);
     }
 }

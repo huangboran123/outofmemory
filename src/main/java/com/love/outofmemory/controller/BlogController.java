@@ -10,6 +10,7 @@ import com.love.outofmemory.domain.view.Classify;
 import com.love.outofmemory.service.IBlogService;
 import com.love.outofmemory.service.IBlogTagService;
 import com.love.outofmemory.service.IClassificationService;
+import com.love.outofmemory.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,8 @@ public class BlogController {
     private IClassificationService iClassificationService;
     @Autowired
     private IBlogTagService iBlogTagService;
+    @Autowired
+    private ICommentService iCommentService;
 
     //新建博客页面
     @RequestMapping(value = "/newBlogPage",method = RequestMethod.GET)
@@ -212,16 +215,24 @@ public class BlogController {
 
         //判断session是否为空
         if(session.getAttribute("user")!=null){
+            /*当前浏览博客信息*/
             Blog blog=iBlogService.getblogById(blogId);
+         /*   博客作者统计信息*/
             BlogPageUser blogPageUser=iBlogService.getUserMoreById(userId);
+         /*   作者博客分类信息*/
             List<Classify> classlistcount=iBlogService.getClassifyBlogCount(userId);
+            /*推荐博客*/
             List<Blog> recomandblogs=iBlogService.getRecommandblogs();
+
+            List<Comment> comments=iCommentService.getAllCommentsPageByBlogId(blogId,5);
 
             /*博客，用户信息查询*/
             model.addAttribute("blog",blog);
             model.addAttribute("blogPageuser",blogPageUser);
             model.addAttribute("classlistcount",classlistcount);
             model.addAttribute("recomandblogs",recomandblogs);
+            /*当前博客评论查询*/
+
             return "front/blog/show_blog";
 
         }

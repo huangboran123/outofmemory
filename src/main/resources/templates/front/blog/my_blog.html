@@ -168,7 +168,7 @@
 
  /*------------------------------------------------------------------------------------------------------*/
 /*跳转博客浏览页面*/
- $(".item_left").on("click",function () {
+ $(document).on("click",".item_left",function () {
 
      let blogId=this.getAttribute("id");
      let userId=this.firstElementChild.value;
@@ -500,8 +500,8 @@ function setBlnakm(){
 
                     var b=blogList[i];
                     $(".blog_item").html($(".blog_item").html()+
-                        "            <div class=\"item_div\" id='"+b.id+"'>\n" +
-                        "                <div class=\"item_left\">\n" +
+                        "            <div class=\"item_div\" >\n" +
+                        "                <div class=\"item_left\" id='"+b.id+"'>\n" +
                         "             <input type='hidden' value='"+b.user.id+"'>"+
                         "                    <ul class=\"item\">\n" +
                         "                        <li class=\"item_title\"><a href=\"\">"+b.title+"</a></li>\n" +
