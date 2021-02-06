@@ -28,7 +28,7 @@ public class CommentController {
           /* 新建评论实体*/
             Comment comment1=new Comment();
             comment1.setComment_content(comment);
-            comment1.setComment_time(DateUtil.getNowDateShort());
+            comment1.setComment_time(DateUtil.getNowDateLong());
 
             User critic=new User();
             critic.setId(userId);

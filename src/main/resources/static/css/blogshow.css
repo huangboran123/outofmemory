@@ -1075,6 +1075,7 @@ p {
 }
 .comment-text {
     margin-bottom: 1.25rem;
+    font-size: medium;
 }
 .bottom-comment {
     color: #45474b;

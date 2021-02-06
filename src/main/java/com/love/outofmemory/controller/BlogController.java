@@ -224,7 +224,7 @@ public class BlogController {
             /*推荐博客*/
             List<Blog> recomandblogs=iBlogService.getRecommandblogs();
 
-            List<Comment> comments=iCommentService.getAllCommentsPageByBlogId(blogId,5);
+            List<Comment> comments=iCommentService.getAllCommentsPageByBlogId(blogId,0,5);
 
             /*博客，用户信息查询*/
             model.addAttribute("blog",blog);
@@ -232,6 +232,7 @@ public class BlogController {
             model.addAttribute("classlistcount",classlistcount);
             model.addAttribute("recomandblogs",recomandblogs);
             /*当前博客评论查询*/
+            model.addAttribute("comments",comments);
 
             return "front/blog/show_blog";
 

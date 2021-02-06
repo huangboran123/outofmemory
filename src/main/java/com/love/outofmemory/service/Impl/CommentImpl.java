@@ -19,7 +19,7 @@ public class CommentImpl implements ICommentService {
     }
 
     @Override
-    public List<Comment> getAllCommentsPageByBlogId(Integer blogId, Integer counts) {
-        return commentMapper.getAllCommentsPageByBlogId(blogId,counts);
+    public List<Comment> getAllCommentsPageByBlogId(Integer blogId, Integer start, Integer counts) {
+        return commentMapper.getAllCommentsPageByBlogId(blogId,start,counts);
     }
 }

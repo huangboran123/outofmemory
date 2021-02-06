@@ -7,9 +7,14 @@ import java.util.Date;
 @Data
 public class ReplyComment {
     private Integer id;
-    private Comment comment;//comment_id
+    //comment_id
+    private Comment comment;
     private Date comment_time;
     private String comment_content;
+    //from_uid
+    private User from;
+    //to_uid；
+    private User to;
 
 
 

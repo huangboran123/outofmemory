@@ -7,5 +7,5 @@ import java.util.List;
 public interface ICommentService {
     int commitcomment(Comment comment1);
 
-    List<Comment> getAllCommentsPageByBlogId(Integer blogId, Integer counts);
+    List<Comment> getAllCommentsPageByBlogId(Integer blogId, Integer start, Integer counts);
 }
