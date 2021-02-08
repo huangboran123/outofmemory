@@ -1097,3 +1097,51 @@ p {
 .comment-actions li.reply {
     padding-left: 0.625rem;
 }
+
+/*虚拟回复框*/
+.reply_window{
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+
+    transition: opacity .5s;
+
+    /*初始隐藏*/
+    visibility: hidden;
+    opacity: 0;
+    /*不响应鼠标事件*/
+    pointer-events: none;
+
+    /*居中*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.reply_window:target{
+    visibility: visible;
+    opacity: 1;
+    /*响应鼠标事件*/
+    pointer-events: auto;
+}
+.reply_window:target >div{
+    transform: translateY(30%) rotateY(0.9deg);
+    transition-timing-function: cubic-bezier(0.8, 0, 0, 1.5);
+    opacity: 1;
+}
+.reply_window>div{
+    /*子元素的相对位置*/
+    position: relative;
+    top: -10%;
+    width: 350px;
+    height: 120px;
+    border-radius: 6px;
+    padding: 0;
+    background-color: #ffffff;
+    font-size: medium;
+    transition: .25s;
+}

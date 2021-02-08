@@ -22,7 +22,11 @@
     <!--当前博客目录信息隐藏-->
     <div id="my-toc-container">
     </div>
-   <!-- 目录打开关闭按钮,回到顶部-->
+    <!--虚拟回复框-->
+    <div id="open_reply" class="reply_window">
+        <div ></div>
+    </div>
+   <!-- 目录打开关.闭按钮,回到顶部-->
     <div class="catabutton"><a href="javascript:void(0)">打开目录</a></div>
     <div class="backtotop"><a href="#particles-js">回到顶部</a></div>
 
@@ -209,7 +213,7 @@
                     <div class="bottom-comment">
                         <div class="comment-date" th:text="${#dates.format(c.comment_time,'yyyy-MM-dd HH:mm')}" ></div>
                         <ul class="comment-actions">
-                            <li class="reply">回复</li>
+                            <li class="reply"><a href="#open_reply">回复</a></li>
                         </ul>
                     </div>
                 </div>
@@ -424,7 +428,7 @@
                 type: "post",
                 data: {'comment':comment,'blogId':blogId},
                 success:function (msg) {
-                    alert(msg);
+                    location.reload();
 
                 },
                 error:function (msg) {
