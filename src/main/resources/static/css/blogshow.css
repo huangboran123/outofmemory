@@ -1026,7 +1026,7 @@ color: white;
 .comment_area{
     position: relative;
     width: 73vw;
-    height:60vh;
+    height:auto;
     float: left;
     left: 25vw;
     margin-bottom: 10vh;
@@ -1060,6 +1060,17 @@ p {
     width: 2.25rem;
     border-radius: 50%;
     background-size: contain;
+}
+.c_username{
+    padding-top: 0.625rem;
+   /* margin设置无效*/
+    display: table-cell;
+    width: 6rem;
+    vertical-align: top;
+}
+
+.c_username a{
+    font-size: medium;
 }
 .comment-block {
     padding: 1rem;
@@ -1138,10 +1149,56 @@ p {
     position: relative;
     top: -10%;
     width: 350px;
-    height: 120px;
+    height: auto;
     border-radius: 6px;
     padding: 0;
     background-color: #ffffff;
     font-size: medium;
     transition: .25s;
+}
+.reply_span{
+    height: 40px;
+    width: 350px;
+}
+.reply_title{
+    position: relative;
+    height: 38px;
+    width: 275px;
+    float: left;
+    padding-top: 2px;
+    padding-left: 5px;
+
+}
+.reply_title span{
+    font-size: large;
+
+}
+.reply_close{
+    position: relative;
+    height: 40px;
+    width: 70px;
+    float: left;
+    text-align: center;
+}
+.reply_close a{
+    font-size: medium;
+}
+.reply_body{
+    position: relative;
+    height:auto;
+    width: 350px;
+}
+.reply_to{
+    position: relative;
+    height: 50px;
+    width: 350px;
+}
+
+.reply_name{
+    position: relative;
+    float: left;
+}
+.reply_photo{
+    position: relative;
+    float: left;
 }

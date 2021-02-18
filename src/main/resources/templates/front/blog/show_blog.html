@@ -24,7 +24,42 @@
     </div>
     <!--虚拟回复框-->
     <div id="open_reply" class="reply_window">
-        <div ></div>
+        <input type="hidden" id="commentId">
+        <input type="hidden" id="criticId">
+        <div>
+            <div class="reply_span">
+                <div class="reply_title"><span>回复评论</span></div>
+                <div class="reply_close"><a href="javascript:void(0)">关闭</a></div>
+            </div>
+            <div class="reply_body">
+                <div class="reply_to">
+                    <div class="reply_name">回复@</div>
+                    <div class="reply_photo"></div>
+                </div>
+
+
+                <div class="reply_content" contenteditable="true">
+
+                </div>
+                <!--    <div class="comment_emoji">
+                        <div onClick="showEmoji()" class="showemoji">
+                            <a href="javascript:void(0)">插入表情</a>
+                        </div>
+
+                        <div class="publish_comment">
+                            <a href="javascript:void(0)">发表评论</a>
+                        </div>
+
+                        <div class="emoji-collection">
+
+                        </div>
+                    </div>-->
+
+            </div>
+            <div class="reply_info"></div>
+
+
+        </div>
     </div>
    <!-- 目录打开关.闭按钮,回到顶部-->
     <div class="catabutton"><a href="javascript:void(0)">打开目录</a></div>
@@ -208,6 +243,11 @@
                 <div class="photo">
                     <div class="avatar" th:style="'background-image:'+ 'url('+'/common/profile_image/'+${c.critic.image}+')'"></div>
                 </div>
+                <div class="c_username">
+
+                        <a href="javascript:void(0)" th:text="${c.critic.username}"></a>
+
+                </div>
                 <div class="comment-block">
                     <p class="comment-text" th:text="${c.comment_content}"></p>
                     <div class="bottom-comment">
@@ -215,6 +255,9 @@
                         <ul class="comment-actions">
                             <li class="reply"><a href="#open_reply">回复</a></li>
                         </ul>
+                        <input type="hidden" th:value="${c.critic.id}">
+                        <input type="hidden" th:value="${c.id}">
+                        <input type="hidden" th:value="${c.critic.username}">
                     </div>
                 </div>
             </div>
@@ -249,6 +292,8 @@
 <script src="js/plugin/emoji-lib/punycode.min.js"></script>
 <script src="js/plugin/emoji-lib/emoji.js"></script>
 <script type="text/javascript">
+
+
     /*前端解析md*/
     $(document).ready(function () {
         editormd.markdownToHTML("content", {
@@ -443,9 +488,27 @@
             alert("输入评论为空或空串");
         }
 
-
-
-
+    })
+/*    ----------------------------------------------------------------------------------*/
+// 回复框关闭按钮
+    $(".reply_close a").on("click",function () {
+            if(window.location.hash!==""){
+                window.location.hash=null;
+            }
+    })
+    /* hash 属性是一个可读可写的字符串，该字符串是 URL 的锚部分,去除地址栏锚点部分*/
+    window.onload=function(){
+        if(window.location.hash!==""){
+            window.location.hash="";
+        }
+    }
+  /*  ----------------------------------------------------------------------------------------*/
+ /*   点击回复按钮传递评论参数*/
+    $(".reply a").on("click",function () {
+        var commentId=this.parentElement.parentElement.nextElementSibling.value;
+        var criticId=this.parentElement.parentElement.nextElementSibling.nextElementSibling.value;
+        $("#commentId").val(commentId);
+        $("#criticId").val(criticId);
 
     })
 </script>
