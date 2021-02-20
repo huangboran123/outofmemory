@@ -1148,7 +1148,7 @@ p {
     /*子元素的相对位置*/
     position: relative;
     top: -10%;
-    width: 350px;
+    width: 400px;
     height: auto;
     border-radius: 6px;
     padding: 0;
@@ -1157,13 +1157,14 @@ p {
     transition: .25s;
 }
 .reply_span{
+    position: relative;
     height: 40px;
-    width: 350px;
+    width: 400px;
 }
 .reply_title{
     position: relative;
     height: 38px;
-    width: 275px;
+    width: 330px;
     float: left;
     padding-top: 2px;
     padding-left: 5px;
@@ -1176,22 +1177,23 @@ p {
 .reply_close{
     position: relative;
     height: 40px;
-    width: 70px;
+    width: 60px;
     float: left;
-    text-align: center;
+    text-align: right;
 }
 .reply_close a{
     font-size: medium;
 }
 .reply_body{
     position: relative;
-    height:auto;
-    width: 350px;
+    height:30px;
+    width: 400px;
 }
 .reply_to{
     position: relative;
-    height: 50px;
-    width: 350px;
+    height: 30px;
+    width: 120px;
+    float: left;
 }
 
 .reply_name{
@@ -1201,4 +1203,23 @@ p {
 .reply_photo{
     position: relative;
     float: left;
+}
+.reply_info{
+    position: relative;
+    height:35px;
+    width: 350px;
+}
+.reply_content{
+    position: relative;
+    float: left;
+    height: 30px;
+    width: 250px;
+    border: 1px black solid;
+    border-radius: 6px;
+    padding-left: 5px;
+}
+.reply_photo img{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
 }

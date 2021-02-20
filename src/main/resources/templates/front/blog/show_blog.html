@@ -33,27 +33,19 @@
             </div>
             <div class="reply_body">
                 <div class="reply_to">
-                    <div class="reply_name">回复@</div>
-                    <div class="reply_photo"></div>
+                    <div class="reply_name">
+                        <span>回复@</span>
+                        <span class="s_towho"></span>
+                    </div>
+                    <div class="reply_photo">
+                        <img >
+
+                    </div>
                 </div>
-
-
                 <div class="reply_content" contenteditable="true">
 
                 </div>
-                <!--    <div class="comment_emoji">
-                        <div onClick="showEmoji()" class="showemoji">
-                            <a href="javascript:void(0)">插入表情</a>
-                        </div>
 
-                        <div class="publish_comment">
-                            <a href="javascript:void(0)">发表评论</a>
-                        </div>
-
-                        <div class="emoji-collection">
-
-                        </div>
-                    </div>-->
 
             </div>
             <div class="reply_info"></div>
@@ -258,6 +250,8 @@
                         <input type="hidden" th:value="${c.critic.id}">
                         <input type="hidden" th:value="${c.id}">
                         <input type="hidden" th:value="${c.critic.username}">
+                        <input type="hidden" th:value="${c.critic.image}">
+
                     </div>
                 </div>
             </div>
@@ -507,8 +501,14 @@
     $(".reply a").on("click",function () {
         var commentId=this.parentElement.parentElement.nextElementSibling.value;
         var criticId=this.parentElement.parentElement.nextElementSibling.nextElementSibling.value;
+        var criticName=this.parentElement.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.value;
+        var criticPhoto=this.parentElement.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.value;
+
         $("#commentId").val(commentId);
         $("#criticId").val(criticId);
+
+        $(".s_towho").text(criticName);
+        $(".reply_photo img").attr("src","/common/profile_image/"+criticPhoto)
 
     })
 </script>
