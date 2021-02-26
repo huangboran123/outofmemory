@@ -27,10 +27,12 @@
         <input type="hidden" id="commentId">
         <input type="hidden" id="criticId">
         <div>
+            <!--头-->
             <div class="reply_span">
                 <div class="reply_title"><span>回复评论</span></div>
                 <div class="reply_close"><a href="javascript:void(0)">关闭</a></div>
             </div>
+          <!--  输入主体-->
             <div class="reply_body">
                 <div class="reply_to">
                     <div class="reply_name">
@@ -45,9 +47,23 @@
                 <div class="reply_content" contenteditable="true">
 
                 </div>
+                <div class="reply_emoji">
+                    <div onClick="showReplyEmoji()" class="showreplyemoji">
+                        <a href="javascript:void(0)">插入表情</a>
+                    </div>
+
+                    <div class="publish_reply">
+                        <a href="javascript:void(0)">发表回复</a>
+                    </div>
+
+                    <div class="emoji-Replycollection">
+
+                    </div>
+                </div>
 
 
             </div>
+            <!--消息返回-->
             <div class="reply_info"></div>
 
 
@@ -511,5 +527,120 @@
         $(".reply_photo img").attr("src","/common/profile_image/"+criticPhoto)
 
     })
+    /*虚拟回复框点击效果*/
+    $(".reply_content").on("click",function () {
+        $(".reply_content").css("height","150px");
+        $(".reply_content").css("border","#03a7ff solid 2px");
+
+    })
+    $(".reply_content").on("blur",function () {
+        $(".reply_content").css("height","30px");
+        $(".reply_content").css("border","1px black solid");
+
+    })
+/*-----------------------------------------------------------------------------------------------------*/
+    /*回复框表情包输入*/
+
+    function  showReplyEmoji() {
+        let that = this
+        /*  显示与隐藏*/
+        $(".emoji-Replycollection").html("");
+        if($(".showreplyemoji a").text()==="插入表情"){
+            $(".showreplyemoji a").text("关闭表情");
+            $(".emoji-Replycollection").css("border","rgba(0,0,0,0.26) 1px solid");
+            $(".emoji-Replycollection").css("height","auto");
+            that.renderReplyEmoji();
+
+        }
+        else{
+            $(".showreplyemoji a").text("插入表情");
+
+            $(".emoji-Replycollection").css("border","0px");
+            $(".emoji-Replycollection").css("height","0px");
+
+        }
+
+
+        //点击表情将表情添加在emoji中
+        //对每一个表情包绑定点击事件
+        $(".emoji-icon").each(function (k, v) {
+            $(v).click(function () {
+                var code = $(this).attr("unicode16");
+                /* $(".comment_content").append(that.parse("&#" + parseInt(code, 16) + ";"));*/
+                /*光标位置插入表情包*/
+                // 判断文档输入框是否focus
+                if($(".reply_content").is(":focus")){
+                    insertHtmlAtCaret(that.parse("&#" + parseInt(code, 16) + ";"))
+                }
+                /*若评论编辑框不处于focus状态，则设置为focus状态，并写入点击的表情包*/
+                else{
+                    $(".reply_content").focus();
+                    insertHtmlAtCaret(that.parse("&#" + parseInt(code, 16) + ";"))
+                }
+
+
+            });
+        });
+    }
+    /* 获取光标并插入*/
+    function insertHtmlAtCaret(html) {
+        var sel, range;
+        if (window.getSelection) {
+            // IE9 and non-IE
+            sel = window.getSelection();
+            if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0);
+                range.deleteContents();
+                // Range.createContextualFragment() would be useful here but is
+                // non-standard and not supported in all browsers (IE9, for one)
+                var el = document.createElement("div");
+                el.innerHTML = html;
+                var frag = document.createDocumentFragment(), node, lastNode;
+                while ((node = el.firstChild)) {
+                    lastNode = frag.appendChild(node);
+                }
+                range.insertNode(frag);
+                // Preserve the selection
+                if (lastNode) {
+                    range = range.cloneRange();
+                    range.setStartAfter(lastNode);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+            }
+        } else if (document.selection && document.selection.type != "Control") {
+            // IE < 9
+            document.selection.createRange().pasteHTML(html);
+        }
+    }
+
+    //动态生成表情列表
+    function renderReplyEmoji () {
+        var emos = getEmojiList()[0];
+        var html = '<ul class="emoji_Replyitem">';
+        for (var j = 0; j < emos.length; j++) {
+            var emo = emos[j];
+            var data = 'data:image/png;base64,' + emo[2];
+            html += '<li>';
+            html += '<img style="display: inline;vertical-align: middle;" src="' + data + '"  unicode16="' + emo[1] + '"  class="emoji-icon"  /></li>';
+        }
+        $(".emoji-Replycollection").append(html);
+    }
+    //表情 通过该方法 可以直接把表情在输入框中显示出来。
+    function parse (arg) {
+        if(typeof ioNull != 'undefined') {
+            return ioNull.emoji.parse(arg);
+        }
+        return '';
+    }
+    /*-------------------------------------------------------------------------------------------------------------------*/
+    /*点击表情包区域编辑框不失焦点*/
+    $(".reply_emoji").on("mousedown",function (event) {
+        event .preventDefault();
+        return false;
+
+    })
+
 </script>
 </html>

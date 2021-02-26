@@ -941,6 +941,7 @@ canvas{
     transition: .3s;
     font-size: medium;
 }
+
 /*点击显示表情包*/
 .showemoji{
     float: left;
@@ -1148,7 +1149,7 @@ p {
     /*子元素的相对位置*/
     position: relative;
     top: -10%;
-    width: 400px;
+    width: 600px;
     height: auto;
     border-radius: 6px;
     padding: 0;
@@ -1159,7 +1160,7 @@ p {
 .reply_span{
     position: relative;
     height: 40px;
-    width: 400px;
+    width: 600px;
 }
 .reply_title{
     position: relative;
@@ -1180,6 +1181,7 @@ p {
     width: 60px;
     float: left;
     text-align: right;
+    right: 3px;
 }
 .reply_close a{
     font-size: medium;
@@ -1187,39 +1189,97 @@ p {
 .reply_body{
     position: relative;
     height:30px;
-    width: 400px;
+    width: 600px;
 }
 .reply_to{
     position: relative;
     height: 30px;
-    width: 120px;
+    width: 140px;
     float: left;
+    font-size: small;
+    margin-left: 5px;
 }
 
 .reply_name{
     position: relative;
+    width: 110px;
     float: left;
+
 }
 .reply_photo{
     position: relative;
     float: left;
+    width: 20px;
 }
 .reply_info{
     position: relative;
     height:35px;
     width: 350px;
+    float: left;
 }
 .reply_content{
     position: relative;
     float: left;
     height: 30px;
-    width: 250px;
+    width: 440px;
     border: 1px black solid;
     border-radius: 6px;
     padding-left: 5px;
+    transition: .5s;
 }
+
 .reply_photo img{
-    width: 36px;
-    height: 36px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
 }
+/*
+虚拟回复框表情包输入*/
+.reply_emoji{
+    float: right;
+    position: relative;
+    width: 440px;
+    height:auto;
+    margin-top:5px;
+    overflow: hidden;
+    outline: none;
+    transition: .3s;
+    font-size: medium;
+    right: 10px;
+}
+.showreplyemoji{
+    text-align: center;
+    position: relative;
+    float: left;
+    width: 75px;
+
+
+}
+.publish_reply{
+    position: relative;
+    float: left;
+    width: 75px;
+    left: 290px;
+    text-align: center;
+}
+.emoji-Replycollection{
+    position: relative;
+    float: left;
+    width: 250px;
+    height: auto;
+    margin-top:3px;
+    /*border: rgba(0,0,0,0.26) 1px solid;*/
+    border-radius: 6px;
+    overflow: hidden;
+    outline: none;
+    transition: height .3s;
+    display: block;
+}
+.emoji_Replyitem li{
+    float: left;
+    border: 0.3px solid #928d8d;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2px;
+}
+
