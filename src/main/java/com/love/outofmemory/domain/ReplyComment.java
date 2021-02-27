@@ -9,8 +9,8 @@ public class ReplyComment {
     private Integer id;
     //comment_id
     private Comment comment;
-    private Date comment_time;
-    private String comment_content;
+    private Date reply_time;
+    private String reply_content;
     //from_uid
     private User from;
     //to_uid；

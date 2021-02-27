@@ -175,8 +175,7 @@ public class UserController {
           user_name.setPath("/");
           response.addCookie(user_name);
       }
-      //session不包含密码
-      user.setPassword("无权限");
+      //服务的写入session
       session.setAttribute("user",user);
 
       return "登录成功";

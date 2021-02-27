@@ -971,7 +971,7 @@ color: white;
 .publish_comment{
     float: left;
     position: relative;
-    width: 13%;
+    width: 12.8%;
     height:22px;
     border-radius: 4px;
     border: 1px black solid;
@@ -1178,7 +1178,7 @@ p {
 .reply_close{
     position: relative;
     height: 40px;
-    width: 60px;
+    width: 260px;
     float: left;
     text-align: right;
     right: 3px;
@@ -1252,20 +1252,24 @@ p {
     position: relative;
     float: left;
     width: 75px;
+    border-radius: 4px;
+    border: 1px black solid;
 
 
 }
 .publish_reply{
     position: relative;
     float: left;
-    width: 75px;
+    width: 70px;
     left: 290px;
     text-align: center;
+    border-radius: 4px;
+    border: 1px black solid;
 }
 .emoji-Replycollection{
     position: relative;
     float: left;
-    width: 250px;
+    width: 100%;
     height: auto;
     margin-top:3px;
     /*border: rgba(0,0,0,0.26) 1px solid;*/
@@ -1274,6 +1278,12 @@ p {
     outline: none;
     transition: height .3s;
     display: block;
+
+}
+.emoji_Replyitem{
+    position: relative;
+    float: left;
+    left: 8px;
 }
 .emoji_Replyitem li{
     float: left;

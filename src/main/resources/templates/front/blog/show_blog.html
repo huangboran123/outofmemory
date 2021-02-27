@@ -243,6 +243,7 @@
         </div>
 
     </div>
+   <!-- 显示评论区-->
     <div class="comment_area">
         <div class="comments">
 
@@ -483,6 +484,8 @@
                 type: "post",
                 data: {'comment':comment,'blogId':blogId},
                 success:function (msg) {
+                    /*刷新*/
+
                     location.reload();
 
                 },
@@ -515,8 +518,8 @@
   /*  ----------------------------------------------------------------------------------------*/
  /*   点击回复按钮传递评论参数*/
     $(".reply a").on("click",function () {
-        var commentId=this.parentElement.parentElement.nextElementSibling.value;
-        var criticId=this.parentElement.parentElement.nextElementSibling.nextElementSibling.value;
+        var criticId=this.parentElement.parentElement.nextElementSibling.value;
+        var commentId=this.parentElement.parentElement.nextElementSibling.nextElementSibling.value;
         var criticName=this.parentElement.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.value;
         var criticPhoto=this.parentElement.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.value;
 
@@ -547,7 +550,7 @@
         $(".emoji-Replycollection").html("");
         if($(".showreplyemoji a").text()==="插入表情"){
             $(".showreplyemoji a").text("关闭表情");
-            $(".emoji-Replycollection").css("border","rgba(0,0,0,0.26) 1px solid");
+           /* $(".emoji-Replycollection").css("border","rgba(0,0,0,0.26) 1px solid");*/
             $(".emoji-Replycollection").css("height","auto");
             that.renderReplyEmoji();
 
@@ -634,13 +637,47 @@
         }
         return '';
     }
-    /*-------------------------------------------------------------------------------------------------------------------*/
     /*点击表情包区域编辑框不失焦点*/
     $(".reply_emoji").on("mousedown",function (event) {
         event .preventDefault();
         return false;
 
     })
+    /*-------------------------------------------------------------------------------------------------------------------*/
+    /*提交回复*/
+    $(".publish_reply").on("click",function () {
+        //子评论所在的父评论id
+        let commentId=$("#commentId").val();
+        //就是你要回复的用户id
+        let toUId=$("#criticId").val();
+        //回复内容
+        let replyContent=$(".reply_content").text();
 
+        if(replyContent!=null&&replyContent.replace(/^\s+|\s+$/g,'').length !==0){
+            //使用ajax与服务器交流
+            $.ajax({
+                dataType: "text",
+                url: "/reply",
+                type: "post",
+                data:{'commentId':commentId,'toUId':toUId,'replyContent':replyContent},
+                success:function (msg) {
+
+                    alert(msg);
+                },
+                error:function (msg) {
+                    alert(msg);
+                }
+
+
+            })
+
+        }
+        else{
+            alert("回复内容为空或者为空串")
+        }
+
+
+
+    })
 </script>
 </html>
