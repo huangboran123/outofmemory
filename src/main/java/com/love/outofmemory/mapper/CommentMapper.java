@@ -34,7 +34,7 @@ public interface CommentMapper {
     int commitreply(ReplyComment replyComment);
 
 //    注意:若某表中含有相同类型的外键需要连表查询，可以使用子查询命名为不同别名再连接
-    @Select("select o_reply_comment.id rid, comment_id,reply_time,reply_content,from_uid,to_uid,o_user.id fromid,toid,o_user.username fromusername,tousername,o_user.image fromimage,toimage from ((o_reply_comment inner join o_user on o_reply_comment.from_uid=o_user.id)inner join (select id toid,username tousername,image toimage from o_user)fromuser on o_reply_comment.to_uid=fromuser.toid ) where comment_id=#{id}"
+    @Select("select o_reply_comment.id rid, comment_id,reply_time,reply_content,from_uid,to_uid,o_user.id fromid,toid,o_user.username fromusername,tousername,o_user.image fromimage,toimage from ((o_reply_comment inner join o_user on o_reply_comment.from_uid=o_user.id)inner join (select id toid,username tousername,image toimage from o_user)fromuser on o_reply_comment.to_uid=fromuser.toid ) where comment_id=#{id} order by reply_time desc"
            )
     /*回复结果集映射*/
     @Results(id="reply",value = {

@@ -1092,6 +1092,8 @@ p {
 .bottom-comment {
     color: #45474b;
     font-size: 0.875rem;
+    height: 25px;
+    width: 100%;
 }
 .comment-date {
     float: left;
@@ -1108,6 +1110,70 @@ p {
 }
 .comment-actions li.reply {
     padding-left: 0.625rem;
+}
+.reply-block{
+    position: relative;
+    float: left;
+    font-size: medium;
+    height: auto;
+    width: 100%;
+}
+.fromphoto{
+    position: relative;
+    float: left;
+    height: 30px;
+    width: 30px;
+}
+.fromphoto img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+.replytext{
+    position: relative;
+    float: left;
+    height: 30px;
+    width: 35px;
+    left: 5px;
+    font-size: small;
+
+}
+.fromusername{
+    position: relative;
+    float: left;
+    height: 30px;
+    width: auto;
+    font-size: small;
+    font-weight: normal;
+}
+.tophoto{
+    position: relative;
+    float: left;
+    height: 30px;
+    width: 30px;
+
+}
+.tophoto img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.tousername{
+    position: relative;
+    float: left;
+    height: 30px;
+    width: auto;
+    font-size: small;
+    font-weight: normal;
+}
+.replyContent{
+    position: relative;
+    float: left;
+    height: 30px;
+    width: auto;
+    font-size: small;
+    font-weight: normal;
 }
 
 /*虚拟回复框*/

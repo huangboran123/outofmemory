@@ -249,16 +249,28 @@
 
 
             <div class="comment-wrapbox" th:each="c:${comments}">
+                 <!--评论人头像-->
                 <div class="photo">
                     <div class="avatar" th:style="'background-image:'+ 'url('+'/common/profile_image/'+${c.critic.image}+')'"></div>
                 </div>
+                <!--评论人昵称-->
                 <div class="c_username">
 
                         <a href="javascript:void(0)" th:text="${c.critic.username}"></a>
 
                 </div>
                 <div class="comment-block">
+                    <!--评论内容-->
                     <p class="comment-text" th:text="${c.comment_content}"></p>
+                    <!--回复内容-->
+                    <div class="reply-block" th:each="r:${c.replyCommentList}">
+                        <div class="fromphoto"><img th:src="@{/common/profile_image/{fromimage}(fromimage=${r.from.image})}" th:title="${r.from.username}"></div>
+                        <div class="fromusername" th:text="${r.from.username}"></div>
+                        <div class="replytext">回复</div>
+                        <div class="tophoto"><img th:src="@{/common/profile_image/{toimage}(toimage=${r.to.image})}" th:title="${r.to.username}"></div>
+                        <div class="tousername" th:text="${r.to.username+' :'}"></div>
+                        <div class="replyContent" th:text="${r.reply_content}"></div>
+                    </div>
                     <div class="bottom-comment">
                         <div class="comment-date" th:text="${#dates.format(c.comment_time,'yyyy-MM-dd HH:mm')}" ></div>
                         <ul class="comment-actions">
