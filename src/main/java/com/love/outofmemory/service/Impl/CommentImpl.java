@@ -21,7 +21,14 @@ public class CommentImpl implements ICommentService {
 
     @Override
     public List<Comment> getAllCommentsPageByBlogId(Integer blogId, Integer start, Integer counts) {
-        return commentMapper.getAllCommentsPageByBlogId(blogId,start,counts);
+
+
+        List<Comment> commentList= commentMapper.getAllCommentsPageByBlogId(blogId,start,counts);
+        for (Comment c:commentList) {
+           List<ReplyComment> replyCommentList=commentMapper.getAllReplycommentsById(c.getId());
+           c.setReplyCommentList(replyCommentList);
+        }
+        return commentList;
     }
 
     @Override

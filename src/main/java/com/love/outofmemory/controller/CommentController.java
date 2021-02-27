@@ -78,9 +78,13 @@ public class CommentController {
             replyComment.setFrom(user);
 
             int i=iCommentService.commitreply(replyComment);
+            if(i==1){
+                return "回复成功";
+            }
+            else{
+                return "回复失败";
+            }
 
-
-            return null;
         }
         else{
             return "请先登录";
