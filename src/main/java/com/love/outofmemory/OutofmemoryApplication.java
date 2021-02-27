@@ -15,5 +15,4 @@ public class OutofmemoryApplication {
     public static void main(String[] args) {
         SpringApplication.run(OutofmemoryApplication.class, args);
     }
-
 }

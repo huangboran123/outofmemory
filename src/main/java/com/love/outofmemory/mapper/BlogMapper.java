@@ -19,6 +19,7 @@ public interface BlogMapper {
             "#{good_count},#{content},#{title},#{views},#{tag.id},#{comments},#{isoriginal})")
     int addBlog(Blog blog);
 
+
     /*左外连接,查询对应用户博客分类中的所有各自数量*/
     @Select("SELECT COUNT(o_blog.classification) counts ,blog_classification.id,NAME " +
             "FROM blog_classification LEFT JOIN  o_blog " +
