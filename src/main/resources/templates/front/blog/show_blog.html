@@ -270,11 +270,12 @@
                         <div class="tophoto"><img th:src="@{/common/profile_image/{toimage}(toimage=${r.to.image})}" th:title="${r.to.username}"></div>
                         <div class="tousername" th:text="${r.to.username+' :'}"></div>
                         <div class="replyContent" th:text="${r.reply_content}"></div>
-                        <div class="subreplytime"></div>
-                        <div class="subreply"></div>
+                        <div class="subreply"><a href="javascript:void(0)">回复</a></div>
+                        <div class="subreplytime" th:text="${'回复时间: '+#dates.format(r.reply_time,'yyyy-MM-dd HH:mm')}"></div>
+
                     </div>
                     <div class="bottom-comment">
-                        <div class="comment-date" th:text="${#dates.format(c.comment_time,'yyyy-MM-dd HH:mm')}" ></div>
+                        <div class="comment-date" th:text="${'评论时间: '+#dates.format(c.comment_time,'yyyy-MM-dd HH:mm')}" ></div>
                         <ul class="comment-actions">
                             <li class="reply"><a href="#open_reply">回复</a></li>
                         </ul>

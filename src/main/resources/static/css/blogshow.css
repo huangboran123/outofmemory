@@ -1176,6 +1176,26 @@ p {
     font-weight: normal;
 }
 
+.subreply{
+    position: relative;
+    float: right;
+    height: 30px;
+    width: 30px;
+    font-weight: normal;
+}
+.subreply a{
+    font-size: small;
+}
+.subreplytime{
+    position: relative;
+    float: left;
+    height: 25px;
+    width: 100%;
+    font-size: small;
+    font-weight: normal;
+    text-align: right;
+}
+
 /*虚拟回复框*/
 .reply_window{
     position: fixed;
@@ -1266,6 +1286,7 @@ p {
     margin-left: 5px;
 }
 
+/*评论区回复*/
 .reply_name{
     position: relative;
     width: 110px;
@@ -1301,6 +1322,8 @@ p {
     height: 20px;
     border-radius: 50%;
 }
+
+
 /*
 虚拟回复框表情包输入*/
 .reply_emoji{
