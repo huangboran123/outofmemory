@@ -1282,6 +1282,8 @@ p {
     height:35px;
     width: 350px;
     float: left;
+    left: 150px;
+    text-align: center;
 }
 .reply_content{
     position: relative;

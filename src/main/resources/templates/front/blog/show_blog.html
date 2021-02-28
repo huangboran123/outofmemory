@@ -270,6 +270,8 @@
                         <div class="tophoto"><img th:src="@{/common/profile_image/{toimage}(toimage=${r.to.image})}" th:title="${r.to.username}"></div>
                         <div class="tousername" th:text="${r.to.username+' :'}"></div>
                         <div class="replyContent" th:text="${r.reply_content}"></div>
+                        <div class="subreplytime"></div>
+                        <div class="subreply"></div>
                     </div>
                     <div class="bottom-comment">
                         <div class="comment-date" th:text="${#dates.format(c.comment_time,'yyyy-MM-dd HH:mm')}" ></div>
@@ -672,11 +674,21 @@
                 type: "post",
                 data:{'commentId':commentId,'toUId':toUId,'replyContent':replyContent},
                 success:function (msg) {
+                    $(".reply_info").text(msg);
+                    setTimeout(setBlankc,1200);
+                    setTimeout(closewindow,1400);
+                    setTimeout(refresh,1500);
+                    return 0;
 
-                    alert(msg);
+
+
                 },
                 error:function (msg) {
-                    alert(msg);
+                 /*   $(".reply_info").text(msg);
+                    setTimeout(setBlankc(),1000);
+                    closewindow();
+                    location.reload();*/
+                    return 0;
                 }
 
 
@@ -690,5 +702,18 @@
 
 
     })
+
+    function setBlankc(){
+        $(".reply_info").text("");
+    }
+    function closewindow() {
+        $(".reply_close a").click();
+
+    }
+    function refresh() {
+        location.reload();
+
+    }
+
 </script>
 </html>
