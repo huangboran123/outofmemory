@@ -42,8 +42,10 @@ public class User {
     private Date create_time;
 
     private Integer fans;
+
     private Integer follow;
 
+    private Integer level;
 
 
 }

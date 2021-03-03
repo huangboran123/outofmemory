@@ -1,6 +1,7 @@
 package com.love.outofmemory.service.Impl;
 
 import com.love.outofmemory.domain.User;
+import com.love.outofmemory.domain.view.ProfilePageUser;
 import com.love.outofmemory.mapper.UserMapper;
 import com.love.outofmemory.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,10 @@ public class UserSetviceImpl implements IUserService {
             return userMapper.getUserByPhone(loginname);
         }
 
+    }
+
+    @Override
+    public ProfilePageUser getProfileUserById(Integer userId) {
+        return userMapper.getProfileUserById(userId);
     }
 }

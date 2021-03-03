@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    <link rel="short icon"  href="/common/system_icon/favicon.ico"/>
+    <link href="/css/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/header.css" rel="stylesheet" type="text/css">
+    <link href="particles/style.css" rel="stylesheet" type="text/css">
+    <link href="/css/profile.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+<div id="particles-js">
+    <!--   使用模板model, 隐藏参数便于传参-->
+    <input type="hidden" id="userId" th:value="${session.user.id}">
+
+
+
+    <div th:replace="/front/component/page::header">
+    </div>
+
+    <!--左边功能栏目-->
+    <div class="leftprofilebody">
+        <div class="personalset"><a href="javascript:void(0)">个人设置</a></div>
+        <div class="accountset"><a href="javascript:void(0)">账号设置</a></div>
+        <div class="mycollection"><a href="javascript:void(0)">我的收藏</a></div>
+        <div class="myblog"><a href="javascript:void(0)">管理博客</a></div>
+    </div>
+   <!-- 右边显示栏目-->
+    <div class="rightprofilebody">
+        <div class="basicinfo">
+            <div class="profilebasic">
+                <div class="profilephotobox">
+                    <img th:src="@{/common/profile_image/{fromimage}(fromimage=${session.user.image})}">
+                </div>
+
+                <div class="profilename">
+                    <span  th:text="${session.user.username}"></span>
+                </div>
+                <div class="codeage"><span>码龄:0 年</span></div>
+                <div class="personalstats"><a href="">个人主页</a></div>
+                <div class="personlevel">
+                    <div class="check-in"><a href="">签到</a></div>
+                    <div class="userlevel"><span>等级:0</span></div>
+                </div>
+
+            </div>
+        </div>
+        <div class="basicinfodetail">
+            <div class="basictext"><span>基本信息</span></div>
+            <div class="editprofile">
+                <ul class="ul_profile">
+                    <li>
+                        <div class="profileshow-l">用户昵称</div>
+                        <div class="profileshow-r">孤独成瘾</div>
+                    </li>
+                    <li>
+                        <div class="profileshow-l">用户ID</div>
+                        <div class="profileshow-r-userid">12</div>
+                    </li>
+                    <li>
+                        <div class="profileshow-l">性别</div>
+                        <div class="profileshow-r">男</div>
+                    </li>
+                    <li>
+                        <div class="profileshow-l">生日</div>
+                        <div class="profileshow-r-birthday">2020.12.17</div>
+                    </li>
+                    <li>
+                        <div class="profileshow-l">地区</div>
+                        <div class="profileshow-r">湖北省仙桃市</div>
+                    </li>
+
+                    <li>
+                        <div class="profileshow-l">个人简介</div>
+                        <div class="profileshow-r-reputation">
+                           胡晓晖,女,1967年2月出生,安徽人。1989年毕业于江西财经大学,曾在安徽铜陵财经专科学校任教,2001年8月调入上海科学技术职业学院工作至今
+                        </div>
+                    </li>
+
+
+
+
+
+
+                </ul>
+                <div class="editprofile-do">
+                    <a href="javascript:void(0)">编辑</a>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <div th:replace="/front/component/page::footer">
+    </div>
+
+</div>
+</body>
+<script src="js/plugin/jquery.js"></script>
+<!--打字效果引入-->
+<script src="js/plugin/commentTyping.js"></script>
+<!--粒子效果引入-->
+<script src="particles/particles.js"></script>
+<script src="particles/app.js"></script>
+
+<script type="text/javascript">
+    /*------------------------------------------------------------------------------------------------------*/
+    /*头悬浮栏*/
+    $(document).on("mouseover",".current_user_section",function () {
+        $("#user_menu").css("display","block");
+    })
+    $(document).on("mouseout",".current_user_section",function () {
+        $("#user_menu").css("display","none");
+    })
+
+    $(document).on("mouseout","#user_menu",function () {
+        $("#user_menu").css("display","none");
+    })
+    /*------------------------------------------------------------------------------------------------------*/
+     /*页面加载时触发，默认个人设置页面*/
+      window.onload=function () {
+          $(".personalset").click();
+      }
+      /*个人设置点击事件*/
+    $(".personalset").on("click",function () {
+        let userId=$("#userId").val();
+
+
+        $.ajax({
+            url:"/profilePage/getuserInfo",
+            data:{'userId':userId},
+            dataType:"json",
+            method:"post",
+            success:function (user) {
+
+
+            }
+
+
+
+
+        })
+
+    })
+   /* ----------------------------------------编辑个人基本信息------------------------------------------------*/
+
+    $(".editprofile-do").on("click",function () {
+
+
+     })
+
+</script>
+</html>

@@ -1,0 +1,252 @@
+/*个人信息修改与查询页面*/
+.leftprofilebody{
+    float: left;
+    z-index: 1;
+    position: relative;
+    top: 10vh;
+    left: 15vw;
+    height: 24vh;
+    width: 14vw;
+    background-color: white;
+    padding-top: 1%;
+}
+.leftprofilebody div{
+    float: left;
+    width: 100%;
+    height: 24%;
+    line-height: 50px;
+    text-align: center;
+
+}
+.leftprofilebody div a{
+    font-size: medium;
+    color: black;
+    font-weight: normal;
+}
+.leftprofilebody div:hover{
+    background-color: #f0f0f5;
+}
+.leftprofilebody div:hover a{
+    font-weight: bold;
+}
+
+.rightprofilebody{
+    float: left;
+    z-index: 1;
+    position: relative;
+    top: 10vh;
+    left: 17vw;
+    height: auto;
+    width: 63vw;
+    background-color: transparent;
+}
+
+/*---------------个人信息查询--------------*/
+.basicinfo{
+
+    width: 100%;
+    height: 20vh;
+    background-color: white;
+
+}
+.basicinfodetail{
+    width: 100%;
+    height: 60vh;
+    background-color: white;
+    margin-top: 2vh;
+
+}
+.profilebasic{
+    width: auto;
+    height: auto;
+    padding: 10px 10px;
+
+}
+.profilephotobox img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.profilephotobox{
+    position: relative;
+    float: left;
+    width: auto;
+    height: auto;
+}
+.profilename{
+    position: relative;
+    float: left;
+    width: auto;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+    left: 5px;
+
+}
+.profilename span{
+    font-size: 26px;
+    color: black;
+    font-weight: normal;
+
+}
+.codeage{
+    position: relative;
+    float: left;
+    width: auto;
+    height: 70px;
+    text-align: center;
+    line-height:70px;
+    left: 15px;
+}
+.codeage span{
+    font-size: medium;
+}
+.personalstats{
+    position: relative;
+    float: right;
+    width: auto;
+    height: 70px;
+    text-align: right;
+    line-height:70px;
+
+}
+.personalstats a{
+    color: black;
+    font-size: medium;
+}
+.personalstats a:hover{
+    color: red;
+}
+.personlevel{
+    position: relative;
+    height: 30px;
+    width: 700px;
+    float: left;
+}
+.check-in{
+    position: relative;
+    float: left;
+    height: 30px;
+    width:70px ;
+    text-align: center;
+    line-height: 30px;
+}
+.check-in a{
+    font-size: medium;
+    color: black;
+}
+.check-in a:hover{
+    color: red;
+}
+
+.userlevel{
+    position: relative;
+    float: left;
+    height: 30px;
+    width:70px ;
+    text-align: center;
+    line-height: 30px;
+}
+.userlevel span{
+    font-size: medium;
+}
+/*--------个人信息修改---------*/
+.basictext{
+    width: 95%;
+    height: 7%;
+    padding: 20px 20px 10px 20px;
+
+}
+.basictext span{
+    font-size: 20px;
+    font-weight: bold;
+}
+.editprofile{
+    width: 95%;
+    height: 83.2%;
+    margin: 1.2% 2.4%;
+}
+.editprofile:hover{
+    background-color: rgb(243, 243, 243);
+}
+.ul_profile{
+    position: relative;
+    width: 93.4%;
+    height: 98.5%;
+    float: left;
+    padding: 1.2% 0 1.2% 1.2%;
+}
+.ul_profile li{
+    list-style-type: none;
+    width: auto;
+    height: 10%;
+    padding-bottom:2%;
+
+}
+.editprofile-do{
+    position: relative;
+    right: 1%;
+    width:auto ;
+    float: right;
+    height: auto;
+    top: 1%;
+}
+.editprofile-do a{
+    color: rgba(0,0,0,0.55);
+    font-size: medium;
+
+}
+.editprofile-do a:hover{
+    color: red;
+    cursor: pointer;
+}
+.profileshow-l{
+    position: relative;
+    height: auto;
+    width: 80px;
+    font-size: medium;
+    float: left;
+    color: rgba(0,0,0,0.55);
+    text-align: left;
+
+
+}
+.profileshow-r{
+    position: relative;
+    float: left;
+    height: auto;
+    width: auto;
+    font-size: medium;
+    left: 20px;
+    color: rgba(0,0,0,0.55);
+}
+.profileshow-r-reputation{
+    position: relative;
+    float: left;
+    height: auto;
+    width: 98%;
+    font-size: medium;
+    color: rgba(0,0,0,0.55);
+    left: 2%;
+
+}
+.profileshow-r-userid{
+    position: relative;
+    float: left;
+    height: 24px;
+    width: auto;
+    font-size: medium;
+    color: rgba(0,0,0,0.55);
+    padding-top: 5px;
+    left: 20px;
+}
+.profileshow-r-birthday{
+    position: relative;
+    float: left;
+    height: 24px;
+    width: auto;
+    font-size: medium;
+    color: rgba(0,0,0,0.55);
+    padding-top: 5px;
+    left: 20px;
+}

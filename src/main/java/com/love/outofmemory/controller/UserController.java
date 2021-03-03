@@ -1,18 +1,18 @@
 package com.love.outofmemory.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.love.outofmemory.Utills.DateUtil;
 import com.love.outofmemory.Utills.EncryptionUtils;
 import com.love.outofmemory.domain.User;
+import com.love.outofmemory.domain.view.ProfilePageUser;
 import com.love.outofmemory.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
@@ -36,6 +36,7 @@ public class UserController {
     private IUserService iUserService;
 
 
+   /* 注册*/
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public String register(
             @RequestPart("profilepicture") MultipartFile profilepicture,
@@ -131,6 +132,7 @@ public class UserController {
 
     }
 
+    /*登录*/
     //produces解决返回中文乱码
     @RequestMapping(value = "/login",method = RequestMethod.POST,produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
@@ -181,12 +183,39 @@ public class UserController {
       return "登录成功";
     }
 
+    /*个人资料修改页面*/
     @RequestMapping("/profilePage")
-    public String profilePage(Model model){
+    public String profilePage(Model model,HttpSession session,Integer userId){
+        User user=(User)session.getAttribute("user");
+        if(user!=null){
+
+            return "front/profile/profilepage";
+        }
+        else{
+            return "redirect:/";
+        }
 
 
-        return "front/profile/profilePage";
     }
+
+    /*查询个人资料*/
+    @PostMapping(value = "/profilePage/getuserInfo",produces ={"text/plain;charset=UTF-8"})
+    @ResponseBody
+    public String getUserView(Integer userId){
+      ProfilePageUser userInfo=iUserService.getProfileUserById(userId);
+
+        ObjectMapper objectMapper=new ObjectMapper();
+
+        try {
+            return objectMapper.writeValueAsString(userInfo);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "查询个人信息失败";
+        }
+
+    }
+
+
 
 
 

@@ -266,11 +266,15 @@
                     <div class="reply-block" th:each="r:${c.replyCommentList}">
                         <div class="fromphoto"><img th:src="@{/common/profile_image/{fromimage}(fromimage=${r.from.image})}" th:title="${r.from.username}"></div>
                         <div class="fromusername" th:text="${r.from.username}"></div>
-                        <div class="replytext">回复</div>
-                        <div class="tophoto"><img th:src="@{/common/profile_image/{toimage}(toimage=${r.to.image})}" th:title="${r.to.username}"></div>
-                        <div class="tousername" th:text="${r.to.username+' :'}"></div>
-                        <div class="replyContent" th:text="${r.reply_content}"></div>
-                        <div class="subreply"><a href="javascript:void(0)">回复</a></div>
+                        <div class="replytext" th:if="${c.critic.id!=r.to.id}" >回复</div>
+                        <div class="tophoto" th:if="${c.critic.id!=r.to.id}" ><img th:src="@{/common/profile_image/{toimage}(toimage=${r.to.image})}" th:title="${r.to.username}"></div>
+                        <div class="tousername" th:if="${c.critic.id!=r.to.id}" th:text="${r.to.username}"></div>
+                        <div class="replyContent" th:text="${':'+r.reply_content}"></div>
+                        <div class="subreply"><a href="#open_reply">回复</a></div>
+                        <input type="hidden" th:value="${c.id}">
+                        <input type="hidden" th:value="${r.from.id}">
+                        <input type="hidden" th:value="${r.from.username}">
+                        <input type="hidden" th:value="${r.from.image}">
                         <div class="subreplytime" th:text="${'回复时间: '+#dates.format(r.reply_time,'yyyy-MM-dd HH:mm')}"></div>
 
                     </div>
@@ -659,7 +663,7 @@
     })
     /*-------------------------------------------------------------------------------------------------------------------*/
     /*提交回复*/
-    $(".publish_reply").on("click",function () {
+    $(document).on("click",'.publish_reply',function () {
         //子评论所在的父评论id
         let commentId=$("#commentId").val();
         //就是你要回复的用户id
@@ -703,7 +707,7 @@
 
 
     })
-
+/*定时功能函数*/
     function setBlankc(){
         $(".reply_info").text("");
     }
@@ -715,6 +719,19 @@
         location.reload();
 
     }
+/*--------------------------------------------------------------------------------------------*/
+/*子评论回复*/
+    $(document).on("click",'.subreply',function () {
+        var commentId=this.nextElementSibling.value;
+        var criticId=this.nextElementSibling.nextElementSibling.value;
+        var criticName=this.nextElementSibling.nextElementSibling.nextElementSibling.value;
+        var criticPhoto=this.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.value;
 
+        $("#commentId").val(commentId);
+        $("#criticId").val(criticId);
+
+        $(".s_towho").text(criticName);
+        $(".reply_photo img").attr("src","/common/profile_image/"+criticPhoto)
+    })
 </script>
 </html>
