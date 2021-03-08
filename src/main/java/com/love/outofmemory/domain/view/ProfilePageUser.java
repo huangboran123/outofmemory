@@ -8,6 +8,8 @@ import java.util.Date;
 public class ProfilePageUser {
 
 
+    private String id;
+
     private String username;
 
     private String sex;

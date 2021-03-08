@@ -21,6 +21,6 @@ public interface UserMapper {
     User getUserByEmail(String email);
 
 
-    @Select("select username,sex,birthday,reputation,qq_number,address,image,level,TIMESTAMPDIFF(YEAR,create_time,NOW()) AS codeage from o_user where id=#{userId}")
+    @Select("select id,username,sex,birthday,reputation,qq_number,address,image,level,TIMESTAMPDIFF(YEAR,create_time,NOW()) AS codeage from o_user where id=#{userId}")
     ProfilePageUser getProfileUserById(Integer userId);
 }

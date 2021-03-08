@@ -250,3 +250,85 @@
     padding-top: 5px;
     left: 20px;
 }
+/*修改profile*/
+.edittingprofile{
+    width: 95%;
+    height: 83.2%;
+    margin: 1.2% 2.4%;
+    text-align: center;
+}
+.mainedit{
+    width: 95%;
+    height: 85%;
+}
+.e_user{
+    position: relative;
+    float: left;
+    width: 40%;
+    height: 30%;
+    left: 14%;
+}
+.e_text{
+
+    width: 100%;
+    height: 40%;
+    font-size: large;
+    text-align: left;
+}
+.e_input{
+    width: 100%;
+    height: 60%;
+    text-align: left;
+}
+.e_input input{
+    width: 80%;
+    height: 50%;
+    font-size: large;
+}
+.e_reputation{
+    position: relative;
+    float: left;
+    width: 86%;
+    height: 30%;
+    left: 14%;
+}
+#reputation{
+    overflow-y: scroll;
+    border: 1px solid black;
+    height: 45%;
+    text-align: left;
+    font-size: medium;
+}
+
+.e_cancel{
+    position: relative;
+    float: left;
+    width: 30%;
+    height: 30%;
+    border: 1px solid black;
+    left: 10%;
+    top: 20%;
+}
+.e_cancel a{
+    font-size: medium;
+    color: black;
+    cursor: pointer;
+}
+.e_confirm{
+    float: left;
+    position: relative;
+    width: 30%;
+    height: 30%;
+    border: 1px solid black;
+    left: 10.2%;
+    top: 20%;
+}
+
+.e_confirm a{
+    font-size: medium;
+    color: black;
+    cursor: pointer;
+}
+.e_input select{
+    font-size: large;
+}
