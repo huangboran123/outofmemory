@@ -214,6 +214,13 @@ public class UserController {
         }
 
     }
+   /* 修改个人资料*/
+    @PostMapping(value = "/profilePage/profile",produces ={"application/json;charset=UTF-8"})
+    @ResponseBody
+   /* 前端JS要传送一个JS对象，springMVC中使用@RequestBody来解析JSON字符串转化为对应的JAVA对象*/
+    public Boolean modifyprofile(@RequestBody User muser){
+        return true;
+    }
 
 
 

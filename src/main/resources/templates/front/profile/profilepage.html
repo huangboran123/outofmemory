@@ -235,6 +235,47 @@
         $("#sex").val(parray[2]);
 
      })
+/*-------------------------------------------------修改以及取消事件-----------------------------------------------------------------------------------*/
 
+    /*取消修改*/
+    $(document).on("click",'.e_cancel',function () {
+    $(".personalset").click();
+    })
+    /*确认修改*/
+    $(document).on("click",'.e_confirm',function () {
+        let username=$("#username").val();
+        if(username.length>10||username.replace(/^\s+|\s+$/g,'').length ===0){
+            alert("用户名不大于10个字符且不能为空");
+            return 0;
+        }
+        let birthday=$("#birthday").val();
+        let qq_number=$("#qqnumber").val();
+        let address=$("#address").val();
+        let sex=$("#sex").val();
+        let reputation=$("#reputation").text();
+        /*新建要修改的用户信息js对象*/
+        let muser={username:username,birthday:birthday,
+            qq_number:qq_number,address:address,sex:sex,reputation:reputation}
+
+        $.ajax({
+            url:"/profilePage/profile",
+            dataType: "text",
+            data: JSON.stringify(muser),
+            method: "post",
+            contentType:"application/json",
+            success:function (msg) {
+
+                alert(msg);
+                return 0;
+            },
+            error:function (msg) {
+                alert(msg);
+                return 0;
+
+            }
+        })
+
+        return 0;
+    })
 </script>
 </html>

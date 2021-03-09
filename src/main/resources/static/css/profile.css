@@ -303,29 +303,48 @@
 .e_cancel{
     position: relative;
     float: left;
-    width: 30%;
-    height: 30%;
+    width: 40%;
+    height: 35%;
     border: 1px solid black;
-    left: 10%;
     top: 20%;
+    border-radius: 5px;
+}
+.e_cancel:hover{
+    background-color: rgba(0,0,0,0.29);
+}
+.e_cancel:active{
+    background-color: black;
+}
+.e_cancel:active a{
+   color: white;
 }
 .e_cancel a{
-    font-size: medium;
+    font-size: 22px;
     color: black;
     cursor: pointer;
 }
 .e_confirm{
     float: left;
     position: relative;
-    width: 30%;
-    height: 30%;
+    width: 40%;
+    height: 35%;
     border: 1px solid black;
-    left: 10.2%;
+    left: 1%;
     top: 20%;
+    border-radius: 5px;
+}
+.e_confirm:hover{
+    background-color: rgba(0,0,0,0.29);
+}
+.e_confirm:active{
+    background-color: black;
+}
+.e_confirm:active a{
+    color: white;
 }
 
 .e_confirm a{
-    font-size: medium;
+    font-size: 22px;
     color: black;
     cursor: pointer;
 }
