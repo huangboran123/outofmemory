@@ -41,4 +41,9 @@ public class UserSetviceImpl implements IUserService {
     public ProfilePageUser getProfileUserById(Integer userId) {
         return userMapper.getProfileUserById(userId);
     }
+
+    @Override
+    public int updateUserById(User muser) {
+        return userMapper.updateUserById(muser);
+    }
 }

@@ -351,3 +351,24 @@
 .e_input select{
     font-size: large;
 }
+
+/*
+-------------------------------------------账号信息---------------------------------------*/
+.account_text{
+    width: 95%;
+    height: 7vh;
+    padding: 20px 20px 10px 20px;
+    background-color: white;
+}
+
+.account_text span{
+    font-size: 20px;
+    font-weight: bold;
+
+}
+.accountinfo{
+    width: 95%;
+    height: 67vh;
+    padding: 20px 20px 10px 20px;
+    background-color: white;
+}

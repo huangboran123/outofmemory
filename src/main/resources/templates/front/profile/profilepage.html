@@ -30,28 +30,15 @@
     </div>
    <!-- 右边显示栏目-->
     <div class="rightprofilebody">
-        <div class="basicinfo">
-            <div class="profilebasic">
-                <div class="profilephotobox">
-                    <img th:src="@{/common/profile_image/{fromimage}(fromimage=${session.user.image})}">
-                </div>
-
-                <div class="profilename">
-                    <span  th:text="${session.user.username}"></span>
-                </div>
-                <div class="codeage"><span>码龄:0 年</span></div>
-                <div class="personalstats"><a href="">个人主页</a></div>
-                <div class="personlevel">
-                    <div class="check-in"><a href="">签到</a></div>
-                    <div class="userlevel"><span>等级:0</span></div>
-                </div>
-
+        <div class="account_text"><span>账号信息</span></div>
+        <div class="accountinfo">
+            <div class="account_md">
+                <div class="account_l"></div>
+                <div class="account_r"></div>
             </div>
-        </div>
-        <div class="basicinfodetail">
-
 
         </div>
+
 
     </div>
 
@@ -89,7 +76,7 @@
     /*------------------------------------------------------------------------------------------------------*/
      /*页面加载时触发，默认个人设置页面*/
       window.onload=function () {
-          $(".personalset").click();
+          /*$(".personalset").click();*/
 
       }
       /*个人设置点击事件*/
@@ -100,7 +87,7 @@
         var flist=$(".leftprofilebody div");
         for(var i=0;i<flist.length;i++){
             if(flist[i]!==this){
-                flist[i].style.background_color="white";
+                flist[i].style.backgroundColor="white";
             }
 
         }
@@ -206,11 +193,11 @@
             "                    </div>\n" +
             "                  <div class=\"e_user\">\n" +
             "                        <div class=\"e_text\">QQ号码：</div>\n" +
-            "                        <div class=\"e_input\"><input type=\"text\" id=\"qqnumber\" value='"+parray[3]+"'></div>\n" +
+            "                        <div class=\"e_input\"><input type=\"text\" placeholder='可为空,4~20数字' id=\"qqnumber\" value='"+parray[3]+"'></div>\n" +
             "                  </div>\n" +
             "                  <div class=\"e_user\">\n" +
             "                        <div class=\"e_text\">地址：</div>\n" +
-            "                        <div class=\"e_input\"><input type=\"text\" id=\"address\" value='"+parray[5]+"'></div>\n" +
+            "                        <div class=\"e_input\"><input type=\"text\" id=\"address\" placeholder='可为空' value='"+parray[5]+"'></div>\n" +
             "                  </div>\n" +
             "                    <div class=\"e_user\">\n" +
             "                        <div class=\"e_text\">性别：</div>\n" +
@@ -243,16 +230,28 @@
     })
     /*确认修改*/
     $(document).on("click",'.e_confirm',function () {
-        let username=$("#username").val();
-        if(username.length>10||username.replace(/^\s+|\s+$/g,'').length ===0){
-            alert("用户名不大于10个字符且不能为空");
+        let username=$("#username").val().replace(/\s*/g,"");
+        if(username.length<2||username.length>10){
+            alert("用户名不大于10个字符不小于2个字符且不能为空");
             return 0;
         }
-        let birthday=$("#birthday").val();
-        let qq_number=$("#qqnumber").val();
-        let address=$("#address").val();
+        let birthday=$("#birthday").val()
+        if(birthday.length ===0){
+            alert("生日不能为空");
+            return 0;
+        }
+        let qq_number=$("#qqnumber").val().replace(/\s*/g,"");
+        if(qq_number.length !==0&&(qq_number.length<4||qq_number.length>20)){
+            alert("QQ号码不大于20个数字不小于4个数字");
+            return 0;
+        }
+        let address=$("#address").val().replace(/\s*/g,"");
+        if(address.length>50){
+            alert("地址不能大于50个字符且不能全输入空格");
+            return 0;
+        }
         let sex=$("#sex").val();
-        let reputation=$("#reputation").text();
+        let reputation=$("#reputation").text().replace(/\s*/g,"");
         /*新建要修改的用户信息js对象*/
         let muser={username:username,birthday:birthday,
             qq_number:qq_number,address:address,sex:sex,reputation:reputation}
@@ -265,8 +264,15 @@
             contentType:"application/json",
             success:function (msg) {
 
-                alert(msg);
-                return 0;
+                if(msg==="true"){
+                    alert("修改成功");
+                    return 0;
+                }
+                else {
+                    alert("修改失败");
+                    return  0;
+                }
+
             },
             error:function (msg) {
                 alert(msg);
@@ -277,5 +283,23 @@
 
         return 0;
     })
+/* ---------------------------------------------账号设置事件---------------------------------------------*/
+
+   /* 账号设置点击事件*/
+    $(".accountset").on("click",function () {
+
+        $(".rightprofilebody").html("");
+        /*点击后改变当前点击栏目背景色*/
+        $(".accountset").css("background-color","#f0f0f5");
+        /*点击效果互斥*/
+        var flist=$(".leftprofilebody div");
+        for(var i=0;i<flist.length;i++){
+            if(flist[i]!==this){
+                flist[i].style.backgroundColor="white";
+            }
+
+        }
+    })
+
 </script>
 </html>

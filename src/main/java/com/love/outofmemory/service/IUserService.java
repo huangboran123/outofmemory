@@ -13,4 +13,6 @@ public interface IUserService {
     User getUserByloginname(String loginname);
 
     ProfilePageUser getProfileUserById(Integer userId);
+
+    int updateUserById(User muser);
 }

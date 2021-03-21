@@ -5,6 +5,7 @@ import com.love.outofmemory.domain.User;
 import com.love.outofmemory.domain.view.ProfilePageUser;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -23,4 +24,7 @@ public interface UserMapper {
 
     @Select("select id,username,sex,birthday,reputation,qq_number,address,image,level,TIMESTAMPDIFF(YEAR,create_time,NOW()) AS codeage from o_user where id=#{userId}")
     ProfilePageUser getProfileUserById(Integer userId);
+
+    @Update("update o_user set username=#{username},birthday=#{birthday},qq_number=#{qq_number},sex=#{sex},reputation=#{reputation} where id=#{id}")
+    int updateUserById(User muser);
 }
