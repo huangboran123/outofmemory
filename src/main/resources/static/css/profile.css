@@ -356,8 +356,8 @@
 -------------------------------------------账号信息---------------------------------------*/
 .account_text{
     width: 95%;
-    height: 7vh;
-    padding: 20px 20px 10px 20px;
+    height: 5vh;
+    padding: 20px 20px 5px 20px;
     background-color: white;
 }
 
@@ -369,6 +369,45 @@
 .accountinfo{
     width: 95%;
     height: 67vh;
-    padding: 20px 20px 10px 20px;
+    padding: 1.2% 2.4%;
     background-color: white;
+}
+.account_md{
+    position: relative;
+    width: 95%;
+    height: 5vh;
+   font-size: medium;
+    color: rgba(0,0,0,0.55);
+    left: 1%;
+}
+.account_l{
+    float: left;
+    position: relative;
+    width: 20%;
+    height: 100%;
+    text-align: left;
+}
+.account_r{
+    float: left;
+    position: relative;
+    width: 40%;
+    height: 87%;
+    text-align: left;
+    padding-top: 0.7%;
+
+}
+
+.modifyitem{
+    float: left;
+    position: relative;
+    width: 10%;
+    height: 100%;
+    text-align: left;
+}
+.modifyitem a{
+    color: rgba(0,0,0,0.55);
+    font-size: medium;
+}
+.modifyitem a:hover{
+    color: red;
 }
