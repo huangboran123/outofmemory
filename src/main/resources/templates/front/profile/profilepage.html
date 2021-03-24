@@ -43,10 +43,28 @@
                 <div class="modifyitem"><a href="javascript:void(0)">修改</a></div>
             </div>
             <div class="account_mdpasswd">
-                <div class="passwdchange-btn">变更密码</div>
-                <div class="">
-                    <div></div>
-                    <div></div>
+                <div class="passwdchange">
+                    <div class="passwdchange-btn"><a href="javascript:void(0)">变更密码</a></div>
+                </div>
+                <div class="showchangepw">
+                    <div class="changepw">
+                        <div class="p-text">原密码</div>
+                        <div class="originalpasswd-input" contenteditable="true"></div>
+                        <div class="oi-info"></div>
+                    </div>
+                    <div class="changepw">
+                        <div class="p-text">新密码</div>
+                        <div class="newpasswd-input" contenteditable="true"></div>
+                        <div class="np-info"></div>
+                    </div>
+                    <div class="changepw">
+                        <div class="p-text">确认新密码</div>
+                        <div class="conpasswd-input" contenteditable="true"></div>
+                        <div class="cp-info"></div>
+                    </div>
+                    <div class="changepw">
+                        <div class="submirpasswd"><a href="javascript:void(0)">确认修改</a></div>
+                    </div>
 
 
                 </div>
@@ -317,5 +335,23 @@
         }
     })
 
+/*----------------------------------------------修改个人密码---------------------------------------------------*/
+         $(document).on("click",'.passwdchange-btn',function () {
+             let bgtext=$(".passwdchange-btn a").text();
+
+             if(bgtext==="变更密码")
+             {
+                 $(".showchangepw").css("display","block");
+                 $(".passwdchange-btn a").text("取消变更");
+             }
+             else{
+
+                 $(".showchangepw").css("display","none");
+                 $(".passwdchange-btn a").text("变更密码");
+             }
+
+
+
+         })
 </script>
 </html>

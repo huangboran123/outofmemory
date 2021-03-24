@@ -393,7 +393,7 @@
     width: 40%;
     height: 87%;
     text-align: left;
-    padding-top: 0.7%;
+    /*padding-top: 0.7%;*/
 
 }
 
@@ -410,4 +410,135 @@
 }
 .modifyitem a:hover{
     color: red;
+}
+.modifyitem a:active{
+    color: black;
+}
+.account_mdpasswd{
+
+    position: relative;
+    width: 95%;
+    height: auto;
+    font-size: medium;
+    color: rgba(0,0,0,0.55);
+    left: 1%;
+}
+
+.passwdchange{
+
+    height: 25px;
+    width: 100%;
+
+}
+.passwdchange-btn {
+    width: 10%;
+    height: 100%;
+}
+.passwdchange .passwdchange-btn a{
+    color: rgba(0,0,0,0.55);
+}
+
+.passwdchange .passwdchange-btn a:hover{
+    color: red;
+}
+.passwdchange .passwdchange-btn a:active{
+    color: black;
+}
+
+.showchangepw{
+    height: 155px;
+    width: 100%;
+    display: none;
+
+}
+
+.changepw{
+    position: relative;
+    float: left;
+    width: 90%;
+    height: auto;
+    margin-top: 10px;
+    left: 9%;
+}
+
+.p-text{
+    position: relative;
+    float: left;
+    width: 15%;
+    height: 29px;
+    padding-top: 1px;
+}
+.originalpasswd-input{
+
+    position: relative;
+    float: left;
+    width: 30%;
+    height: 26px;
+    left: 5%;
+    border-radius: 50px;
+    border: 1px solid rgba(0,0,0,0.55);
+    padding-left: 10px;
+    padding-top: 2px;
+}
+
+
+.oi-info{
+    position: relative;
+    float: left;
+    width: 15%;
+    height: 30px;
+    left: 8%;
+}
+
+.newpasswd-input{
+    position: relative;
+    float: left;
+    width: 30%;
+    height: 26px;
+    left: 5%;
+    border-radius: 50px;
+    border: 1px solid rgba(0,0,0,0.55);
+    padding-left: 10px;
+    padding-top: 2px;
+}
+
+.conpasswd-input{
+    position: relative;
+    float: left;
+    width: 30%;
+    height: 26px;
+    left: 5%;
+    border-radius: 50px;
+    border: 1px solid rgba(0,0,0,0.55);
+    padding-left: 10px;
+    padding-top: 2px;
+}
+.cp-info{
+    position: relative;
+    float: left;
+    width: 15%;
+    height: 30px;
+    left: 8%;
+}
+.np-info{
+    position: relative;
+    float: left;
+    width: 15%;
+    height: 30px;
+    left: 8%;
+}
+
+.submirpasswd{
+    position: relative;
+    width: 10%;
+    left: 52%;
+}
+.submirpasswd a{
+color: rgba(0,0,0,0.55)
+}
+.submirpasswd a:hover{
+    color: red;
+}
+.submirpasswd a:active{
+    color: black;
 }
