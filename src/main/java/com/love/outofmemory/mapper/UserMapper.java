@@ -27,4 +27,7 @@ public interface UserMapper {
 
     @Update("update o_user set username=#{username},birthday=#{birthday},qq_number=#{qq_number},sex=#{sex},reputation=#{reputation} where id=#{id}")
     int updateUserById(User muser);
+
+    @Update("update o_user set password=#{newpasswdMd5} where id=#{userId}")
+    int updateUserpasswdById(Integer userId, String newpasswdMd5);
 }

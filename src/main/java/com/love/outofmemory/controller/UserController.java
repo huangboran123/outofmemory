@@ -3,6 +3,7 @@ package com.love.outofmemory.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.love.outofmemory.Utills.CodeUtil;
 import com.love.outofmemory.Utills.DateUtil;
 import com.love.outofmemory.Utills.EncryptionUtils;
 import com.love.outofmemory.domain.User;
@@ -225,10 +226,7 @@ public class UserController {
             Integer uid=user.getId();
             muser.setId(uid);
             int i=iUserService.updateUserById(muser);
-            if(i==1){
-                return true;
-            }
-            else return false;
+            return i == 1;
 
         }
         else{
@@ -238,8 +236,39 @@ public class UserController {
 
     }
 
+   /* 查询个人密码是否一致*/
+   @PostMapping(value = "/passwdtest",produces ={"application/json;charset=UTF-8"})
+   @ResponseBody
+   public Boolean passwdissame(HttpSession session,String originalpasswd){
 
+       User user=(User)session.getAttribute("user");
+       if(user!=null){
+           return user.getPassword().equals(EncryptionUtils.encryptMD5(originalpasswd));
+       }
+       else{
+           return false;
+       }
+   }
 
+    /* 修改密码*/
+    @PostMapping(value = "/passwdchange",produces ={"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Boolean passwdchange(HttpSession session,String newpasswd){
 
+        User user=(User)session.getAttribute("user");
+        if(user!=null){
+           Integer userId=user.getId();
+           if(userId!=null&&newpasswd!=null ){
+              String  newpasswdMd5=EncryptionUtils.encryptMD5(newpasswd);
+             int i=iUserService.updateUserpasswdById(userId,newpasswdMd5);
+              return i == 1;
+
+           }
+           else return false;
+        }
+        else{
+            return false;
+        }
+    }
 
 }

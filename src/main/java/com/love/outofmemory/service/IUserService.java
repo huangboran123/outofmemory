@@ -15,4 +15,6 @@ public interface IUserService {
     ProfilePageUser getProfileUserById(Integer userId);
 
     int updateUserById(User muser);
+
+    int updateUserpasswdById(Integer userId, String newpasswdMd5);
 }

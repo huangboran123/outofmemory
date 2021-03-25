@@ -63,6 +63,7 @@
                         <div class="cp-info"></div>
                     </div>
                     <div class="changepw">
+                        <div class="submirpasswd-info"></div>
                         <div class="submirpasswd"><a href="javascript:void(0)">确认修改</a></div>
                     </div>
 
@@ -336,9 +337,12 @@
     })
 
 /*----------------------------------------------修改个人密码---------------------------------------------------*/
+
+
          $(document).on("click",'.passwdchange-btn',function () {
              let bgtext=$(".passwdchange-btn a").text();
 
+             let flag=0;
              if(bgtext==="变更密码")
              {
                  $(".showchangepw").css("display","block");
@@ -350,8 +354,117 @@
                  $(".passwdchange-btn a").text("变更密码");
              }
 
+             $(document).on("click",'.submirpasswd',function () {
+
+                 let originalpasswd=$(".originalpasswd-input").text().replace(/\s*/g,"");
+                 let newpasswd=$(".newpasswd-input").text().replace(/\s*/g,"");
+                 let confirmnewpasswd=$(".conpasswd-input").text().replace(/\s*/g,"");
+                 let userId=$("#userId").val();
+
+                 /*原密码是否符合格式*/
+                 let passwdreg=/^(?![0-9]+$)(?![A-Za-z]+$)[A-Za-z0-9]{8,15}$/
+                 if(!passwdreg.test(originalpasswd)){
+                     $(".oi-info").text("原密码不符合格式");
+                     setTimeout(textdispear,2500);
+                     return 0;
+                 }
+
+                 /*查询原密码是否一致*/
+                 $.ajax({
+                     url:"/passwdtest",
+                     dataType:"text",
+                     method:"post",
+                     data:{'originalpasswd':originalpasswd},
+                     success:function (msg) {
+                         if(msg!=="true"){
+                             $(".oi-info").text("原密码错误");
+                             setTimeout(textdispear,2200);
+                             return 0;
+                         }
+
+                     },
+                     error:function (msg) {
+                         return 0;
+
+                     }
+                 })
+
+
+
+                 /*新密码是否符合格式*/
+                 if(!passwdreg.test(newpasswd)){
+                     $(".np-info").text("新密码不符合格式");
+                     setTimeout(textdispear,2200);
+                     return 0;
+                 }
+                 /*确认新密码*/
+                 if((!passwdreg.test(confirmnewpasswd))||(!newpasswd===confirmnewpasswd)){
+                     $(".cp-info").text("密码不一致");
+                     setTimeout(textdispear,2200);
+                     return 0;
+                 }
+
+
+                 /*前台确认可以修改密码*/
+                 $.ajax({
+                     url:"/passwdchange",
+                     dataType:"text",
+                     data:{'newpasswd':newpasswd},
+                     method:"post",
+                     success: function (msg) {
+                         if(msg==="true"){
+                             $(".submirpasswd-info").text("密码修改成功");
+                             setTimeout(textdispear,2200);
+                             return 0;
+                         }
+                         else{
+                             $(".submirpasswd-info").text("密码修改失败");
+                             setTimeout(textdispear,2200);
+                             return 0;
+                         }
+
+                     },
+                     error:function (msg) {
+                         alert("msg");
+                         return 0;
+
+                     }
+
+                 })
+
+
+                /* let emailrep=/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+                 if(!emailrep.test(originalpasswd)){
+                     alert("原密码不符合格式");
+                     return 0;
+                 }*/
+
+
+               /*  $.ajax({
+
+                     url:"",
+                     dataType:"text",
+                     method:"post",
+                     data:{'userId':userId}
+
+
+                 })*/
+
+
+             })
+
 
 
          })
+    /*设置文字提示文字消失*/
+    function textdispear() {
+             $(".oi-info").text("");
+             $(".cp-info").text("");
+             $(".np-info").text("");
+             $(".submirpasswd-info").text("")
+
+    }
+
+
 </script>
 </html>
