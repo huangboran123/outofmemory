@@ -387,31 +387,55 @@
     height: 100%;
     text-align: left;
 }
-.account_r{
+
+.account_r-phone{
     float: left;
     position: relative;
     width: 40%;
     height: 87%;
     text-align: left;
-    /*padding-top: 0.7%;*/
-
+}
+.account_r-email{
+    float: left;
+    position: relative;
+    width: 40%;
+    height: 87%;
+    text-align: left;
 }
 
-.modifyitem{
+.modifyitem-phone{
     float: left;
     position: relative;
     width: 10%;
     height: 100%;
     text-align: left;
 }
-.modifyitem a{
+.modifyitem-email{
+    float: left;
+    position: relative;
+    width: 10%;
+    height: 100%;
+    text-align: left;
+}
+.modifyitem-email a{
     color: rgba(0,0,0,0.55);
     font-size: medium;
 }
-.modifyitem a:hover{
+.modifyitem-email a:hover{
     color: red;
 }
-.modifyitem a:active{
+.modifyitem-email a:active{
+    color: black;
+}
+
+.modifyitem-phone a{
+    color: rgba(0,0,0,0.55);
+    font-size: medium;
+}
+.modifyitem-phone a:hover{
+    color: red;
+}
+.modifyitem-phone a:active{
     color: black;
 }
 .account_mdpasswd{
@@ -431,8 +455,17 @@
 
 }
 .passwdchange-btn {
+    position: relative;
+    float: left;
     width: 10%;
     height: 100%;
+}
+.submirpasswd-info{
+    position: relative;
+    float: left;
+    width: 20%;
+    left: 15%;
+
 }
 .passwdchange .passwdchange-btn a{
     color: rgba(0,0,0,0.55);
@@ -542,8 +575,4 @@ color: rgba(0,0,0,0.55)
 .submirpasswd a:active{
     color: black;
 }
-.submirpasswd-info{
-    position: relative;
-    width: 20%;
-    left: 25%;
-}
+

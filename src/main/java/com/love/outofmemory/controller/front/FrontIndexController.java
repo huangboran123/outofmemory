@@ -49,6 +49,7 @@ public class FrontIndexController {
 
         } else {
 
+            //获取COOKIE
             Cookie[] cookies = request.getCookies();
             //判断是否处于生命期
             int flag = 0;
@@ -67,6 +68,7 @@ public class FrontIndexController {
             }
 
             //若存在则重查数据库
+            //浏览器端存在COOKEI则重新设置SESSION
             if (user.getPhone() != null && user.getPassword() != null) {
 
               User user2= iUserService.getUserByloginname(user.getPhone());

@@ -34,17 +34,19 @@
         <div class="accountinfo">
             <div class="account_md">
                 <div class="account_l">手机号码:</div>
-                <div class="account_r">15771134221</div>
-                <div class="modifyitem"><a href="javascript:void(0)">修改</a></div>
+                <div class="account_r-phone">15771134221</div>
+                <div class="modifyitem-phone"><a href="javascript:void(0)">修改</a></div>
+
             </div>
             <div class="account_md">
                 <div class="account_l">邮箱:</div>
-                <div class="account_r">1813422657@qq.com</div>
-                <div class="modifyitem"><a href="javascript:void(0)">修改</a></div>
+                <div class="account_r-email">1813422657@qq.com</div>
+                <div class="modifyitem-email"><a href="javascript:void(0)">修改</a></div>
             </div>
             <div class="account_mdpasswd">
                 <div class="passwdchange">
                     <div class="passwdchange-btn"><a href="javascript:void(0)">变更密码</a></div>
+                    <div class="submirpasswd-info"></div>
                 </div>
                 <div class="showchangepw">
                     <div class="changepw">
@@ -63,7 +65,6 @@
                         <div class="cp-info"></div>
                     </div>
                     <div class="changepw">
-                        <div class="submirpasswd-info"></div>
                         <div class="submirpasswd"><a href="javascript:void(0)">确认修改</a></div>
                     </div>
 
@@ -342,6 +343,10 @@
          $(document).on("click",'.passwdchange-btn',function () {
              let bgtext=$(".passwdchange-btn a").text();
 
+             $(".originalpasswd-input").text("");
+             $(".newpasswd-input").text("");
+             $(".conpasswd-input").text("");
+
              let flag=0;
              if(bgtext==="变更密码")
              {
@@ -354,6 +359,7 @@
                  $(".passwdchange-btn a").text("变更密码");
              }
 
+             /*密码修改提交*/
              $(document).on("click",'.submirpasswd',function () {
 
                  let originalpasswd=$(".originalpasswd-input").text().replace(/\s*/g,"");
@@ -379,6 +385,7 @@
                          if(msg!=="true"){
                              $(".oi-info").text("原密码错误");
                              setTimeout(textdispear,2200);
+
                              return 0;
                          }
 
@@ -415,6 +422,7 @@
                          if(msg==="true"){
                              $(".submirpasswd-info").text("密码修改成功");
                              setTimeout(textdispear,2200);
+                             $(".passwdchange-btn").click();
                              return 0;
                          }
                          else{
@@ -456,7 +464,59 @@
 
 
          })
-    /*设置文字提示文字消失*/
+
+/*    --------------------------------------------修改手机号码-----------------------------------------------*/
+
+    $(document).on("click",'.modifyitem-phone',function () {
+
+       let mdtext=$(".modifyitem-phone a").text();
+       let orginalphone=  $(".account_r-phone").text();
+       if(mdtext==="修改"){
+           $(".modifyitem-phone a").text("保存");
+           $(".account_r-phone").attr("contenteditable","true");
+           $(".account_r-phone").text("");
+           $(".account_r-phone").focus();
+
+       }
+       else{
+           //手机号正则表达式
+           let phonereg=/^[1-9][0-9]{10}$/;
+           let phonenumber=$(".account_r-phone").text().replace(/\s*/g,"");
+           if(phonereg.test(phonenumber)){
+               $.ajax({
+                   url:"/phonechange",
+                   dataType:"text",
+                   data:{'phonenumber':phonenumber},
+                   type:"post",
+                   success:function (msg) {
+
+                       $(".modifyitem-phone a").text("修改");
+
+                       $(".account_r-phone").attr("contenteditable","false");
+
+                       alert(msg);
+                       return 0;
+
+                   },
+                   error:function (msg) {
+
+                       alert(msg);
+                   }
+
+               })
+           }
+           else{
+               alert("新号码不符合格式")
+           }
+
+       }
+
+    })
+
+
+
+
+  /*  ---------------------------------------设置文字提示文字消失------------------------------------------*/
     function textdispear() {
              $(".oi-info").text("");
              $(".cp-info").text("");

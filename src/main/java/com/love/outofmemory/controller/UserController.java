@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -168,7 +169,7 @@ public class UserController {
           login_name.setPath("/");
           response.addCookie(login_name);
 
-          Cookie pass_word = new Cookie("password", password);
+          Cookie pass_word = new Cookie("password", EncryptionUtils.encryptMD5(password));
           pass_word.setMaxAge(60 * 60 * 24 * 30);
           pass_word.setPath("/");
           response.addCookie(pass_word);
@@ -253,7 +254,7 @@ public class UserController {
     /* 修改密码*/
     @PostMapping(value = "/passwdchange",produces ={"application/json;charset=UTF-8"})
     @ResponseBody
-    public Boolean passwdchange(HttpSession session,String newpasswd){
+    public Boolean passwdchange(HttpSession session, String newpasswd, HttpServletRequest request,HttpServletResponse response){
 
         User user=(User)session.getAttribute("user");
         if(user!=null){
@@ -261,7 +262,40 @@ public class UserController {
            if(userId!=null&&newpasswd!=null ){
               String  newpasswdMd5=EncryptionUtils.encryptMD5(newpasswd);
              int i=iUserService.updateUserpasswdById(userId,newpasswdMd5);
-              return i == 1;
+              if(i==1){
+                  /*若修改成功，则重置cookie与sesssion*/
+                  Cookie[] cookeis=request.getCookies();
+                  for (Cookie c:cookeis) {
+
+                      if(c.getName().equals("password")){
+                          c.setValue(newpasswdMd5);
+                          c.setPath("/");
+                          c.setMaxAge(60 * 60 * 24 * 30);
+                          response.addCookie(c);
+                      }
+
+                      if(c.getName().equals("loginname")){
+                          c.setValue(user.getPhone());
+                          c.setPath("/");
+                          c.setMaxAge(60 * 60 * 24 * 30);
+                          response.addCookie(c);
+                      }
+
+                      if(c.getName().equals("username")){
+                          c.setValue(user.getUsername());
+                          c.setPath("/");
+                          c.setMaxAge(60 * 60 * 24 * 30);
+                          response.addCookie(c);
+                      }
+
+                  }
+                  /*重置session*/
+                  session.removeAttribute("user");
+                  session.setAttribute("user",iUserService.getUserByloginname(user.getPhone()));
+
+                  return true;
+              }
+              else return false;
 
            }
            else return false;
@@ -269,6 +303,17 @@ public class UserController {
         else{
             return false;
         }
+    }
+
+
+   /* consumes = {"application/json"}表示ajax发送的数据格式，也代表服务器解析的数据格式*/
+   /* produces = {"application/json;charset=UTF-8;"} 代表返回给ajax的数据格式，也表示ajax解析的数据格式*/
+    @PostMapping(value = "/phonechange",produces = {"application/json;charset=UTF-8;"})
+    @ResponseBody
+    public Boolean phonechange(HttpSession session,String phonenumber){
+
+        return true;
+
     }
 
 }
