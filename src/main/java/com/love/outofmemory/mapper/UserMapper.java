@@ -30,4 +30,10 @@ public interface UserMapper {
 
     @Update("update o_user set password=#{newpasswdMd5} where id=#{userId}")
     int updateUserpasswdById(Integer userId, String newpasswdMd5);
+
+    @Update("update o_user set phone=#{phonenumber} where id=#{userId}")
+    int updateUserphoneById(Integer userId, String phonenumber);
+
+    @Update("update o_user set email=#{email} where id=#{userId}")
+    int updateUseremailById(Integer userId, String email);
 }

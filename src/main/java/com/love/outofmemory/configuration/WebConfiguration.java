@@ -51,7 +51,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         //addResourceHandler请求路径
         //addResourceLocations 在项目中的资源路径
         //映射顶级路径静态资源
-        registry.addResourceHandler("/**").addResourceLocations("/static/");
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
         super.addResourceHandlers(registry);
 
         //获取文件的真实路径 work_project代表项目工程名 需要更改
@@ -91,8 +91,8 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
                     addResourceLocations("classpath:/static/css/");
            registry.addResourceHandler("/common/**").
                   addResourceLocations("classpath:/static/common/");
-            registry.addResourceHandler("/myblog/js/**","/js/**").
-                    addResourceLocations("classpath:/static/js/");
+            registry.addResourceHandler("/blog/**","/").
+                    addResourceLocations("classpath:/static/");
         }
         super.addResourceHandlers(registry);
     }

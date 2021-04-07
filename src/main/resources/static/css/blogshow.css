@@ -110,6 +110,7 @@ canvas{
     float: left;*/
     width: 70%;
     height: auto;
+    min-height: 60vh;
     background-color: white;
     position: relative;
     z-index: 1;

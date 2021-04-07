@@ -245,7 +245,36 @@ public class BlogController {
 
 
     }
+/*浏览他人博客,不进行登录判断*/
+@GetMapping(value = "/blog/viewblog")
+public String viewotherblogPage(Model model,
+                           @RequestParam("blogId") Integer blogId,
+                           @RequestParam("userId") Integer userId,
+                           HttpSession session){
+
+        /*当前浏览博客信息*/
+        Blog blog=iBlogService.getblogById(blogId);
+        /*   博客作者统计信息*/
+        BlogPageUser blogPageUser=iBlogService.getUserMoreById(userId);
+        /*   作者博客分类信息*/
+        List<Classify> classlistcount=iBlogService.getClassifyBlogCount(userId);
+        /*推荐博客*/
+        List<Blog> recomandblogs=iBlogService.getRecommandblogs();
+
+        List<Comment> comments=iCommentService.getAllCommentsPageByBlogId(blogId,0,5);
+
+        /*博客，用户信息查询*/
+        model.addAttribute("blog",blog);
+        model.addAttribute("blogPageuser",blogPageUser);
+        model.addAttribute("classlistcount",classlistcount);
+        model.addAttribute("recomandblogs",recomandblogs);
+        /*当前博客评论查询*/
+        model.addAttribute("comments",comments);
+
+        return "front/blog/show_blog";
 
 
+
+}
 
 }

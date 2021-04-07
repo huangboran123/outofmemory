@@ -36,12 +36,14 @@
                 <div class="account_l">手机号码:</div>
                 <div class="account_r-phone">15771134221</div>
                 <div class="modifyitem-phone"><a href="javascript:void(0)">修改</a></div>
+                <div class="pm-info"></div>
 
             </div>
             <div class="account_md">
                 <div class="account_l">邮箱:</div>
                 <div class="account_r-email">1813422657@qq.com</div>
                 <div class="modifyitem-email"><a href="javascript:void(0)">修改</a></div>
+                <div class="pe-info"></div>
             </div>
             <div class="account_mdpasswd">
                 <div class="passwdchange">
@@ -322,7 +324,7 @@
 /* ---------------------------------------------账号设置事件---------------------------------------------*/
 
    /* 账号设置点击事件*/
-    $(".accountset").on("click",function () {
+    $(document).on("click",'.accountset',function () {
 
         $(".rightprofilebody").html("");
         /*点击后改变当前点击栏目背景色*/
@@ -335,6 +337,120 @@
             }
 
         }
+
+        $.ajax({
+            url:"/getphoneandemail",
+            type:"post",
+            dataType:"text",
+            success:function (msg) {
+                if(msg==="查询失败"){
+                    $(".rightprofilebody").html("");
+                    $(".rightprofilebody").html("<div class=\"account_text\"><span>账号信息</span></div>\n" +
+                        "        <div class=\"accountinfo\">\n" +
+                        "            <div class=\"account_md\">\n" +
+                        "                <div class=\"account_l\">手机号码:</div>\n" +
+                        "                <div class=\"account_r-phone\">查询错误</div>\n" +
+                        "                <div class=\"modifyitem-phone\"><a href=\"javascript:void(0)\">修改</a></div>\n" +
+                        "                <div class=\"pm-info\"></div>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"account_md\">\n" +
+                        "                <div class=\"account_l\">邮箱:</div>\n" +
+                        "                <div class=\"account_r-email\">查询错误11</div>\n" +
+                        "                <div class=\"modifyitem-email\"><a href=\"javascript:void(0)\">修改</a></div>\n" +
+                        "                <div class=\"pe-info\"></div>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"account_mdpasswd\">\n" +
+                        "                <div class=\"passwdchange\">\n" +
+                        "                    <div class=\"passwdchange-btn\"><a href=\"javascript:void(0)\">变更密码</a></div>\n" +
+                        "                    <div class=\"submirpasswd-info\"></div>\n" +
+                        "                </div>\n" +
+                        "                <div class=\"showchangepw\">\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">原密码</div>\n" +
+                        "                        <div class=\"originalpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"oi-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">新密码</div>\n" +
+                        "                        <div class=\"newpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"np-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">确认新密码</div>\n" +
+                        "                        <div class=\"conpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"cp-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"submirpasswd\"><a href=\"javascript:void(0)\">确认修改</a></div>\n" +
+                        "                    </div>\n" +
+                        "                </div>\n" +
+                        "            </div>\n" +
+                        "        </div>");
+
+                    return 0;
+                }
+                else{
+                    var user=JSON.parse(msg);
+                    $(".rightprofilebody").html("");
+                    $(".rightprofilebody").html("<div class=\"account_text\"><span>账号信息</span></div>\n" +
+                        "        <div class=\"accountinfo\">\n" +
+                        "            <div class=\"account_md\">\n" +
+                        "                <div class=\"account_l\">手机号码:</div>\n" +
+                        "                <div class=\"account_r-phone\">"+user.phone+"</div>\n" +
+                        "                <div class=\"modifyitem-phone\"><a href=\"javascript:void(0)\">修改</a></div>\n" +
+                        "                <div class=\"pm-info\"></div>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"account_md\">\n" +
+                        "                <div class=\"account_l\">邮箱:</div>\n" +
+                        "                <div class=\"account_r-email\">"+user.email+"</div>\n" +
+                        "                <div class=\"modifyitem-email\"><a href=\"javascript:void(0)\">修改</a></div>\n" +
+                        "                <div class=\"pe-info\"></div>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"account_mdpasswd\">\n" +
+                        "                <div class=\"passwdchange\">\n" +
+                        "                    <div class=\"passwdchange-btn\"><a href=\"javascript:void(0)\">变更密码</a></div>\n" +
+                        "                    <div class=\"submirpasswd-info\"></div>\n" +
+                        "                </div>\n" +
+                        "                <div class=\"showchangepw\">\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">原密码</div>\n" +
+                        "                        <div class=\"originalpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"oi-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">新密码</div>\n" +
+                        "                        <div class=\"newpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"np-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">确认新密码</div>\n" +
+                        "                        <div class=\"conpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"cp-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"submirpasswd\"><a href=\"javascript:void(0)\">确认修改</a></div>\n" +
+                        "                    </div>\n" +
+                        "                </div>\n" +
+                        "            </div>\n" +
+                        "        </div>");
+                    return 0;
+
+                }
+
+
+            },
+            error:function (msg) {
+                alert(msg);
+
+
+            }
+
+
+
+        });
+        return 0;
+
+
     })
 
 /*----------------------------------------------修改个人密码---------------------------------------------------*/
@@ -433,7 +549,8 @@
 
                      },
                      error:function (msg) {
-                         alert("msg");
+                         $(".submirpasswd-info").text("密码修改失败");
+                         setTimeout(textdispear,2200);
                          return 0;
 
                      }
@@ -489,39 +606,127 @@
                    data:{'phonenumber':phonenumber},
                    type:"post",
                    success:function (msg) {
+                       if(msg==="true"){
+                           $(".modifyitem-phone a").text("修改");
+                           $(".account_r-phone").attr("contenteditable","false");
+                           $(".pm-info").text("手机修改成功");
+                           setTimeout(textduspear2,2200);
+                           return 0;
+                       }
+                       else
+                       {
+                           $(".modifyitem-phone a").text("修改");
+                           $(".account_r-phone").attr("contenteditable","false");
+                           $(".account_r-phone").text(orginalphone);
+                           $(".pm-info").text("手机已存在或修改失败");
+                           setTimeout(textduspear2,2200);
+                       }
 
-                       $(".modifyitem-phone a").text("修改");
 
-                       $(".account_r-phone").attr("contenteditable","false");
-
-                       alert(msg);
-                       return 0;
 
                    },
                    error:function (msg) {
 
-                       alert(msg);
+                       $(".modifyitem-phone a").text("修改");
+                       $(".account_r-phone").attr("contenteditable","false");
+                       $(".account_r-phone").text(orginalphone);
+                       $(".pm-info").text("手机修改失败");
+                       setTimeout(textduspear2,2200);
                    }
 
                })
            }
            else{
-               alert("新号码不符合格式")
+               $(".pm-info").text("新号码不符合格式");
+               $(".account_r-phone").text(orginalphone);
+               setTimeout(textduspear2,2200);
            }
 
        }
 
     })
 
+    /*    --------------------------------------------修改邮箱号码-----------------------------------------------*/
+
+    $(document).on("click",'.modifyitem-email',function () {
+
+        let mdtext=$(".modifyitem-email a").text();
+        let orginalemail=  $(".account_r-email").text();
+        if(mdtext==="修改"){
+            $(".modifyitem-email a").text("保存");
+            $(".account_r-email").attr("contenteditable","true");
+            $(".account_r-email").text("");
+            $(".account_r-email").focus();
+
+        }
+        else{
+            //email正则表达式
+            let emailreg=/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+            let email=$(".account_r-email").text().replace(/\s*/g,"");
+            if(emailreg.test(email)){
+                $.ajax({
+                    url:"/emailchange",
+                    dataType:"text",
+                    data:{'emailr':email},
+                    type:"post",
+                    success:function (msg) {
+                        if(msg==="true"){
+                            $(".modifyitem-email a").text("修改");
+                            $(".account_r-email").attr("contenteditable","false");
+                            $(".pm-info").text("email修改成功");
+                            setTimeout(textduspear2,2200);
+                            return 0;
+                        }
+                        else
+                        {
+                            $(".modifyitem-email a").text("修改");
+                            $(".account_r-email").attr("contenteditable","false");
+                            $(".account_r-email").text(orginalemail);
+                            $(".pe-info").text("eamil已存在修改失败");
+                            setTimeout(textduspear2,2200);
+                        }
 
 
 
-  /*  ---------------------------------------设置文字提示文字消失------------------------------------------*/
+                    },
+                    error:function (msg) {
+                        $(".modifyitem-email a").text("修改");
+                        $(".account_r-email").attr("contenteditable","false");
+                        $(".account_r-email").text(orginalemail);
+                        $(".pe-info").text("email修改失败");
+                        setTimeout(textduspear2,2200);
+                    }
+
+                })
+            }
+            else{
+                $(".modifyitem-email a").text("修改");
+                $(".account_r-email").attr("contenteditable","false");
+                $(".account_r-email").text(orginalemail);
+                $(".pe-info").text("新email不符合格式");
+                setTimeout(textduspear2,2200);
+            }
+
+        }
+
+    })
+
+
+
+
+    /*  ---------------------------------------设置文字提示文字消失------------------------------------------*/
+   /* psswordifo*/
     function textdispear() {
              $(".oi-info").text("");
              $(".cp-info").text("");
              $(".np-info").text("");
              $(".submirpasswd-info").text("")
+
+    }
+    function textduspear2() {
+        $(".pe-info").text("");
+        $(".pm-info").text("");
+
 
     }
 

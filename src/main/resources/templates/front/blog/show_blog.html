@@ -118,7 +118,7 @@
                 <div class="viewcount">
                 <a href="" th:text="${'浏览量:'+blog.views}"></a>
                 </div>
-                <div class="edit">
+                <div class="edit"  th:if="${session.user.id!=blog.user.id}">
                     <a th:href="@{'/myblog/modPage?blogId='+${blog.id}}">编辑</a>
                 </div>
             </div>

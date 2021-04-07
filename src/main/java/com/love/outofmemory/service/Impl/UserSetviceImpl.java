@@ -51,4 +51,14 @@ public class UserSetviceImpl implements IUserService {
     public int updateUserpasswdById(Integer userId, String newpasswdMd5) {
         return userMapper.updateUserpasswdById(userId,newpasswdMd5);
     }
+
+    @Override
+    public int updateUserphoneById(Integer userId, String phonenumber) {
+        return userMapper.updateUserphoneById(userId,phonenumber);
+    }
+
+    @Override
+    public int updateUseremailById(Integer userId, String email) {
+        return userMapper.updateUseremailById(userId, email);
+    }
 }

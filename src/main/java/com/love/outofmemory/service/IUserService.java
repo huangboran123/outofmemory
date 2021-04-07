@@ -17,4 +17,8 @@ public interface IUserService {
     int updateUserById(User muser);
 
     int updateUserpasswdById(Integer userId, String newpasswdMd5);
+
+    int updateUserphoneById(Integer userId, String phonenumber);
+
+    int updateUseremailById(Integer id, String email);
 }

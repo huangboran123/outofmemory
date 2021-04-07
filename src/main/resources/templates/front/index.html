@@ -32,7 +32,10 @@
 		<div class="best_blog">
 			<div class="recommend_left">推荐博客</div>
 
-			<ul class="blogs" th:each=" b:${blogList}">
+			<ul class="blogs" th:each=" b:${blogList}" >
+				<input type="hidden" th:value="${b.id}">
+				<input type="hidden" th:value="${b.user.id}">
+
 				<!--该部分由数据库查询得到-->
 				<li class="title"><a href="" th:text="${b.title}"></a></li>
 				<li class="author"><img th:src="@{/mycommon/getImage(image=${b.user.image})}" alt=""><a href="" th:text="${b.user.username}"></a></li>
@@ -121,8 +124,13 @@
 	$("#user_menu").mouseout(function () {
 		$("#user_menu").css("display","none");
 	})
+/*-------------------------------点击博客事件--------------------------------------*/
+$(document).on("click",'.blogs',function () {
+	let blogId=this.firstElementChild.value;
+	let userId=this.firstElementChild.nextElementSibling.value;
+	window.location.href="blog/viewblog?blogId="+blogId+"&userId="+userId;
 
-
+})
 
 
 </script>

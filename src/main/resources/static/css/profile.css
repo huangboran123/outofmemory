@@ -575,4 +575,16 @@ color: rgba(0,0,0,0.55)
 .submirpasswd a:active{
     color: black;
 }
+.pm-info{
+    position: relative;
+    float: left;
+    width: auto;
+    height: 100%;
+}
 
+.pe-info{
+    position: relative;
+    float: left;
+    width: auto;
+    height: 100%;
+}

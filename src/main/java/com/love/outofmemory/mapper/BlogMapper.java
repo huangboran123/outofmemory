@@ -78,7 +78,6 @@ public interface BlogMapper {
             @Result(column ="fans" ,property = "user.fans"),
             @Result(column ="follow" ,property = "user.follow"),
             @Result(column ="reputation" ,property = "user.reputation"),
-            @Result(column ="reputation" ,property = "user.reputation"),
     })
     Blog getblogById(Integer blogId);
 
