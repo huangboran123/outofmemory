@@ -118,7 +118,7 @@
                 <div class="viewcount">
                 <a href="" th:text="${'浏览量:'+blog.views}"></a>
                 </div>
-                <div class="edit"  th:if="${session.user.id!=blog.user.id}">
+                <div class="edit"  th:if="${session.user!=null and session.user.id==blog.user.id}">
                     <a th:href="@{'/myblog/modPage?blogId='+${blog.id}}">编辑</a>
                 </div>
             </div>
@@ -211,7 +211,7 @@
         </div>
 
        <!--当前未登录或者是登录用户访问其他用户博客才显示-->
-        <div class="One_key_three_links"  th:if="${session.user.id!=blog.user.id}">
+        <div class="One_key_three_links"  th:if="${session.user!=null and session.user.id==blog.user.id}">
             <div class="collect"></div>
             <div class="follow"></div>
             <div class="three_trigger"></div>
