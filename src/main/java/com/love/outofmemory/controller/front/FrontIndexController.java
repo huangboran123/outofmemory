@@ -36,11 +36,15 @@ public class FrontIndexController {
         //这里可以将user用户信息存入redis缓存，而不使用服务器session
         //用户退出时，删除redis相应key即可
 
+        Integer page=1;
+        Integer pagesize=5;
 
         List<BlogTag> blogTagList=iBlogTagService.getBlogTags();
         model.addAttribute("blogTagList",blogTagList);
 
-        List<Blog> blogList=iBlogService.getIndexRecommandblogs();
+
+
+        List<Blog> blogList=iBlogService.getIndexRecommandblogs(page,pagesize);
         model.addAttribute("blogList",blogList);
 
 

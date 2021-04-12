@@ -1,5 +1,6 @@
 package com.love.outofmemory.service.Impl;
 
+import com.love.outofmemory.Utills.RedisUtil;
 import com.love.outofmemory.domain.Blog;
 import com.love.outofmemory.domain.view.Classify;
 import com.love.outofmemory.domain.view.BlogPageUser;
@@ -10,6 +11,7 @@ import com.love.outofmemory.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,8 +24,9 @@ public class BlogServiceImpl implements IBlogService {
     @Autowired
     private BlogTagMapper blogTagMapper;
     @Autowired
-
     private ClassificationMapper classificationMapper;
+    @Autowired
+    private RedisUtil redisUtil;
 
 
 
@@ -97,12 +100,37 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    public List<Blog> getIndexRecommandblogs() {
-        return blogMapper.getIndexRecommandblogs();
+    public List<Blog> getIndexRecommandblogs(Integer page, Integer pagesize) {
+
+
+       /* 博客查询redis优化*/
+        List<Integer> blogids=getRecommandBlogIds(page,pagesize);
+        List<Blog> bloglistbetter=new ArrayList<>();
+
+        for (Integer i:blogids)
+        {
+            if(redisUtil.HashGet("Views",i.toString())==null){
+                Blog b=getblogById(i);
+                bloglistbetter.add(b);
+                redisUtil.HashPut("Views",i.toString(),b.getViews());
+            }
+            else{
+                Blog b=getblogByIdNoviews(i);
+                b.setViews((Integer)redisUtil.HashGet("Views",i.toString()));
+                bloglistbetter.add(b);
+            }
+        }
+
+        return bloglistbetter;
     }
 
     @Override
     public Blog getblogByIdNoviews(Integer blogId) {
         return blogMapper.getblogByIdNoviews(blogId);
+    }
+
+    @Override
+    public List<Integer> getRecommandBlogIds(Integer page, Integer pagesize) {
+        return blogMapper.getRecommandBlogIds(page-1,pagesize);
     }
 }
