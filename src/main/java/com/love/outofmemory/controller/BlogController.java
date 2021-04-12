@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.love.outofmemory.Utills.DateUtil;
 import com.love.outofmemory.Utills.MarkDownUtil;
+import com.love.outofmemory.Utills.RedisUtil;
 import com.love.outofmemory.domain.*;
 import com.love.outofmemory.domain.view.BlogPageUser;
 import com.love.outofmemory.domain.view.Classify;
@@ -34,6 +35,8 @@ public class BlogController {
     private IBlogTagService iBlogTagService;
     @Autowired
     private ICommentService iCommentService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     //新建博客页面
     @RequestMapping(value = "/newBlogPage",method = RequestMethod.GET)
@@ -251,9 +254,19 @@ public String viewotherblogPage(Model model,
                            @RequestParam("blogId") Integer blogId,
                            @RequestParam("userId") Integer userId,
                            HttpSession session){
+    String blogID=blogId.toString();
+    Blog blog=new Blog();
+ /*   判断redis中是否已经存在博客id的view*/
+    if(redisUtil.HashGet("Views",blogID)!=null){
+        blog=iBlogService.getblogByIdNoviews(blogId);
+        blog.setViews((Integer) redisUtil.HashGet("Views",blogID));
 
+    }else{
         /*当前浏览博客信息*/
-        Blog blog=iBlogService.getblogById(blogId);
+        blog=iBlogService.getblogById(blogId);
+
+    }
+
         /*   博客作者统计信息*/
         BlogPageUser blogPageUser=iBlogService.getUserMoreById(userId);
         /*   作者博客分类信息*/
@@ -271,6 +284,21 @@ public String viewotherblogPage(Model model,
         /*当前博客评论查询*/
         model.addAttribute("comments",comments);
 
+        /*查询浏览量存入redis数据库,若redis中存在则加一*/
+         /*评论量存blogid和views*/
+
+        if(redisUtil.HashGet("Views",blogID)==null){
+            redisUtil.HashPut("Views",blogID,blog.getViews());
+        }
+        else{
+            redisUtil.HashPut("Views",blogID,blog.getViews()+1);
+        }
+
+
+
+
+
+        /*与浏览个人博客返回一样的视图，使用thymeleaf进行条件判断*/
         return "front/blog/show_blog";
 
 

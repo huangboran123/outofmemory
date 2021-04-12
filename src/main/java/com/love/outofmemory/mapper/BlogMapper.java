@@ -61,6 +61,28 @@ public interface BlogMapper {
     @Update("update o_blog set classification=#{movchoice} where id=#{blogId}")
     int moveBlogtootherclass(Integer blogId, Integer movchoice);
 
+    @Select("SELECT o_blog.user_id user_id ,o_blog.id blogId,publish_time,good_count,content,title,comments,isoriginal,username,image,fans,follow,reputation,blog_classification.name classificationName,blog_tag.name tagName, blog_classification.id classificationId,blog_tag.id tagId \n" +
+            "FROM ((o_blog INNER JOIN blog_classification ON o_blog.classification=blog_classification.id)INNER JOIN o_user on o_user.id=o_blog.user_id) INNER JOIN blog_tag ON blog_tag.id=o_blog.tag " +
+            "where o_blog.id=#{blogId}")
+    @Results(id="blognoviews",value ={
+            //classification映射
+            @Result(column = "blogId",property = "id"),
+            @Result(column ="classificationId" ,property = "classification.id"),
+            @Result(column ="classificationName" ,property = "classification.name"),
+            //映射tag
+            @Result(column ="tagId" ,property = "tag.id"),
+            @Result(column ="tagName" ,property = "tag.name"),
+            //user不必映射所有
+            @Result(column ="user_id" ,property = "user.id"),
+            @Result(column ="username" ,property = "user.username"),
+            @Result(column ="image" ,property = "user.image"),
+            @Result(column ="fans" ,property = "user.fans"),
+            @Result(column ="follow" ,property = "user.follow"),
+            @Result(column ="reputation" ,property = "user.reputation"),
+    })
+    Blog getblogByIdNoviews(Integer blogId);
+
+
     @Select("SELECT * , blog_classification.name classificationName,blog_tag.name tagName, blog_classification.id classificationId,blog_tag.id tagId \n" +
             "FROM ((o_blog INNER JOIN blog_classification ON o_blog.classification=blog_classification.id)INNER JOIN o_user on o_user.id=o_blog.user_id) INNER JOIN blog_tag ON blog_tag.id=o_blog.tag " +
             "where o_blog.id=#{blogId}")

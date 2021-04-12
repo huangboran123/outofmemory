@@ -100,4 +100,9 @@ public class BlogServiceImpl implements IBlogService {
     public List<Blog> getIndexRecommandblogs() {
         return blogMapper.getIndexRecommandblogs();
     }
+
+    @Override
+    public Blog getblogByIdNoviews(Integer blogId) {
+        return blogMapper.getblogByIdNoviews(blogId);
+    }
 }

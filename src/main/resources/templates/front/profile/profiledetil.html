@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    <link rel="short icon"  href="/common/system_icon/favicon.ico"/>
+    <link href="/css/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/header.css" rel="stylesheet" type="text/css">
+    <link href="particles/style.css" rel="stylesheet" type="text/css">
+    <link href="/css/profile.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+<div id="particles-js">
+    
+
+
+
+
+
+
+
+    <div th:replace="/front/component/page::footer">
+    </div>
+
+</div>
+</body>
+<script src="js/plugin/jquery.js"></script>
+<!--打字效果引入-->
+<script src="js/plugin/commentTyping.js"></script>
+<!--粒子效果引入-->
+<script src="particles/particles.js"></script>
+<script src="particles/app.js"></script>
+<script src="js/plugin/date.js"></script>
+
+
+<script type="text/javascript">
+    /*------------------------------------------------------------------------------------------------------*/
+    /*头悬浮栏*/
+    $(document).on("mouseover",".current_user_section",function () {
+        $("#user_menu").css("display","block");
+    })
+    $(document).on("mouseout",".current_user_section",function () {
+        $("#user_menu").css("display","none");
+    })
+
+    $(document).on("mouseout","#user_menu",function () {
+        $("#user_menu").css("display","none");
+    })
+
+
+
+
+
+
+</script>
+</html>

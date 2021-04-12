@@ -2,7 +2,6 @@ package com.love.outofmemory.Utills;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +26,16 @@ public class RedisUtil {
        return redisTemplate.opsForValue().get(key);
 
     }
+
+    public void HashPut(String mapname, String field , Object value){
+       redisTemplate.opsForHash().put(mapname,field,value);
+
+    }
+    public Object HashGet(String mapname, String field ){
+      return   redisTemplate.opsForHash().get(mapname,field);
+
+    }
+
 
 
 

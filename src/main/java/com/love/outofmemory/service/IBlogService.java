@@ -45,4 +45,6 @@ public interface IBlogService {
     List<Blog> getRecommandblogs();
 
     List<Blog> getIndexRecommandblogs();
+
+    Blog getblogByIdNoviews(Integer blogId);
 }
