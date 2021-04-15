@@ -45,6 +45,7 @@ public class CommentController {
 
 
            int i=iCommentService.commitcomment(comment1);
+           int j=iCommentService.commentaddonebyid(blogId);
            if(i==1){
                return "评论提交成功";
            }
@@ -60,7 +61,7 @@ public class CommentController {
   /*  提交回复*/
     @PostMapping(value = "/reply",produces ={"text/plain;charset=UTF-8"} )
     @ResponseBody
-    public String reply(Integer commentId,Integer toUId,String replyContent,HttpSession session){
+    public String reply(Integer commentId,Integer toUId,String replyContent,Integer blogId,HttpSession session){
 
         User user=(User) session.getAttribute("user");
         if(user!=null){
@@ -78,6 +79,7 @@ public class CommentController {
             replyComment.setFrom(user);
 
             int i=iCommentService.commitreply(replyComment);
+            int j=iCommentService.commentaddonebyid(blogId);
             if(i==1){
                 return "回复成功";
             }

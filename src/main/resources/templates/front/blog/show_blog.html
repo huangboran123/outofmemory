@@ -322,6 +322,8 @@
 <script src="js/plugin/emoji-lib/emoji.js"></script>
 <script type="text/javascript">
 
+    /*全局变量*/
+    var blogId=$("#blogId").val();
 
     /*前端解析md*/
     $(document).ready(function () {
@@ -492,7 +494,6 @@
     $(".publish_comment").on("click",function () {
         /*获取评论框的输入内容*/
         let comment=$(".comment_content").text();
-        let blogId=$("#blogId").val();
         if(comment!=null&&comment.replace(/^\s+|\s+$/g,'').length !==0){
             /*使用ajax*/
             $.ajax({
@@ -677,7 +678,7 @@
                 dataType: "text",
                 url: "/reply",
                 type: "post",
-                data:{'commentId':commentId,'toUId':toUId,'replyContent':replyContent},
+                data:{'commentId':commentId,'toUId':toUId,'replyContent':replyContent,'blogId':blogId},
                 success:function (msg) {
                     $(".reply_info").text(msg);
                     setTimeout(setBlankc,1200);
@@ -733,5 +734,37 @@
         $(".s_towho").text(criticName);
         $(".reply_photo img").attr("src","/common/profile_image/"+criticPhoto)
     })
+
+/*    -------------------------------------------------------------------------------------------------------*/
+//点赞
+$(document).on("click",'.goodcounts_image',function (e) {
+    $.ajax({
+
+        url:"/likes",
+        type:"post",
+        dataType:"text",
+        data:{'blogId':blogId},
+        success:function (e) {
+            if(e=='true'){
+                let goodcount=$(".goodcounts_item a");
+                let or= goodcount.text().substring(2);
+                goodcount.text('点赞'+(parseInt(or)+1));
+                return 0;
+            }
+            else{
+                return 0;
+            }
+
+        },
+        error:function (e) {
+            return 0;
+
+        }
+
+    })
+
+})
+
+
 </script>
 </html>

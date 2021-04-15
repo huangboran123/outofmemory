@@ -295,14 +295,25 @@ public String viewotherblogPage(Model model,
         }
 
 
-
-
-
         /*与浏览个人博客返回一样的视图，使用thymeleaf进行条件判断*/
         return "front/blog/show_blog";
-
-
-
 }
+
+        @PostMapping(value = "/likes",produces = {"application/json;charset=UTF-8"})
+        @ResponseBody
+        public Boolean likes(Integer blogId,HttpSession session){
+            if(session.getAttribute("user")!=null){
+
+                int i=iBlogService.likesblogbyid(blogId);
+                return i == 1;
+            }
+            else{
+                return false;
+            }
+
+
+
+        }
+
 
 }

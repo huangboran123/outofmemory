@@ -49,4 +49,6 @@ public interface IBlogService {
     Blog getblogByIdNoviews(Integer blogId);
 
     List<Integer> getRecommandBlogIds(Integer page, Integer pagesize);
+
+    int likesblogbyid(Integer blogId);
 }

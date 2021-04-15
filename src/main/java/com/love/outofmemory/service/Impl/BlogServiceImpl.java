@@ -133,4 +133,9 @@ public class BlogServiceImpl implements IBlogService {
     public List<Integer> getRecommandBlogIds(Integer page, Integer pagesize) {
         return blogMapper.getRecommandBlogIds(page-1,pagesize);
     }
+
+    @Override
+    public int likesblogbyid(Integer blogId) {
+        return blogMapper.likesblogbyid(blogId);
+    }
 }

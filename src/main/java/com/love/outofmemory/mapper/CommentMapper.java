@@ -2,10 +2,7 @@ package com.love.outofmemory.mapper;
 
 import com.love.outofmemory.domain.Comment;
 import com.love.outofmemory.domain.ReplyComment;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -51,4 +48,7 @@ public interface CommentMapper {
 
     })
     List<ReplyComment> getAllReplycommentsById(Integer id);
+
+    @Update("update o_blog set comments=comments+1 where id=#{blogId}")
+    int commentaddonebyid(Integer blogId);
 }

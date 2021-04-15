@@ -135,4 +135,7 @@ public interface BlogMapper {
     @Select("select id  from o_blog  ORDER BY good_count+views+comments DESC LIMIT #{page},#{pagesize}")
 
     List<Integer> getRecommandBlogIds(Integer page, Integer pagesize);
+
+    @Update("update o_blog set good_count=good_count+1 where id=#{blogId}")
+    int likesblogbyid(Integer blogId);
 }

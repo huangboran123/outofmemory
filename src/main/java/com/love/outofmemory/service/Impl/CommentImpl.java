@@ -35,4 +35,9 @@ public class CommentImpl implements ICommentService {
     public int commitreply(ReplyComment replyComment) {
         return commentMapper.commitreply(replyComment);
     }
+
+    @Override
+    public int commentaddonebyid(Integer blogId) {
+        return commentMapper.commentaddonebyid(blogId);
+    }
 }

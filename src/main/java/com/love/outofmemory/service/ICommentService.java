@@ -11,4 +11,6 @@ public interface ICommentService {
     List<Comment> getAllCommentsPageByBlogId(Integer blogId, Integer start, Integer counts);
 
     int commitreply(ReplyComment replyComment);
+
+    int commentaddonebyid(Integer blogId);
 }
