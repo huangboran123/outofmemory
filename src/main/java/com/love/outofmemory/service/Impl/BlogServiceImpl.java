@@ -95,8 +95,8 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    public List<Blog> getRecommandblogs() {
-        return blogMapper.getRecommandblogs();
+    public List<Blog> getSideRecommandblogs() {
+        return blogMapper.getSideRecommandblogs();
     }
 
     @Override
@@ -131,11 +131,16 @@ public class BlogServiceImpl implements IBlogService {
 
     @Override
     public List<Integer> getRecommandBlogIds(Integer page, Integer pagesize) {
-        return blogMapper.getRecommandBlogIds(page-1,pagesize);
+        return blogMapper.getRecommandBlogIds((page-1)*pagesize,pagesize);
     }
 
     @Override
     public int likesblogbyid(Integer blogId) {
         return blogMapper.likesblogbyid(blogId);
+    }
+
+    @Override
+    public Integer getTotalcountbyclass(Integer id) {
+        return blogMapper.getgetTotalcountbyclass(id);
     }
 }

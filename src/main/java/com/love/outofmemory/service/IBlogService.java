@@ -42,7 +42,7 @@ public interface IBlogService {
     BlogPageUser getUserMoreById(Integer userId);
 
   /*  获取推荐的博客，依据浏览量，点赞数和评论数之和*/
-    List<Blog> getRecommandblogs();
+    List<Blog> getSideRecommandblogs();
 
     List<Blog> getIndexRecommandblogs(Integer page, Integer pagesize);
 
@@ -51,4 +51,6 @@ public interface IBlogService {
     List<Integer> getRecommandBlogIds(Integer page, Integer pagesize);
 
     int likesblogbyid(Integer blogId);
+
+    Integer getTotalcountbyclass(Integer id);
 }

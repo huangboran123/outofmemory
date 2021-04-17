@@ -225,7 +225,7 @@ public class BlogController {
          /*   作者博客分类信息*/
             List<Classify> classlistcount=iBlogService.getClassifyBlogCount(userId);
             /*推荐博客*/
-            List<Blog> recomandblogs=iBlogService.getRecommandblogs();
+            List<Blog> recomandblogs=iBlogService.getSideRecommandblogs();
 
             List<Comment> comments=iCommentService.getAllCommentsPageByBlogId(blogId,0,5);
 
@@ -272,7 +272,7 @@ public String viewotherblogPage(Model model,
         /*   作者博客分类信息*/
         List<Classify> classlistcount=iBlogService.getClassifyBlogCount(userId);
         /*推荐博客*/
-        List<Blog> recomandblogs=iBlogService.getRecommandblogs();
+        List<Blog> recomandblogs=iBlogService.getSideRecommandblogs();
 
         List<Comment> comments=iCommentService.getAllCommentsPageByBlogId(blogId,0,5);
 

@@ -44,8 +44,13 @@ public class FrontIndexController {
 
 
 
+        /*首页推荐博客*/
         List<Blog> blogList=iBlogService.getIndexRecommandblogs(page,pagesize);
         model.addAttribute("blogList",blogList);
+
+
+        /*根据博客类别来查询博客数*/
+        Integer totalcount=iBlogService.getTotalcountbyclass();
 
 
         if (session.getAttribute("user") != null) {
