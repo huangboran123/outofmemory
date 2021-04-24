@@ -4,6 +4,7 @@ import com.love.outofmemory.domain.Blog;
 import com.love.outofmemory.domain.view.Classify;
 
 import com.love.outofmemory.domain.view.BlogPageUser;
+import com.love.outofmemory.mapper.provider.BlogTypeProvider;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -140,6 +141,6 @@ public interface BlogMapper {
     int likesblogbyid(Integer blogId);
 
 
-    @SelectProvider()
+    @SelectProvider(value = BlogTypeProvider.class,method ="dynamicTypeSql" )
     Integer getgetTotalcountbyclass(Integer id);
 }

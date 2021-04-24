@@ -39,39 +39,37 @@ public class BlogController {
     private RedisUtil redisUtil;
 
     //新建博客页面
-    @RequestMapping(value = "/newBlogPage",method = RequestMethod.GET)
-   public String newBlogPage(HttpSession session, Model model){
+    @RequestMapping(value = "/newBlogPage", method = RequestMethod.GET)
+    public String newBlogPage(HttpSession session, Model model) {
 
-        User user=(User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         //防止非登录状态请求
-        if(user!=null){
+        if (user != null) {
             //查询用户博客分类信息，以及相关的博客标签信息
-            List<Classification> classificationList=iClassificationService.getClassificationByUserID(user.getId());
-            model.addAttribute("Classifications",classificationList);
+            List<Classification> classificationList = iClassificationService.getClassificationByUserID(user.getId());
+            model.addAttribute("Classifications", classificationList);
 
-            List<BlogTag> blogTagsList=iBlogTagService.getBlogTags();
-            model.addAttribute("blogTagsList",blogTagsList);
+            List<BlogTag> blogTagsList = iBlogTagService.getBlogTags();
+            model.addAttribute("blogTagsList", blogTagsList);
 
             return "front/blog/new_blog";
-        }
-        else
-        {
+        } else {
             return "redirect:/";
         }
 
     }
 
     //新建博客提交
-    @RequestMapping(value = "/newBlog",method = RequestMethod.POST,produces = {"text/plain;charset=UTF-8"})
+    @RequestMapping(value = "/newBlog", method = RequestMethod.POST, produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
-    public String newBlog(String title,String content,String tag, String classify,Integer isoriginal, HttpSession session){
-       //获取当前登录用户信息
-        User user=(User)session.getAttribute("user");
-        Integer userId =user.getId();
+    public String newBlog(String title, String content, String tag, String classify, Integer isoriginal, HttpSession session) {
+        //获取当前登录用户信息
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
 
         //新建一个blog实体
-        Blog blog=new Blog();
-        blog.setClassification(iClassificationService.getIdByname(userId ,classify));
+        Blog blog = new Blog();
+        blog.setClassification(iClassificationService.getIdByname(userId, classify));
         blog.setContent(content);
         blog.setTitle(title);
         blog.setGood_count(0);
@@ -81,54 +79,51 @@ public class BlogController {
         blog.setIsoriginal(isoriginal);
         blog.setComments(0);
         blog.setUser(user);
-        int i=iBlogService.addBlog(blog);
-        if(i==1){
+        int i = iBlogService.addBlog(blog);
+        if (i == 1) {
 
             return "发布成功";
-        }
-        else {
+        } else {
             return "发布失败";
         }
 
     }
 
-   /* 我的博客页面*/
-    @GetMapping(value = "/myblog",produces = {"text/plain;charset=UTF-8"})
-    public String myblogPage(Model model ,HttpSession session)
-    {
+    /* 我的博客页面*/
+    @GetMapping(value = "/myblog", produces = {"text/plain;charset=UTF-8"})
+    public String myblogPage(Model model, HttpSession session) {
 
-        User user=(User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         //防止非登录状态请求
-        if(user!=null){
+        if (user != null) {
 
             //个人博客分类信息
-         List<Classify> classifyList= iBlogService.getClassifyBlogCount(user.getId());
-         model.addAttribute("classifyList",classifyList);
+            List<Classify> classifyList = iBlogService.getClassifyBlogCount(user.getId());
+            model.addAttribute("classifyList", classifyList);
 
-         //查询所有博客取前n条按发布时间
-            List<Blog> allblogList=iBlogService.gettopnblogsorderBydate(user.getId(),6);
+            //查询所有博客取前n条按发布时间
+            List<Blog> allblogList = iBlogService.gettopnblogsorderBydate(user.getId(), 6);
             //将查询到的Stringmarkdown格式转换为html格式
-            for (Blog b:allblogList) {
-                String content= MarkDownUtil.markdownToHtml(b.getContent());
+            for (Blog b : allblogList) {
+                String content = MarkDownUtil.markdownToHtml(b.getContent());
                 b.setContent(content);
             }
 
-            model.addAttribute("allblogList",allblogList);
+            model.addAttribute("allblogList", allblogList);
             return "front/blog/my_blog";
         }
 
-         return "redirect:/";
+        return "redirect:/";
     }
 
-   /* 查询博客分类*/
-    @PostMapping(value = "/myblog/classify",produces = {"text/plain;charset=UTF-8"})
+    /* 查询博客分类*/
+    @PostMapping(value = "/myblog/classify", produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
-    public String queryClassify(HttpSession session,Integer classificationId)
-    {
-        User user=(User)session.getAttribute("user");
-        List<Blog> blogList=iBlogService.getblogsByuseridandclassify(user.getId(),classificationId);
+    public String queryClassify(HttpSession session, Integer classificationId) {
+        User user = (User) session.getAttribute("user");
+        List<Blog> blogList = iBlogService.getblogsByuseridandclassify(user.getId(), classificationId);
 
-        ObjectMapper json=new ObjectMapper();
+        ObjectMapper json = new ObjectMapper();
 
         try {
             return json.writeValueAsString(blogList);
@@ -139,53 +134,48 @@ public class BlogController {
 
     }
 
-   /* 博客删除确认*/
-    @RequestMapping(value = "/myblog/del",produces = {"text/plain;charset=UTF-8"},method = RequestMethod.POST)
+    /* 博客删除确认*/
+    @RequestMapping(value = "/myblog/del", produces = {"text/plain;charset=UTF-8"}, method = RequestMethod.POST)
     @ResponseBody
-    public String deleteBlog(Integer delblogId,HttpSession session){
-        User user=(User)session.getAttribute("user");
-        if(delblogId!=null&&user!=null){
-            int i=iBlogService.removeblogByIid(delblogId);
-            if(i==0){
+    public String deleteBlog(Integer delblogId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (delblogId != null && user != null) {
+            int i = iBlogService.removeblogByIid(delblogId);
+            if (i == 0) {
                 return "删除失败";
-            }
-            else{
+            } else {
                 return "删除成功";
             }
-        }
-        else{
+        } else {
 
             return "删除失败";
         }
-
 
 
     }
 
     /*修改博客页面*/
     @GetMapping(value = "/myblog/modPage")
-    public String blogModify(@RequestParam("blogId") Integer blogId,Model model,HttpSession session){
-        User user=(User)session.getAttribute("user");
+    public String blogModify(@RequestParam("blogId") Integer blogId, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
         //防止非登录状态请求
-        if(user!=null){
-            Blog blog=iBlogService.getblogById(blogId);
-            if(blog==null){
+        if (user != null) {
+            Blog blog = iBlogService.getblogById(blogId);
+            if (blog == null) {
                 return "redirect:/myblog";
             }
             /*防止个人用户修改其它用户数据，理论上不可能发生*/
-            if(!user.getId().equals(blog.getUser().getId())){
+            if (!user.getId().equals(blog.getUser().getId())) {
                 return "redirect:/";
-            }
-
-            else{
+            } else {
                 //查询用户博客分类信息，以及相关的博客标签信息
-                List<Classification> classificationList=iClassificationService.getClassificationByUserID(user.getId());
-                model.addAttribute("Classifications",classificationList);
+                List<Classification> classificationList = iClassificationService.getClassificationByUserID(user.getId());
+                model.addAttribute("Classifications", classificationList);
 
-                List<BlogTag> blogTagsList=iBlogTagService.getBlogTags();
-                model.addAttribute("blogTagsList",blogTagsList);
+                List<BlogTag> blogTagsList = iBlogTagService.getBlogTags();
+                model.addAttribute("blogTagsList", blogTagsList);
 
-                model.addAttribute("blog",blog);
+                model.addAttribute("blog", blog);
                 return "front/blog/modify_blog";
             }
         }
@@ -195,17 +185,16 @@ public class BlogController {
     }
 
     /*修改博客提交*/
-    @PostMapping(value = "/myblog/modblog",produces = {"text/plain;charset=UTF-8"})
+    @PostMapping(value = "/myblog/modblog", produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
-    public String modBlog(Integer userId,Integer blogId,String title,String content,String tag,String classify,Integer isoriginal ){
+    public String modBlog(Integer userId, Integer blogId, String title, String content, String tag, String classify, Integer isoriginal) {
 
-        int i=iBlogService.updateBlogByid(userId,blogId,title,content,tag,classify,isoriginal);
+        int i = iBlogService.updateBlogByid(userId, blogId, title, content, tag, classify, isoriginal);
 
-        if(i==1){
+        if (i == 1) {
             return "博客修改成功";
-        }
-       else{
-           return "博客修改失败";
+        } else {
+            return "博客修改失败";
         }
     }
 
@@ -214,106 +203,115 @@ public class BlogController {
     public String viewblogPage(Model model,
                                @RequestParam("blogId") Integer blogId,
                                @RequestParam("userId") Integer userId,
-                               HttpSession session){
+                               HttpSession session) {
 
         //判断session是否为空
-        if(session.getAttribute("user")!=null){
+        if (session.getAttribute("user") != null) {
             /*当前浏览博客信息*/
-            Blog blog=iBlogService.getblogById(blogId);
-         /*   博客作者统计信息*/
-            BlogPageUser blogPageUser=iBlogService.getUserMoreById(userId);
-         /*   作者博客分类信息*/
-            List<Classify> classlistcount=iBlogService.getClassifyBlogCount(userId);
+            Blog blog = iBlogService.getblogById(blogId);
+            /*   博客作者统计信息*/
+            BlogPageUser blogPageUser = iBlogService.getUserMoreById(userId);
+            /*   作者博客分类信息*/
+            List<Classify> classlistcount = iBlogService.getClassifyBlogCount(userId);
             /*推荐博客*/
-            List<Blog> recomandblogs=iBlogService.getSideRecommandblogs();
+            List<Blog> recomandblogs = iBlogService.getSideRecommandblogs();
 
-            List<Comment> comments=iCommentService.getAllCommentsPageByBlogId(blogId,0,5);
+            List<Comment> comments = iCommentService.getAllCommentsPageByBlogId(blogId, 0, 5);
 
             /*博客，用户信息查询*/
-            model.addAttribute("blog",blog);
-            model.addAttribute("blogPageuser",blogPageUser);
-            model.addAttribute("classlistcount",classlistcount);
-            model.addAttribute("recomandblogs",recomandblogs);
+            model.addAttribute("blog", blog);
+            model.addAttribute("blogPageuser", blogPageUser);
+            model.addAttribute("classlistcount", classlistcount);
+            model.addAttribute("recomandblogs", recomandblogs);
             /*当前博客评论查询*/
-            model.addAttribute("comments",comments);
+            model.addAttribute("comments", comments);
 
             return "front/blog/show_blog";
 
-        }
-        else{
+        } else {
 
-             return "redirect:/";
+            return "redirect:/";
         }
-
 
 
     }
-/*浏览他人博客,不进行登录判断*/
-@GetMapping(value = "/blog/viewblog")
-public String viewotherblogPage(Model model,
-                           @RequestParam("blogId") Integer blogId,
-                           @RequestParam("userId") Integer userId,
-                           HttpSession session){
-    String blogID=blogId.toString();
-    Blog blog=new Blog();
- /*   判断redis中是否已经存在博客id的view*/
-    if(redisUtil.HashGet("Views",blogID)!=null){
-        blog=iBlogService.getblogByIdNoviews(blogId);
-        blog.setViews((Integer) redisUtil.HashGet("Views",blogID));
 
-    }else{
-        /*当前浏览博客信息*/
-        blog=iBlogService.getblogById(blogId);
+    /*浏览他人博客,不进行登录判断*/
+    @GetMapping(value = "/blog/viewblog")
+    public String viewotherblogPage(Model model,
+                                    @RequestParam("blogId") Integer blogId,
+                                    @RequestParam("userId") Integer userId,
+                                    HttpSession session) {
+        String blogID = blogId.toString();
+        Blog blog = new Blog();
+        /*   判断redis中是否已经存在博客id的view*/
+        if (redisUtil.HashGet("Views", blogID) != null) {
+            blog = iBlogService.getblogByIdNoviews(blogId);
+            blog.setViews((Integer) redisUtil.HashGet("Views", blogID));
 
-    }
+        } else {
+            /*当前浏览博客信息*/
+            blog = iBlogService.getblogById(blogId);
+
+        }
 
         /*   博客作者统计信息*/
-        BlogPageUser blogPageUser=iBlogService.getUserMoreById(userId);
+        BlogPageUser blogPageUser = iBlogService.getUserMoreById(userId);
         /*   作者博客分类信息*/
-        List<Classify> classlistcount=iBlogService.getClassifyBlogCount(userId);
+        List<Classify> classlistcount = iBlogService.getClassifyBlogCount(userId);
         /*推荐博客*/
-        List<Blog> recomandblogs=iBlogService.getSideRecommandblogs();
+        List<Blog> recomandblogs = iBlogService.getSideRecommandblogs();
 
-        List<Comment> comments=iCommentService.getAllCommentsPageByBlogId(blogId,0,5);
+        List<Comment> comments = iCommentService.getAllCommentsPageByBlogId(blogId, 0, 5);
 
         /*博客，用户信息查询*/
-        model.addAttribute("blog",blog);
-        model.addAttribute("blogPageuser",blogPageUser);
-        model.addAttribute("classlistcount",classlistcount);
-        model.addAttribute("recomandblogs",recomandblogs);
+        model.addAttribute("blog", blog);
+        model.addAttribute("blogPageuser", blogPageUser);
+        model.addAttribute("classlistcount", classlistcount);
+        model.addAttribute("recomandblogs", recomandblogs);
         /*当前博客评论查询*/
-        model.addAttribute("comments",comments);
+        model.addAttribute("comments", comments);
 
         /*查询浏览量存入redis数据库,若redis中存在则加一*/
-         /*评论量存blogid和views*/
+        /*评论量存blogid和views*/
 
-        if(redisUtil.HashGet("Views",blogID)==null){
-            redisUtil.HashPut("Views",blogID,blog.getViews());
-        }
-        else{
-            redisUtil.HashPut("Views",blogID,blog.getViews()+1);
+        if (redisUtil.HashGet("Views", blogID) == null) {
+            redisUtil.HashPut("Views", blogID, blog.getViews());
+        } else {
+            redisUtil.HashPut("Views", blogID, blog.getViews() + 1);
         }
 
 
         /*与浏览个人博客返回一样的视图，使用thymeleaf进行条件判断*/
         return "front/blog/show_blog";
-}
+    }
 
-        @PostMapping(value = "/likes",produces = {"application/json;charset=UTF-8"})
-        @ResponseBody
-        public Boolean likes(Integer blogId,HttpSession session){
-            if(session.getAttribute("user")!=null){
+    /*点赞*/
+    @PostMapping(value = "/likes", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Boolean likes(Integer blogId, HttpSession session) {
+        if (session.getAttribute("user") != null) {
 
-                int i=iBlogService.likesblogbyid(blogId);
-                return i == 1;
-            }
-            else{
-                return false;
-            }
-
-
-
+            int i = iBlogService.likesblogbyid(blogId);
+            return i == 1;
+        } else {
+            return false;
         }
+
+    }
+
+   /* 首页博客分页*/
+    @PostMapping(value = "/index/changeblogpage",produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public List<Blog> changeblogpage(String page,String pageSize){
+
+        int i=0;
+        System.out.println(i);
+
+        return null;
+
+
+    }
 
 
 }

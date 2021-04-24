@@ -97,6 +97,12 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         super.addResourceHandlers(registry);
     }
 
+
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        super.addInterceptors(registry);
+        registry.addInterceptor(new VisitInterceptor()).addPathPatterns("/index/changeblogpage");
+    }
 }
 
 

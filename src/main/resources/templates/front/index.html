@@ -45,15 +45,15 @@
 				<li class="comment_counts"><img src="/common/system_icon/comments.png" alt="评论数" title="评论数"><a href="" th:text="${b.comments}">25</a></li>
 			</ul>
 			<div class="pagination-bar">
-				<div class="total-page">共<span id="indexblogtotalpage"></span>页</div>
+				<div class="total-page">共<span id="indexblogtotalpage" th:text="${tottalcount}"></span>页</div>
 				<div class="jump-page">
 					<div>跳转倒:</div>
 					<div><input id="willjump" type="text" ></div>
-					<div id="jumpconfirm"><a href="javascript:void(0)">确认</a></div></div>
+					<div id="jumpconfirm" onclick="changeindexblogpage(3)"><a href="javascript:void(0)">确认</a></div></div>
 
-				<div class="next-page"><a href="javascript:void(0)">下一页</a></div>
+				<div class="next-page" onclick="changeindexblogpage(2)" ><a href="javascript:void(0)">下一页</a></div>
 				<div class="current-page">当前页:<span id="currentpage">1</span></div>
-				<div class="pre-page"><a href="javascript:void(0)">上一页</a></div>
+				<div class="pre-page" onclick="changeindexblogpage(1)"><a href="javascript:void(0)">上一页</a></div>
 
 
 
@@ -145,7 +145,108 @@ $(document).on("click",'.blogs',function () {
 	window.location.href="blog/viewblog?blogId="+blogId+"&userId="+userId;
 
 })
+/*-------------------------------------分页--------------------------------------------*/
 
 
+
+/*下一页*/
+$(document).on("click",".pre-page",function (e) {
+
+
+
+});
+
+/*--------------------------------分页---------------------------------------------*/
+	function changeindexblogpage(p) {
+
+		let tottalcount=$("#indexblogtotalpage").text().replace(/s+/g,'');
+		let currentPage=$("#currentpage").text().replace(/s+/g,'');
+		let page;
+		switch (p) {
+
+			/*上一页*/
+			case 1:
+				page=parseInt(currentPage)-1;
+				if(page<=0){
+					alert("当前为第一页!");
+					return 0;
+				}
+				else{
+					$.ajax({
+						url:'/index/changeblogpage',
+						dataType:"application/json",
+						data:{'page':page,'pageSize':5},
+						contentType:"application/json",
+						type:"post",
+						success: function (result) {
+							return 0;
+						},
+						error:function (error) {
+
+							console.log(error);
+							return 0;
+						}
+					})
+				}
+				break;
+			/*下一页*/
+			case 2:
+				page=parseInt(currentPage)+1;
+				if(page>tottalcount){
+					alert("当前为最后一页!");
+					return 0;
+				}
+				else{
+					$.ajax({
+						url:'/index/changeblogpage',
+						dataType:"application/json",
+						data:{'page':page,'pageSize':5},
+						contentType:"application/json",
+						type:"post",
+						success: function (result) {
+
+							return 0;
+						},
+						error:function (error) {
+							console.log(error);
+							return 0;
+						}
+					})
+				}
+				break;
+			/*跳转*/
+			case 3:
+				page=parseInt($("#willjump").val());
+				if(page>0&&page<=tottalcount){
+					$.ajax({
+						url:'/index/changeblogpage',
+						dataType:"application/json",
+						data:{'page':page,'pageSize':5},
+						contentType:"application/json",
+						type:"post",
+						success: function (result) {
+
+							return 0;
+						},
+						error:function (error) {
+
+							console.log(error);
+							return 0;
+						}
+					})
+				}
+				else{
+
+					alert("跳转页面不在范围内!")
+				}
+				break;
+
+		}
+
+
+		return 0;
+
+
+	}
 </script>
 </html>

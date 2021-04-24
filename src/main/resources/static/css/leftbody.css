@@ -220,9 +220,10 @@
 
 }
  .pagination-bar{
-     position: relative;
-     float: left;
-     width: 100%;
+     position: fixed;
+     bottom: 7%;
+     right: 30%;
+     width: 80%;
      height: 5%;
      font-size: small;
  }
