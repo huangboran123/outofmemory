@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Objects;
 
 @Component
@@ -18,7 +19,7 @@ public class VisitInterceptor implements HandlerInterceptor {
 
         if(Objects.isNull(user)){
 
-            response.sendRedirect(request.getContextPath()+"/");
+          redirect(request,response);
             return false;
         }
         else {
@@ -36,4 +37,21 @@ public class VisitInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 
     }
+
+
+    public void redirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //获取当前请求的路径
+        //logger.error("请求类型:"+request.getHeader("X-Requested-With"));
+        response.setHeader("Access-Control-Expose-Headers", "REDIRECT,CONTEXTPATH");
+        //告诉ajax我是重定向
+        response.setHeader("REDIRECT", "REDIRECT");
+        //告诉ajax我重定向的路径
+        String registerurl="/front/registerPage";
+        String loginurl="/front/loginPage";
+        response.setHeader("CONTEXTPATH", loginurl);
+        response.getWriter().write(1);
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+    }
+
+
 }
