@@ -97,11 +97,12 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         super.addResourceHandlers(registry);
     }
 
-
+/*配置拦截器*/
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         super.addInterceptors(registry);
-        registry.addInterceptor(new VisitInterceptor()).addPathPatterns("/index/changeblogpage");
+        //这里使用注解进行登录拦截，在这里配置过于麻烦
+        registry.addInterceptor(new VisitInterceptor());
     }
 }
 

@@ -1,7 +1,9 @@
 package com.love.outofmemory.configuration;
 
+import com.love.outofmemory.annotation.LogInterceptor;
 import com.love.outofmemory.domain.User;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,15 +17,27 @@ public class VisitInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        User user =(User)request.getSession().getAttribute("user");
 
-        if(Objects.isNull(user)){
+        //获取方法处理器
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        LogInterceptor logInterceptor =
+                handlerMethod.getMethod()//这一步是获取到我们要访问的方法
+                        //然后根据我们制定的自定义注解的Class对象来获取到对应的注解
+                        .getAnnotation(LogInterceptor.class);
 
-          redirect(request,response);
-            return false;
-        }
-        else {
+        //如果要访问的方法上没有加这个注解，那么就说明这个方法不需要拦截，否则就需要进行拦截
+        if(null == logInterceptor) {
             return true;
+        }
+        else{
+            User user =(User)request.getSession().getAttribute("user");
+            if(Objects.isNull(user)){
+                redirect(request,response);
+                return false;
+            }
+            else {
+                return true;
+            }
         }
 
     }
