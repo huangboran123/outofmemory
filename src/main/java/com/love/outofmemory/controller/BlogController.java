@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.love.outofmemory.Utills.DateUtil;
 import com.love.outofmemory.Utills.MarkDownUtil;
 import com.love.outofmemory.Utills.RedisUtil;
+import com.love.outofmemory.annotation.LogInterceptor;
 import com.love.outofmemory.domain.*;
 import com.love.outofmemory.domain.view.BlogPageUser;
 import com.love.outofmemory.domain.view.Classify;
@@ -12,6 +13,8 @@ import com.love.outofmemory.service.IBlogService;
 import com.love.outofmemory.service.IBlogTagService;
 import com.love.outofmemory.service.IClassificationService;
 import com.love.outofmemory.service.ICommentService;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +22,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author huang
@@ -62,6 +67,7 @@ public class BlogController {
     //新建博客提交
     @RequestMapping(value = "/newBlog", method = RequestMethod.POST, produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
+    @LogInterceptor
     public String newBlog(String title, String content, String tag, String classify, Integer isoriginal, HttpSession session) {
         //获取当前登录用户信息
         User user = (User) session.getAttribute("user");
@@ -119,6 +125,7 @@ public class BlogController {
     /* 查询博客分类*/
     @PostMapping(value = "/myblog/classify", produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
+    @LogInterceptor
     public String queryClassify(HttpSession session, Integer classificationId) {
         User user = (User) session.getAttribute("user");
         List<Blog> blogList = iBlogService.getblogsByuseridandclassify(user.getId(), classificationId);
@@ -137,9 +144,10 @@ public class BlogController {
     /* 博客删除确认*/
     @RequestMapping(value = "/myblog/del", produces = {"text/plain;charset=UTF-8"}, method = RequestMethod.POST)
     @ResponseBody
+    @LogInterceptor
     public String deleteBlog(Integer delblogId, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (delblogId != null && user != null) {
+        if (delblogId != null) {
             int i = iBlogService.removeblogByIid(delblogId);
             if (i == 0) {
                 return "删除失败";
@@ -187,6 +195,7 @@ public class BlogController {
     /*修改博客提交*/
     @PostMapping(value = "/myblog/modblog", produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
+    @LogInterceptor
     public String modBlog(Integer userId, Integer blogId, String title, String content, String tag, String classify, Integer isoriginal) {
 
         int i = iBlogService.updateBlogByid(userId, blogId, title, content, tag, classify, isoriginal);
@@ -205,8 +214,7 @@ public class BlogController {
                                @RequestParam("userId") Integer userId,
                                HttpSession session) {
 
-        //判断session是否为空
-        if (session.getAttribute("user") != null) {
+
             /*当前浏览博客信息*/
             Blog blog = iBlogService.getblogById(blogId);
             /*   博客作者统计信息*/
@@ -227,11 +235,6 @@ public class BlogController {
             model.addAttribute("comments", comments);
 
             return "front/blog/show_blog";
-
-        } else {
-
-            return "redirect:/";
-        }
 
 
     }
@@ -289,26 +292,36 @@ public class BlogController {
     /*点赞*/
     @PostMapping(value = "/likes", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
+    @LogInterceptor
     public Boolean likes(Integer blogId, HttpSession session) {
-        if (session.getAttribute("user") != null) {
+
 
             int i = iBlogService.likesblogbyid(blogId);
             return i == 1;
-        } else {
-            return false;
-        }
 
     }
 
    /* 首页博客分页*/
-    @PostMapping(value = "/index/changeblogpage",produces = {"application/json;charset=UTF-8"})
+    @PostMapping(value = "/index/changeblogpage")
     @ResponseBody
-    public List<Blog> changeblogpage(String page,String pageSize){
+    @LogInterceptor
+    public List<Blog> changeblogpage(Integer page,Integer pageSize) throws JSONException {
+        if(!Objects.isNull(page)&&!Objects.isNull(pageSize)){
 
-        int i=0;
-        System.out.println(i);
 
-        return null;
+            List<Blog> list=new ArrayList<>();
+            list.add(iBlogService.getblogById(19));
+
+
+            return list;
+
+        }
+        else{
+
+            return null;
+
+        }
+
 
 
     }

@@ -256,6 +256,10 @@
          },
          error: function (e) {
              alert("出现错误");
+         },
+         complete:function (xhr,status) {
+             jumptologinPage(xhr, status);
+             return 0;
          }
      });
 
@@ -423,6 +427,42 @@ function setBlnakm(){
 
            }
 
+
+
+       });
+
+       $.ajax({
+           url:"/myblog/del",
+           type:"post",
+           data:{'delblogId':delblogId},
+           success:function (msg) {
+               if(msg==="删除成功"){
+                   $("#delete_classinfo").text(msg+"请稍后");
+                   setTimeout(setBlankd,1500);
+                   setTimeout(closeWindow,1500);
+                   setTimeout(jumpToblog,1800);
+                   return 0;
+
+               }
+               else{
+                   $("delete_classinfo").text(msg+"稍后再试");
+                   setTimeout(setBlankd,1500);
+                   setTimeout(closeWindow,1500);
+                   setTimeout(jumpToblog,1800);
+                   return 0;
+
+               }
+
+           },
+           error:function (e) {
+               alert(e);
+               return 0;
+           },
+           complete:function (xhr,status) {
+               jumptologinPage(xhr, status);
+               return 0;
+           }
+
        })
 
     })
@@ -478,9 +518,9 @@ function setBlnakm(){
 
  /*------------------------------------------------------------------------------------------------------*/
     /*分类栏查询事件*/
-    $(document).on("click",".li_class",function () {
+   $(document).on("click",".li_class",function () {
         var classificationId=this.getAttribute("id");
-        $.post("/myblog/classify",{'classificationId':classificationId},function (msg) {
+       /*  $.post("/myblog/classify",{'classificationId':classificationId},function (msg) {
             //转数组
             if(msg==="[]") {
                 //空json字符串
@@ -489,8 +529,8 @@ function setBlnakm(){
             }
             else{
 
-                /* $(".blog_item").text(msg);*/
-                /*处理json对象数组*/
+                /!* $(".blog_item").text(msg);*!/
+                /!*处理json对象数组*!/
                 var blogList=JSON.parse(msg);
                 var blog=blogList[0];
                 $(".blog_item").html("");
@@ -527,30 +567,109 @@ function setBlnakm(){
                         "                    </div>\n" +
                         "                </div>\n" )
 
-
                 }
 
-                /* 由于dom树改变新加入的么有鼠标移入事件需重新加入若设置为document事件就不用*/
-                /*鼠标hover经过blog编辑删除以及移动事件*/
-               /* $(document).on("mouseover",".item_div",function () {
+                /!* 由于dom树改变新加入的么有鼠标移入事件需重新加入若设置为document事件就不用*!/
+                /!*鼠标hover经过blog编辑删除以及移动事件*!/
+               /!* $(document).on("mouseover",".item_div",function () {
                     this.firstElementChild.nextElementSibling.setAttribute("style","display:inherit");
                 })
 
                 $(document).on("mouseout",".item_div",function () {
                     this.firstElementChild.nextElementSibling.setAttribute("style","display:none");
-                })*/
-                /*alert(blog.id);*/
-
+                })*!/
+                /!*alert(blog.id);*!/
 
                 return  0;
             }
 
 
+        });*/
+ /*分类栏查询事件*/
+        $.ajax({
+            url:"/myblog/classify",
+            type:'POST',
+            data:{'classificationId':classificationId},
+            success:function (msg) {
+                //转数组
+                if(msg==="[]") {
+                    //空json字符串
+                    $(".blog_item").text("暂无文章");
+                    return 0;
+                }
+                else{
+
+                    /* $(".blog_item").text(msg);*/
+                    /*处理json对象数组*/
+                    var blogList=JSON.parse(msg);
+                    var blog=blogList[0];
+                    $(".blog_item").html("");
+                    var inneritemBlog="";
+                    for(var i=0;i<blogList.length;i++){
+
+
+                        var b=blogList[i];
+                        $(".blog_item").html($(".blog_item").html()+
+                            "            <div class=\"item_div\" >\n" +
+                            "                <div class=\"item_left\" id='"+b.id+"'>\n" +
+                            "             <input type='hidden' value='"+b.user.id+"'>"+
+                            "                    <ul class=\"item\">\n" +
+                            "                        <li class=\"item_title\"><a href=\"\">"+b.title+"</a></li>\n" +
+                            "                        <li class=\"item_date\"><a href=\"\">发布时间:"+moment(b.publish_time).format('YYYY-MM-DD HH:mm:ss')+"</a></li>\n" +
+                            "                        <li class=\"item_content\"><a href=\"\">"+b.content.substr(25,38)+"</a></li>\n" +
+                            "                        <li class=\"item_good\"><img src=\"/common/system_icon/good.png\" alt=\"点赞数\" title=\"点赞数\"><a href=\"\">"+b.good_count+"</a></li>\n" +
+                            "                        <li class=\"item_view\"><img src=\"/common/system_icon/views.png\" alt=\"浏览量\" title=\"浏览量\"><a href=\"\">"+b.views+"</a></li>\n" +
+                            "                        <li class=\"item_comment\"><img src=\"/common/system_icon/comments.png\" alt=\"评论数\" title=\"评论数\"><a href=\"\" >"+b.comments+"</a></li>\n" +
+                            "                    </ul>\n" +
+                            "                </div>\n" +
+                            "                <div class=\"item_right\">\n" +
+                            "                    <div class=\"right_del\">\n" +
+                            "                        <a href='#delete_model'>删除</a>\n" +
+                            "                    </div>\n" +
+                            "                    <div class=\"right_mod\">\n" +
+                            "                        <a href='/myblog/modPage?blogId="+b.id+"'>修改</a>\n" +
+                            "                    </div>\n" +
+                            "                    <div class=\"right_mov\">\n" +
+                            "                             <input type=\"hidden\" value='"+b.id+"'>\n" +
+                            "                            <input type=\"hidden\" value='"+b.classification.id+"'>\n" +
+                            "                            <a href=\"#move_model\">移动</a>"+
+
+                            "                    </div>\n" +
+                            "                </div>\n" )
+
+                    }
+
+                    /* 由于dom树改变新加入的么有鼠标移入事件需重新加入若设置为document事件就不用*/
+                    /*鼠标hover经过blog编辑删除以及移动事件*/
+                    /* $(document).on("mouseover",".item_div",function () {
+                         this.firstElementChild.nextElementSibling.setAttribute("style","display:inherit");
+                     })
+
+                     $(document).on("mouseout",".item_div",function () {
+                         this.firstElementChild.nextElementSibling.setAttribute("style","display:none");
+                     })*/
+                    /*alert(blog.id);*/
+
+                    return  0;
+                }
+
+
+
+            },
+            error:function (e) {
+                alert(e);
+                return 0;
+            },
+            complete:function (xhr,status) {
+                jumptologinPage(xhr, status);
+                return 0;
+            }
+
         })
 
 
 
-    })
+    });
  /*------------------------------------------------------------------------------------------------------*/
     /*鼠标hover经过blog编辑删除以及移动事件*/
     $(document).on("mouseover",".item_div",function () {
@@ -575,7 +694,19 @@ function setBlnakm(){
     $(document).on("mouseout","#user_menu",function () {
      $("#user_menu").css("display","none");
  })
-
-
+ /*	--------------------------------拦截器跳转登录------------------------------------*/
+ function  jumptologinPage(xhr, status) {
+     //拦截器实现超时跳转到登录页面
+     // 通过xhr取得响应头
+     var REDIRECT = xhr.getResponseHeader("REDIRECT");
+     //如果响应头中包含 REDIRECT 则说明是拦截器返回的需要重定向的请求
+     if (REDIRECT == "REDIRECT") {
+         var win = window;
+         while (win != win.top) {
+             win = win.top;
+         }
+         win.location.href = xhr.getResponseHeader("CONTEXTPATH");
+     }
+ }
 </script>
 </html>

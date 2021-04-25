@@ -145,16 +145,7 @@ $(document).on("click",'.blogs',function () {
 	window.location.href="blog/viewblog?blogId="+blogId+"&userId="+userId;
 
 })
-/*-------------------------------------分页--------------------------------------------*/
 
-
-
-/*下一页*/
-$(document).on("click",".pre-page",function (e) {
-
-
-
-});
 
 /*--------------------------------分页---------------------------------------------*/
 	function changeindexblogpage(p) {
@@ -174,7 +165,7 @@ $(document).on("click",".pre-page",function (e) {
 				else{
 					$.ajax({
 						url:'/index/changeblogpage',
-						dataType:"application/json",
+						dataType:"json",
 						data:{'page':page,'pageSize':5},
 						contentType:"application/json",
 						type:"post",
@@ -203,11 +194,12 @@ $(document).on("click",".pre-page",function (e) {
 				else{
 					$.ajax({
 						url:'/index/changeblogpage',
-						dataType:"application/json",
+						dataType:"json",
 						data:{'page':page,'pageSize':5},
-						contentType:"application/json",
 						type:"post",
 						success: function (result) {
+
+							console.log(result);
 
 							return 0;
 						},

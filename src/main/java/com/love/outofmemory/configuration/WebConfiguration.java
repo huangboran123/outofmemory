@@ -102,7 +102,15 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
     protected void addInterceptors(InterceptorRegistry registry) {
         super.addInterceptors(registry);
         //这里使用注解进行登录拦截，在这里配置过于麻烦
-        registry.addInterceptor(new VisitInterceptor());
+        registry.addInterceptor(new VisitInterceptor())
+                .excludePathPatterns("/common/blog_image/**")
+                .excludePathPatterns("/common/image_cache/**")
+                .excludePathPatterns("/front/particles/**","/myblog/particles/**","/particles/**")
+                .excludePathPatterns("/editor/**","/myblog/editor/**")
+                .excludePathPatterns("/myblog/js/**","/js/**")
+                .excludePathPatterns("/css/**")
+                .excludePathPatterns("/common/**")
+                .excludePathPatterns("/blog/**","/");
     }
 }
 
