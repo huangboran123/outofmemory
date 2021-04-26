@@ -308,12 +308,7 @@ public class BlogController {
     public List<Blog> changeblogpage(Integer page,Integer pageSize) throws JSONException {
         if(!Objects.isNull(page)&&!Objects.isNull(pageSize)){
 
-
-            List<Blog> list=new ArrayList<>();
-            list.add(iBlogService.getblogById(19));
-
-
-            return list;
+            return iBlogService.getIndexRecommandblogs(page,pageSize);
 
         }
         else{

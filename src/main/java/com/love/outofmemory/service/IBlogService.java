@@ -44,6 +44,7 @@ public interface IBlogService {
   /*  获取推荐的博客，依据浏览量，点赞数和评论数之和*/
     List<Blog> getSideRecommandblogs();
 
+    /*获取首页推荐博客,分页*/
     List<Blog> getIndexRecommandblogs(Integer page, Integer pagesize);
 
     Blog getblogByIdNoviews(Integer blogId);

@@ -32,18 +32,21 @@
 		<div class="best_blog">
 			<div class="recommend_left">推荐博客</div>
 
-			<ul class="blogs" th:each=" b:${blogList}" >
-				<input type="hidden" th:value="${b.id}">
-				<input type="hidden" th:value="${b.user.id}">
+			<div id="blogcontainner">
+				<ul class="blogs" th:each=" b:${blogList}" >
+					<input type="hidden" th:value="${b.id}">
+					<input type="hidden" th:value="${b.user.id}">
 
-				<!--该部分由数据库查询得到-->
-				<li class="title"><a href="" th:text="${b.title}"></a></li>
-				<li class="author"><img th:src="@{/mycommon/getImage(image=${b.user.image})}" alt=""><a href="" th:text="${b.user.username}"></a></li>
-				<li class="preview"><p th:text="${#strings.substring(b.content,0,10)}">java通过反射可以在程序运行时动态修改类...</p></li>
-				<li class="like"><img src="/common/system_icon/good.png" alt="点赞数" title="点赞数"><a href="" th:text="${b.good_count}">520</a></li>
-				<li class="views"><img src="/common/system_icon/views.png" alt="浏览量" title="浏览量"><a href="" th:text="${b.views}">2500</a></li>
-				<li class="comment_counts"><img src="/common/system_icon/comments.png" alt="评论数" title="评论数"><a href="" th:text="${b.comments}">25</a></li>
-			</ul>
+					<!--该部分由数据库查询得到-->
+					<li class="title"><a href="" th:text="${b.title}"></a></li>
+					<li class="author"><img th:src="@{/mycommon/getImage(image=${b.user.image})}" alt=""><a href="" th:text="${b.user.username}"></a></li>
+					<li class="preview"><p th:text="${#strings.substring(b.content,0,10)}">java通过反射可以在程序运行时动态修改类...</p></li>
+					<li class="like"><img src="/common/system_icon/good.png" alt="点赞数" title="点赞数"><a href="" th:text="${b.good_count}">520</a></li>
+					<li class="views"><img src="/common/system_icon/views.png" alt="浏览量" title="浏览量"><a href="" th:text="${b.views}">2500</a></li>
+					<li class="comment_counts"><img src="/common/system_icon/comments.png" alt="评论数" title="评论数"><a href="" th:text="${b.comments}">25</a></li>
+				</ul>
+			</div>
+
 			<div class="pagination-bar">
 				<div class="total-page">共<span id="indexblogtotalpage" th:text="${tottalcount}"></span>页</div>
 				<div class="jump-page">
@@ -55,15 +58,7 @@
 				<div class="current-page">当前页:<span id="currentpage">1</span></div>
 				<div class="pre-page" onclick="changeindexblogpage(1)"><a href="javascript:void(0)">上一页</a></div>
 
-
-
 			</div>
-
-
-
-
-
-
 
 		</div>
 
@@ -167,9 +162,15 @@ $(document).on("click",'.blogs',function () {
 						url:'/index/changeblogpage',
 						dataType:"json",
 						data:{'page':page,'pageSize':5},
-						contentType:"application/json",
 						type:"post",
 						success: function (result) {
+
+							if(result!=null&&result!==""&&result!==undefined){
+								/*渲染返回数据*/
+								showPageBlog(result);
+								$("#currentpage").text(page);
+								return 0;
+							}
 							return 0;
 						},
 						error:function (error) {
@@ -199,8 +200,12 @@ $(document).on("click",'.blogs',function () {
 						type:"post",
 						success: function (result) {
 
-							console.log(result);
-
+							if(result!=null&&result!==""&&result!==undefined){
+								/*渲染返回数据*/
+								showPageBlog(result);
+								$("#currentpage").text(page);
+								return 0;
+							}
 							return 0;
 						},
 						error:function (error) {
@@ -219,12 +224,17 @@ $(document).on("click",'.blogs',function () {
 				if(page>0&&page<=tottalcount){
 					$.ajax({
 						url:'/index/changeblogpage',
-						dataType:"application/json",
+						dataType:"json",
 						data:{'page':page,'pageSize':5},
-						contentType:"application/json",
 						type:"post",
 						success: function (result) {
 
+							if(result!=null&&result!==""&&result!==undefined){
+								/*渲染返回数据*/
+								showPageBlog(result);
+								$("#currentpage").text(page);
+								return 0;
+							}
 							return 0;
 						},
 						error:function (error) {
@@ -262,6 +272,26 @@ function  jumptologinPage(xhr, status) {
 		win.location.href = xhr.getResponseHeader("CONTEXTPATH");
 	}
 }
+
+/*--------------------------------------分页前端渲染--------------------------------------*/
+	function showPageBlog(blogs) {
+		var blogcontainner=$("#blogcontainner");
+		blogcontainner.html("");
+		for(var i=0;i<blogs.length;i++){
+			var b=blogs[i];
+			blogcontainner.html(blogcontainner.html()+"<ul class=\"blogs\" >\n" +
+					"\t\t\t\t<input type=\"hidden\" value='"+b.id+"'>\n" +
+					"\t\t\t\t<input type=\"hidden\" value='"+b.user.id+"'>\n" +
+					"\t\t\t\t<li class=\"title\"><a href=\"\" >"+b.title+"</a></li>\n" +
+					"\t\t\t\t<li class=\"author\"><img src=\"/common/profile_image/"+b.user.image+"\" alt=\"\"><a href=\"\" ></a></li>\n" +
+					"\t\t\t\t<li class=\"preview\"><p ></p>"+b.content.substr(25,38)+"</li>\n" +
+					"\t\t\t\t<li class=\"like\"><img src=\"/common/system_icon/good.png\" alt=\"点赞数\" title=\"点赞数\"><a href=\"\" >"+b.good_count+"</a></li>\n" +
+					"\t\t\t\t<li class=\"views\"><img src=\"/common/system_icon/views.png\" alt=\"浏览量\" title=\"浏览量\"><a href=\"\" >"+b.views+"</a></li>\n" +
+					"\t\t\t\t<li class=\"comment_counts\"><img src=\"/common/system_icon/comments.png\" alt=\"评论数\" title=\"评论数\"><a href=\"\">"+b.comments+"</a></li>\n" +
+					"\t\t\t</ul>")
+		}
+
+	}
 
 </script>
 </html>
