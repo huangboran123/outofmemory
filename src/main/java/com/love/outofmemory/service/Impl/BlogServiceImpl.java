@@ -10,9 +10,11 @@ import com.love.outofmemory.mapper.ClassificationMapper;
 import com.love.outofmemory.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author huang
@@ -142,5 +144,13 @@ public class BlogServiceImpl implements IBlogService {
     @Override
     public Integer getTotalcountbyclass(Integer id) {
         return blogMapper.getgetTotalcountbyclass(id);
+    }
+
+    @Override
+    @Transactional
+    public int saveredisViews(Map<Object, Object> viewmap) {
+
+
+        return 0;
     }
 }

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * @author huang
  */
@@ -34,6 +36,12 @@ public class RedisUtil {
     public Object HashGet(String mapname, String field ){
       return   redisTemplate.opsForHash().get(mapname,field);
 
+
+    }
+
+    public Map<Object,Object> HashGetMapEntries(String mapname){
+
+        return  redisTemplate.opsForHash().entries(mapname);
     }
 
 

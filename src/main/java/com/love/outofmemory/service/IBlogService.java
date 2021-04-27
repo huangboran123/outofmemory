@@ -5,6 +5,7 @@ import com.love.outofmemory.domain.view.Classify;
 import com.love.outofmemory.domain.view.BlogPageUser;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author huang
@@ -54,4 +55,6 @@ public interface IBlogService {
     int likesblogbyid(Integer blogId);
 
     Integer getTotalcountbyclass(Integer id);
+
+    int saveredisViews(Map<Object, Object> viewmap);
 }
