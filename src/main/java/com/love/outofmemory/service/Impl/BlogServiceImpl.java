@@ -147,10 +147,17 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    @Transactional
-    public int saveredisViews(Map<Object, Object> viewmap) {
+    @Transactional(rollbackFor = Exception.class)
+    public Long saveredisViews(Map<Object, Object> viewmap) {
+        Long k= 0L;
 
+        for(Map.Entry<Object, Object> entry:viewmap.entrySet()){
 
-        return 0;
+            String id= (String) entry.getKey();
+            Integer views= (Integer) entry.getValue();
+            int i=blogMapper.updateblogviewByid(id,views);
+            k++;
+        }
+        return k;
     }
 }

@@ -56,5 +56,5 @@ public interface IBlogService {
 
     Integer getTotalcountbyclass(Integer id);
 
-    int saveredisViews(Map<Object, Object> viewmap);
+    Long saveredisViews(Map<Object, Object> viewmap);
 }
