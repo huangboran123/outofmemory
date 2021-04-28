@@ -117,6 +117,7 @@ public class UserController {
             user.setReputation("");
             user.setFans(0);
             user.setFollow(0);
+            user.setLevel(0);
 
             int i = iUserService.newUser(user);
 

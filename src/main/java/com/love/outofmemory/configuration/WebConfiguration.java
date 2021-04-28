@@ -13,7 +13,9 @@ import org.springframework.web.servlet.config.annotation.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-
+/**
+ * web配置
+ */
 @Configuration
 public class WebConfiguration extends WebMvcConfigurationSupport {
 

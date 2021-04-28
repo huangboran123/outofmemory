@@ -6,6 +6,9 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * tomcat配置
+ */
 @Configuration
 public class TomcatConfiguration {
     @Bean
@@ -18,7 +21,10 @@ public class TomcatConfiguration {
     }
 
 
-
+    /**
+     * 配置http转https
+     * @return
+     */
     private Connector createStandardConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         //不想域名加端口访问，这里就配置http默认端口80

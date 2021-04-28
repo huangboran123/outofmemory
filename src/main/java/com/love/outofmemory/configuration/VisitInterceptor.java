@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * 拦截器配置
+ */
 @Component
 public class VisitInterceptor implements HandlerInterceptor {
 
