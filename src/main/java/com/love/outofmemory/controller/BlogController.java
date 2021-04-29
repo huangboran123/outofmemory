@@ -14,7 +14,6 @@ import com.love.outofmemory.service.IBlogTagService;
 import com.love.outofmemory.service.IClassificationService;
 import com.love.outofmemory.service.ICommentService;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -215,10 +213,11 @@ public class BlogController {
                                HttpSession session) {
 
 
+            Integer id=null;
             /*当前浏览博客信息*/
             Blog blog = iBlogService.getblogById(blogId);
             /*   博客作者统计信息*/
-            BlogPageUser blogPageUser = iBlogService.getUserMoreById(userId);
+            BlogPageUser blogPageUser = iBlogService.getUserMoreById(userId, id);
             /*   作者博客分类信息*/
             List<Classify> classlistcount = iBlogService.getClassifyBlogCount(userId);
             /*推荐博客*/
@@ -246,6 +245,7 @@ public class BlogController {
                                     @RequestParam("userId") Integer userId,
                                     HttpSession session) {
         String blogID = blogId.toString();
+        Integer id=null;
         Blog blog = new Blog();
         /*   判断redis中是否已经存在博客id的view*/
         if (redisUtil.HashGet("Views", blogID) != null) {
@@ -258,20 +258,30 @@ public class BlogController {
 
         }
 
+        User user=(User)session.getAttribute("user");
+        if(!Objects.isNull(user)){
+            id=user.getId();
+        }
+
+
         /*   博客作者统计信息*/
-        BlogPageUser blogPageUser = iBlogService.getUserMoreById(userId);
+        BlogPageUser blogPageUser = iBlogService.getUserMoreById(userId,id);
         /*   作者博客分类信息*/
         List<Classify> classlistcount = iBlogService.getClassifyBlogCount(userId);
         /*推荐博客*/
         List<Blog> recomandblogs = iBlogService.getSideRecommandblogs();
 
+        /*评论*/
         List<Comment> comments = iCommentService.getAllCommentsPageByBlogId(blogId, 0, 5);
+
+
 
         /*博客，用户信息查询*/
         model.addAttribute("blog", blog);
         model.addAttribute("blogPageuser", blogPageUser);
         model.addAttribute("classlistcount", classlistcount);
         model.addAttribute("recomandblogs", recomandblogs);
+
         /*当前博客评论查询*/
         model.addAttribute("comments", comments);
 

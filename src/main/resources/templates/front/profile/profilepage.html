@@ -712,7 +712,27 @@
     })
 
 
+/*-------------------------------------------------------管理博客事件----------------------------------*/
+    /* 账号设置点击事件*/
+    $(document).on("click",'.myblog',function () {
 
+        $(".rightprofilebody").html("");
+        /*点击后改变当前点击栏目背景色*/
+        $(".myblog").css("background-color","#f0f0f5");
+        /*点击效果互斥*/
+        var flist=$(".leftprofilebody div");
+        for(var i=0;i<flist.length;i++){
+            if(flist[i]!==this){
+                flist[i].style.backgroundColor="white";
+            }
+
+        }
+
+        window.location.href="/myblog";
+        return 0;
+
+
+    })
 
     /*  ---------------------------------------设置文字提示文字消失------------------------------------------*/
    /* psswordifo*/

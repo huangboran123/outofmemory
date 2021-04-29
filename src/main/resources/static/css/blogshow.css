@@ -179,6 +179,40 @@ canvas{
     height: 50px;
     border-radius: 50%;
 }
+.pattention{
+    position: absolute;
+    left: 80%;
+    height: 60%;
+    width: auto;
+    padding: 2%;
+    font-size: small;
+}
+.followed{
+    border-radius: 15%;
+    background-color: #ffcbff;
+}
+.followed a{
+    color: black;
+    text-decoration: none;
+    font-size: small;
+}
+.followed a:active{
+    color: #a904d2;
+
+}
+.nofollowed{
+    border-radius: 15%;
+    background-color: rgb(255 220 220);
+}
+.nofollowed a{
+    color: black;
+    text-decoration: none;
+    font-size: small;
+}
+.nofollowed a:active{
+    color: rgb(232 77 77);
+
+}
 .aside_rank{
     position: absolute;
     height: 20%;

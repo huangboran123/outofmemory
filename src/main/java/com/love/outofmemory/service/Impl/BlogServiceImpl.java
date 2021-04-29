@@ -92,8 +92,8 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    public BlogPageUser getUserMoreById(Integer userId) {
-        return blogMapper.getUserMoreById(userId);
+    public BlogPageUser getUserMoreById(Integer userId, Integer id) {
+        return blogMapper.getUserMoreById(userId,id);
     }
 
     @Override

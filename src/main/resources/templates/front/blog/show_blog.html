@@ -81,9 +81,14 @@
                 <img th:src="@{/mycommon/getImage(image=${blog.user.image})}">
             </div>
             <div class="pother">
-                <a href="" th:text="${blog.user.username}"></a><br>
+                <a href="javascript:void(0)" th:text="${blog.user.username}"></a><br>
                 <hr style="margin: 0">
-                <a href="" th:text="${'码龄:'+blogPageuser.codeage+'年'}"></a>
+                <a href="javascript:void(0)" th:text="${'码龄:'+blogPageuser.codeage+'年'}"></a>
+            </div>
+            <div class="pattention" th:if="${session.user!=null and session.user.id!=blog.user.id}">
+                <div class="nofollowed" th:if="${blogPageuser.befollowed==0}"><a href="javascript:void(0)">关注</a></div>
+                <div class="followed" th:if="${blogPageuser.befollowed==1}"><a href="javascript:void(0)">已关注</a></div>
+
             </div>
         </div>
         <div class="aside_rank">

@@ -4,7 +4,7 @@ import com.love.outofmemory.domain.Blog;
 import com.love.outofmemory.domain.view.Classify;
 
 import com.love.outofmemory.domain.view.BlogPageUser;
-import com.love.outofmemory.mapper.provider.BlogTypeProvider;
+import com.love.outofmemory.mapper.provider.DynamicSQLProvider;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -104,7 +104,8 @@ public interface BlogMapper {
     })
     Blog getblogById(Integer blogId);
 
-    @Select("SELECT COUNT(o_blog.id) AS userblogcount ,(select count(*) from o_collection where user_id=#{userId}) AS usercollections, SUM(views) AS userviews ,SUM(comments) AS usercomments ,SUM(good_count) AS usergoodcounts,TIMESTAMPDIFF(YEAR,o_user.create_time,NOW()) AS codeage  FROM o_blog INNER JOIN o_user ON o_blog.user_id=o_user.id WHERE o_blog.user_id=#{userId}")
+   /* @Select("SELECT COUNT(o_blog.id) AS userblogcount ,(select count(*) from o_collection where user_id=#{userId}) AS usercollections, SUM(views) AS userviews ,SUM(comments) AS usercomments ,SUM(good_count) AS usergoodcounts,TIMESTAMPDIFF(YEAR,o_user.create_time,NOW()) AS codeage  FROM o_blog INNER JOIN o_user ON o_blog.user_id=o_user.id WHERE o_blog.user_id=#{userId}")*/
+   @SelectProvider(value = DynamicSQLProvider.class,method ="dynamicblogfollowexitsSql" )
     @Results(id="usermore",value = {
 
             //(可省略)
@@ -114,9 +115,10 @@ public interface BlogMapper {
             @Result(column ="usergoodcounts" ,property = "usergoodcounts"),
             @Result(column ="usercollections" ,property = "usercollections"),
             @Result(column ="codeage" ,property = "codeage"),
+            @Result(column = "befollowed",property = "befollowed")
 
     })
-    BlogPageUser getUserMoreById(Integer userId);
+    BlogPageUser getUserMoreById(Integer userId,Integer id);
 
 
 
@@ -141,7 +143,7 @@ public interface BlogMapper {
     int likesblogbyid(Integer blogId);
 
 
-    @SelectProvider(value = BlogTypeProvider.class,method ="dynamicTypeSql" )
+    @SelectProvider(value = DynamicSQLProvider.class,method ="dynamicblogTypeSql" )
     Integer getgetTotalcountbyclass(Integer id);
 
     @Update("update o_blog set views=#{views} where id=#{id}")

@@ -17,6 +17,7 @@ public class BlogPageUser {
     private Integer usergoodcounts;
     private Integer usercollections;
     private Integer codeage;
+    private Integer befollowed; //若用户登录判断是否被关注
 
 
 

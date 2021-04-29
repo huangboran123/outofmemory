@@ -40,7 +40,7 @@ public interface IBlogService {
     int updateBlogByid(Integer userId, Integer blogId, String title, String content, String tag, String classify,Integer isorignal);
 
     /*博客页面的视图，查询博客作者的相关信息*/
-    BlogPageUser getUserMoreById(Integer userId);
+    BlogPageUser getUserMoreById(Integer userId, Integer id);
 
   /*  获取推荐的博客，依据浏览量，点赞数和评论数之和*/
     List<Blog> getSideRecommandblogs();
