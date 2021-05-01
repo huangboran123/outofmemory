@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.love.outofmemory.Utills.CodeUtil;
 import com.love.outofmemory.Utills.DateUtil;
 import com.love.outofmemory.Utills.EncryptionUtils;
+import com.love.outofmemory.annotation.LogInterceptor;
 import com.love.outofmemory.domain.User;
 import com.love.outofmemory.domain.view.ProfilePageUser;
 import com.love.outofmemory.service.IUserService;
@@ -418,16 +419,25 @@ public class UserController {
                 return "{'msg':'查询失败'}";
             }
 
-
-
         }
         else{
             return "{'msg':'查询失败'}";
         }
-
-
     }
 
+    /*关注博主*/
+    @PostMapping(value = "/follow",produces = {"application/json;charset=UTF-8;"})
+    @ResponseBody
+    @LogInterceptor
+    public Boolean follow(Integer userId,Integer blogauthorId){
 
+        if(!Objects.isNull(userId)&&!Objects.isNull(blogauthorId)){
+            int i=iUserService.followblogerByid(userId,blogauthorId);
 
+            return i==1||i==2;
+        }else {
+
+            return false;
+        }
+    }
 }

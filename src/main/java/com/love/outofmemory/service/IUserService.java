@@ -21,4 +21,6 @@ public interface IUserService {
     int updateUserphoneById(Integer userId, String phonenumber);
 
     int updateUseremailById(Integer id, String email);
+
+    int followblogerByid(Integer userId, Integer blogauthorId);
 }

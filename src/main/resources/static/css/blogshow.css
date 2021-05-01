@@ -1419,3 +1419,12 @@ p {
     padding-top: 2px;
 }
 
+.msgmodal{
+    position: fixed;
+    background-color: white;
+    width: 15%;
+    height: 10%;
+    display: none;
+    transition: .2s;
+    z-index: 9999;
+}

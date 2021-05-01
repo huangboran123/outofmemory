@@ -36,4 +36,10 @@ public interface UserMapper {
 
     @Update("update o_user set email=#{email} where id=#{userId}")
     int updateUseremailById(Integer userId, String email);
+
+    @Insert("insert into o_follow values(null,#{userId},#{blogauthorId})")
+    int followblogerByid(Integer userId, Integer blogauthorId);
+
+    @Select("select count(id) from o_follow where user_id=#{userId} and follow_id=#{blogauthorId}")
+    int isalreadyfollowed(Integer userId, Integer blogauthorId);
 }

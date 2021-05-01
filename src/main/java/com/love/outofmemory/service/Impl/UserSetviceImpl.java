@@ -61,4 +61,14 @@ public class UserSetviceImpl implements IUserService {
     public int updateUseremailById(Integer userId, String email) {
         return userMapper.updateUseremailById(userId, email);
     }
+
+    @Override
+    public int followblogerByid(Integer userId, Integer blogauthorId) {
+        if(userMapper.isalreadyfollowed(userId,blogauthorId)==1){
+            return 2;
+        }else {
+            return userMapper.followblogerByid(userId,blogauthorId);
+        }
+
+    }
 }
