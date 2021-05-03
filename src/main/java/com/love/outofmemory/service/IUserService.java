@@ -22,5 +22,5 @@ public interface IUserService {
 
     int updateUseremailById(Integer id, String email);
 
-    int followblogerByid(Integer userId, Integer blogauthorId);
+    int followblogerByid(Integer userId, Integer blogauthorId, Integer type);
 }

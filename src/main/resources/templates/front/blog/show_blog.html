@@ -18,6 +18,12 @@
     <input id="userId" type="hidden" th:value="${session.user.id}">
 
 
+    <div id="model_message" class="model_window_message">
+        <div class="msgtype"></div>
+        <div class="msgcontent"></div>
+
+    </div>
+
 
     <div th:replace="/front/component/page::header">
     </div>
@@ -785,17 +791,19 @@ $(document).on("click",'.goodcounts_image',function (e) {
 
 /*==================================================关注=================================================*/
 $(document).on("click",'.nofollowed',function () {
-    debugger;
    $.ajax({
-       url:"/follow",
+       url:"/changefollow",
        dataType:"text",
-       data:{"userId":userId,"blogauthorId":blogauthorId},
+       data:{"userId":userId,"blogauthorId":blogauthorId,"type":1},
        type:"post",
        success:function (result) {
            if(result=="true"){
-               showMessage("关注成功","成功",2);
+               $(".pattention").html(" <div class=\"followed\"><a href=\"javascript:void(0)\">已关注</a></div>");
+              showMessage("已关注","成功",0.5);
+           /*   hideMessage(2);*/
+               setTimeout(hideMessage,1500,0.5);
            }else{
-               showMessage("关注失败","失败",2);
+
            }
 
        },
@@ -812,6 +820,37 @@ $(document).on("click",'.nofollowed',function () {
    })
 
 })
+/*    =================================取消关注====================================*/
+    $(document).on("click",'.followed',function () {
+        $.ajax({
+            url:"/changefollow",
+            dataType:"text",
+            data:{"userId":userId,"blogauthorId":blogauthorId,"type":1},
+            type:"post",
+            success:function (result) {
+                if(result=="true"){
+                    $(".pattention").html(" <div class=\"nofollowed\"><a href=\"javascript:void(0)\">关注</a></div>");
+                    showMessage("已取消关注","成功",0.5);
+                    setTimeout(hideMessage,1500,0.5);
+                }else{
+
+                }
+
+            },
+            error:function (e) {
+                alert(e);
+                return 0;
+            },
+            complete:function (xhr,status) {
+                jumptologinPage(xhr, status);
+                return 0;
+            }
+
+
+        })
+
+    })
+
 
  /*	--------------------------------拦截器跳转登录------------------------------------*/
     function  jumptologinPage(xhr, status) {
@@ -828,18 +867,21 @@ $(document).on("click",'.nofollowed',function () {
         }
     }
 
-    /*消息提示框*/
-    function showMessage(msg,status,sec) {
-        $(".msgmodal").attr("dispaly","");
 
-        $(".msgmodal .msg").text(msg);
-        $(".msgmodal .status").text(status);
 
-        setTimeout(msgdisplay,sec*1000);
+    /*    $("#model_message").hide(3000,null);*/
+
+/*==========================消息提示框==============================*/
+    function showMessage(msg,type,sec) {
+
+        $("#model_message").show(sec*1000,null);
+        $(".msgtype").text(type);
+        $(".msgcontent").text(msg);
     }
-    function msgdisplay() {
-        $(".msgmodal").attr("dispaly","none");
+    function hideMessage(sec) {
+        $("#model_message").hide(sec*1000,null);
     }
+
 
 </script>
 </html>

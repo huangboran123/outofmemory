@@ -426,18 +426,19 @@ public class UserController {
     }
 
     /*关注博主*/
-    @PostMapping(value = "/follow",produces = {"application/json;charset=UTF-8;"})
+    @PostMapping(value = "/changefollow",produces = {"application/json;charset=UTF-8;"})
     @ResponseBody
     @LogInterceptor
-    public Boolean follow(Integer userId,Integer blogauthorId){
+    public Boolean follow(Integer userId,Integer blogauthorId,Integer type){
 
         if(!Objects.isNull(userId)&&!Objects.isNull(blogauthorId)){
-            int i=iUserService.followblogerByid(userId,blogauthorId);
-
+            int i=iUserService.followblogerByid(userId,blogauthorId,type);
             return i==1||i==2;
         }else {
 
             return false;
         }
     }
+
+
 }

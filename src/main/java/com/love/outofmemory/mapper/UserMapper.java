@@ -3,6 +3,7 @@ package com.love.outofmemory.mapper;
 
 import com.love.outofmemory.domain.User;
 import com.love.outofmemory.domain.view.ProfilePageUser;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -42,4 +43,7 @@ public interface UserMapper {
 
     @Select("select count(id) from o_follow where user_id=#{userId} and follow_id=#{blogauthorId}")
     int isalreadyfollowed(Integer userId, Integer blogauthorId);
+
+    @Delete("delete from o_follow where user_id=#{userId} and follow_id=#{blogauthorId}")
+    int unfollowblogerByid(Integer userId, Integer blogauthorId);
 }

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的关注</title>
+    <link rel="short icon"  href="/common/system_icon/favicon.ico"/>
+    <link href="/css/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/header.css" rel="stylesheet" type="text/css">
+    <link href="/particles/style.css" rel="stylesheet" type="text/css">
+    <link href="/css/profile.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+<div id="particles-js">
+    <!--   使用模板model, 隐藏参数便于传参-->
+    <input type="hidden" id="userId" th:value="${session.user.id}">
+
+
+
+    <div th:replace="/front/component/page::header">
+    </div>
+
+
+
+
+
+    <div th:replace="/front/component/page::footer">
+    </div>
+
+</div>
+</body>
+<script src="js/plugin/jquery.js"></script>
+<!--打字效果引入-->
+<script src="js/plugin/commentTyping.js"></script>
+<!--粒子效果引入-->
+<script src="particles/particles.js"></script>
+<script src="particles/app.js"></script>
+<script src="js/plugin/date.js"></script>
+
+
+<script type="text/javascript">
+    /*------------------------------------------------------------------------------------------------------*/
+    /*头悬浮栏*/
+    $(document).on("mouseover",".current_user_section",function () {
+        $("#user_menu").css("display","block");
+    })
+    $(document).on("mouseout",".current_user_section",function () {
+        $("#user_menu").css("display","none");
+    })
+
+    $(document).on("mouseout","#user_menu",function () {
+        $("#user_menu").css("display","none");
+    })
+    /*------------------------------------------------------------------------------------------------------*/
+    /*页面加载时触发，默认个人设置页面*/
+    window.onload=function () {
+        /*$(".personalset").click();*/
+
+    }
+    /*个人设置点击事件*/
+    $(".personalset").on("click",function () {
+        /*点击后改变当前点击栏目背景色*/
+        $(".personalset").css("background-color","#f0f0f5");
+        /*点击效果互斥*/
+        var flist=$(".leftprofilebody div");
+        for(var i=0;i<flist.length;i++){
+            if(flist[i]!==this){
+                flist[i].style.backgroundColor="white";
+            }
+
+        }
+
+        /*获取本人信息id*/
+        let userId=$("#userId").val();
+
+
+        $.ajax({
+            url:"/profilePage/getuserInfo",
+            data:{'userId':userId},
+            /* 返回数据类型*/
+            dataType:"json",
+            method:"post",
+            success:function (user) {
+                /*自动将返回的json字符串转化为js对象*/
+                $(".rightprofilebody").html("     <div class=\"basicinfo\">\n" +
+                    "            <div class=\"profilebasic\">\n" +
+                    "                <div class=\"profilephotobox\">\n" +
+                    "                    <img src='/common/profile_image/"+user.image+"'>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"profilename\">\n" +
+                    "                    <span >"+user.username+"</span>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"codeage\"><span>码龄:"+user.codeage+" 年</span></div>\n" +
+                    "                <div class=\"personalstats\"><a href=\"\">个人主页</a></div>\n" +
+                    "                <div class=\"personlevel\">\n" +
+                    "                    <div class=\"check-in\"><a href=\"\">签到</a></div>\n" +
+                    "                    <div class=\"userlevel\"><span>等级:"+user.level+"</span></div>\n" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "        <div class=\"basicinfodetail\">\n" +
+                    "            <div class=\"basictext\"><span>基本信息</span></div>\n" +
+                    "            <div class=\"editprofile\">\n" +
+                    "                <ul class=\"ul_profile\">\n" +
+                    "                    <li>\n" +
+                    "                        <div class=\"profileshow-l\">用户昵称</div>\n" +
+                    "                        <div class=\"profileshow-r\">"+user.username+"</div>\n" +
+                    "                    </li>\n" +
+                    "                    <li>\n" +
+                    "                        <div class=\"profileshow-l\">用户ID</div>\n" +
+                    "                        <div class=\"profileshow-r-userid\">"+user.id+"</div>\n" +
+                    "                    </li>\n" +
+                    "                    <li>\n" +
+                    "                        <div class=\"profileshow-l\">性别</div>\n" +
+                    "                        <div class=\"profileshow-r\">"+user.sex+"</div>\n" +
+                    "                    </li>\n" +
+                    "                    <li>\n" +
+                    "                        <div class=\"profileshow-l\">QQ号码</div>\n" +
+                    "                        <div class=\"profileshow-r\">"+user.qq_number+"</div>\n" +
+                    "                    </li>\n" +
+                    "                    <li>\n" +
+                    "                        <div class=\"profileshow-l\">生日</div>\n" +
+                    "                        <div class=\"profileshow-r-birthday\">"+moment(user.birthday).format('YYYY-MM-DD')+"</div>\n" +
+                    "                    </li>\n" +
+                    "                    <li>\n" +
+                    "                        <div class=\"profileshow-l\">地区</div>\n" +
+                    "                        <div class=\"profileshow-r\">"+user.address+"</div>\n" +
+                    "                    </li>\n" +
+                    "                    <li>\n" +
+                    "                        <div class=\"profileshow-l\">个人简介</div>\n" +
+                    "                        <div class=\"profileshow-r-reputation\">"+user.reputation+"</div>\n" +
+                    "                    </li>\n" +
+                    "                </ul>\n" +
+                    "                <div class=\"editprofile-do\">\n" +
+                    "                    <a href=\"javascript:void(0)\">编辑</a>\n" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "        </div>"
+                )
+
+
+            }
+
+
+
+
+        })
+
+    })
+    /* ----------------------------------------编辑个人基本信息------------------------------------------------*/
+
+    $(document).on("click",'.editprofile-do',function () {
+
+        /* 修改信息回显*/
+        var prevalueList=$(".profileshow-l");
+        var parray=new Array(7);
+        for (var i=0;i<prevalueList.length;i++) {
+            parray[i]=prevalueList[i].nextElementSibling.innerHTML;
+        }
+
+        $(".basicinfodetail").html("            <div class=\"basictext\"><span>基本信息修改</span></div>\n" +
+            "            <div class=\"edittingprofile\">\n" +
+            "                <div class=\"mainedit\">\n" +
+            "                  <div class=\"e_user\">\n" +
+            "                      <div class=\"e_text\">用户昵称：</div>\n" +
+            "                      <div class=\"e_input\"><input type=\"text\" id=\"username\" value='"+parray[0]+"'></div>\n" +
+            "                  </div>\n" +
+            "                    <div class=\"e_user\">\n" +
+            "                        <div class=\"e_text\">生日：</div>\n" +
+            "                        <div class=\"e_input\"><input type=\"date\" id=\"birthday\" value='"+parray[4]+"'></div>\n" +
+            "                    </div>\n" +
+            "                  <div class=\"e_user\">\n" +
+            "                        <div class=\"e_text\">QQ号码：</div>\n" +
+            "                        <div class=\"e_input\"><input type=\"text\" placeholder='可为空,4~20数字' id=\"qqnumber\" value='"+parray[3]+"'></div>\n" +
+            "                  </div>\n" +
+            "                  <div class=\"e_user\">\n" +
+            "                        <div class=\"e_text\">地址：</div>\n" +
+            "                        <div class=\"e_input\"><input type=\"text\" id=\"address\" placeholder='可为空' value='"+parray[5]+"'></div>\n" +
+            "                  </div>\n" +
+            "                    <div class=\"e_user\">\n" +
+            "                        <div class=\"e_text\">性别：</div>\n" +
+            "                        <div class=\"e_input\">\n" +
+            "                            <select id=\"sex\" required='true'>\n" +
+            "                                <option value='男'>男</option>\n" +
+            "                                <option value='女'>女</option>\n" +
+            "                            </select>\n" +
+            "                        </div>\n" +
+            "                    </div>\n" +
+            "                    <div class=\"e_user\">\n" +
+            "                        <div class=\"e_cancel\"><a href=\"javascript:void(0)\">取消修改</a></div>\n" +
+            "                        <div class=\"e_confirm\"><a href=\"javascript:void(0)\">确认修改</a></div>\n" +
+            "                    </div>\n" +
+            "                    <div class=\"e_reputation\">\n" +
+            "                        <div class=\"e_text\">个人介绍：</div>\n" +
+            "                        <div id=\"reputation\" contenteditable=\"true\">"+parray[6]+"</div>\n" +
+            "                    </div>\n" +
+            "                </div>\n" +
+            "            </div>");
+
+        $("#sex").val(parray[2]);
+
+    })
+    /*-------------------------------------------------修改以及取消事件-----------------------------------------------------------------------------------*/
+
+    /*取消修改*/
+    $(document).on("click",'.e_cancel',function () {
+        $(".personalset").click();
+    })
+    /*确认修改*/
+    $(document).on("click",'.e_confirm',function () {
+        let username=$("#username").val().replace(/\s*/g,"");
+        if(username.length<2||username.length>10){
+            alert("用户名不大于10个字符不小于2个字符且不能为空");
+            return 0;
+        }
+        let birthday=$("#birthday").val()
+        if(birthday.length ===0){
+            alert("生日不能为空");
+            return 0;
+        }
+        let qq_number=$("#qqnumber").val().replace(/\s*/g,"");
+        if(qq_number.length !==0&&(qq_number.length<4||qq_number.length>20)){
+            alert("QQ号码不大于20个数字不小于4个数字");
+            return 0;
+        }
+        let address=$("#address").val().replace(/\s*/g,"");
+        if(address.length>50){
+            alert("地址不能大于50个字符且不能全输入空格");
+            return 0;
+        }
+        let sex=$("#sex").val();
+        let reputation=$("#reputation").text().replace(/\s*/g,"");
+        /*新建要修改的用户信息js对象*/
+        let muser={username:username,birthday:birthday,
+            qq_number:qq_number,address:address,sex:sex,reputation:reputation}
+
+        $.ajax({
+            url:"/profilePage/profile",
+            dataType: "text",
+            data: JSON.stringify(muser),
+            method: "post",
+            contentType:"application/json",
+            success:function (msg) {
+
+                if(msg==="true"){
+                    alert("修改成功");
+                    return 0;
+                }
+                else {
+                    alert("修改失败");
+                    return  0;
+                }
+
+            },
+            error:function (msg) {
+                alert(msg);
+                return 0;
+
+            }
+        })
+
+        return 0;
+    })
+    /* ---------------------------------------------账号设置事件---------------------------------------------*/
+
+    /* 账号设置点击事件*/
+    $(document).on("click",'.accountset',function () {
+
+        $(".rightprofilebody").html("");
+        /*点击后改变当前点击栏目背景色*/
+        $(".accountset").css("background-color","#f0f0f5");
+        /*点击效果互斥*/
+        var flist=$(".leftprofilebody div");
+        for(var i=0;i<flist.length;i++){
+            if(flist[i]!==this){
+                flist[i].style.backgroundColor="white";
+            }
+
+        }
+
+        $.ajax({
+            url:"/getphoneandemail",
+            type:"post",
+            dataType:"text",
+            success:function (msg) {
+                if(msg==="查询失败"){
+                    $(".rightprofilebody").html("");
+                    $(".rightprofilebody").html("<div class=\"account_text\"><span>账号信息</span></div>\n" +
+                        "        <div class=\"accountinfo\">\n" +
+                        "            <div class=\"account_md\">\n" +
+                        "                <div class=\"account_l\">手机号码:</div>\n" +
+                        "                <div class=\"account_r-phone\">查询错误</div>\n" +
+                        "                <div class=\"modifyitem-phone\"><a href=\"javascript:void(0)\">修改</a></div>\n" +
+                        "                <div class=\"pm-info\"></div>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"account_md\">\n" +
+                        "                <div class=\"account_l\">邮箱:</div>\n" +
+                        "                <div class=\"account_r-email\">查询错误11</div>\n" +
+                        "                <div class=\"modifyitem-email\"><a href=\"javascript:void(0)\">修改</a></div>\n" +
+                        "                <div class=\"pe-info\"></div>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"account_mdpasswd\">\n" +
+                        "                <div class=\"passwdchange\">\n" +
+                        "                    <div class=\"passwdchange-btn\"><a href=\"javascript:void(0)\">变更密码</a></div>\n" +
+                        "                    <div class=\"submirpasswd-info\"></div>\n" +
+                        "                </div>\n" +
+                        "                <div class=\"showchangepw\">\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">原密码</div>\n" +
+                        "                        <div class=\"originalpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"oi-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">新密码</div>\n" +
+                        "                        <div class=\"newpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"np-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">确认新密码</div>\n" +
+                        "                        <div class=\"conpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"cp-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"submirpasswd\"><a href=\"javascript:void(0)\">确认修改</a></div>\n" +
+                        "                    </div>\n" +
+                        "                </div>\n" +
+                        "            </div>\n" +
+                        "        </div>");
+
+                    return 0;
+                }
+                else{
+                    var user=JSON.parse(msg);
+                    $(".rightprofilebody").html("");
+                    $(".rightprofilebody").html("<div class=\"account_text\"><span>账号信息</span></div>\n" +
+                        "        <div class=\"accountinfo\">\n" +
+                        "            <div class=\"account_md\">\n" +
+                        "                <div class=\"account_l\">手机号码:</div>\n" +
+                        "                <div class=\"account_r-phone\">"+user.phone+"</div>\n" +
+                        "                <div class=\"modifyitem-phone\"><a href=\"javascript:void(0)\">修改</a></div>\n" +
+                        "                <div class=\"pm-info\"></div>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"account_md\">\n" +
+                        "                <div class=\"account_l\">邮箱:</div>\n" +
+                        "                <div class=\"account_r-email\">"+user.email+"</div>\n" +
+                        "                <div class=\"modifyitem-email\"><a href=\"javascript:void(0)\">修改</a></div>\n" +
+                        "                <div class=\"pe-info\"></div>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"account_mdpasswd\">\n" +
+                        "                <div class=\"passwdchange\">\n" +
+                        "                    <div class=\"passwdchange-btn\"><a href=\"javascript:void(0)\">变更密码</a></div>\n" +
+                        "                    <div class=\"submirpasswd-info\"></div>\n" +
+                        "                </div>\n" +
+                        "                <div class=\"showchangepw\">\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">原密码</div>\n" +
+                        "                        <div class=\"originalpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"oi-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">新密码</div>\n" +
+                        "                        <div class=\"newpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"np-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"p-text\">确认新密码</div>\n" +
+                        "                        <div class=\"conpasswd-input\" contenteditable=\"true\"></div>\n" +
+                        "                        <div class=\"cp-info\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"changepw\">\n" +
+                        "                        <div class=\"submirpasswd\"><a href=\"javascript:void(0)\">确认修改</a></div>\n" +
+                        "                    </div>\n" +
+                        "                </div>\n" +
+                        "            </div>\n" +
+                        "        </div>");
+                    return 0;
+
+                }
+
+
+            },
+            error:function (msg) {
+                alert(msg);
+
+
+            }
+
+
+
+        });
+        return 0;
+
+
+    })
+
+    /*----------------------------------------------修改个人密码---------------------------------------------------*/
+
+
+    $(document).on("click",'.passwdchange-btn',function () {
+        let bgtext=$(".passwdchange-btn a").text();
+
+        $(".originalpasswd-input").text("");
+        $(".newpasswd-input").text("");
+        $(".conpasswd-input").text("");
+
+        let flag=0;
+        if(bgtext==="变更密码")
+        {
+            $(".showchangepw").css("display","block");
+            $(".passwdchange-btn a").text("取消变更");
+        }
+        else{
+
+            $(".showchangepw").css("display","none");
+            $(".passwdchange-btn a").text("变更密码");
+        }
+
+        /*密码修改提交*/
+        $(document).on("click",'.submirpasswd',function () {
+
+            let originalpasswd=$(".originalpasswd-input").text().replace(/\s*/g,"");
+            let newpasswd=$(".newpasswd-input").text().replace(/\s*/g,"");
+            let confirmnewpasswd=$(".conpasswd-input").text().replace(/\s*/g,"");
+            let userId=$("#userId").val();
+
+            /*原密码是否符合格式*/
+            let passwdreg=/^(?![0-9]+$)(?![A-Za-z]+$)[A-Za-z0-9]{8,15}$/
+            if(!passwdreg.test(originalpasswd)){
+                $(".oi-info").text("原密码不符合格式");
+                setTimeout(textdispear,2500);
+                return 0;
+            }
+
+            /*查询原密码是否一致*/
+            $.ajax({
+                url:"/passwdtest",
+                dataType:"text",
+                method:"post",
+                data:{'originalpasswd':originalpasswd},
+                success:function (msg) {
+                    if(msg!=="true"){
+                        $(".oi-info").text("原密码错误");
+                        setTimeout(textdispear,2200);
+
+                        return 0;
+                    }
+
+                },
+                error:function (msg) {
+                    return 0;
+
+                }
+            })
+
+
+
+            /*新密码是否符合格式*/
+            if(!passwdreg.test(newpasswd)){
+                $(".np-info").text("新密码不符合格式");
+                setTimeout(textdispear,2200);
+                return 0;
+            }
+            /*确认新密码*/
+            if((!passwdreg.test(confirmnewpasswd))||(!newpasswd===confirmnewpasswd)){
+                $(".cp-info").text("密码不一致");
+                setTimeout(textdispear,2200);
+                return 0;
+            }
+
+
+            /*前台确认可以修改密码*/
+            $.ajax({
+                url:"/passwdchange",
+                dataType:"text",
+                data:{'newpasswd':newpasswd},
+                method:"post",
+                success: function (msg) {
+                    if(msg==="true"){
+                        $(".submirpasswd-info").text("密码修改成功");
+                        setTimeout(textdispear,2200);
+                        $(".passwdchange-btn").click();
+                        return 0;
+                    }
+                    else{
+                        $(".submirpasswd-info").text("密码修改失败");
+                        setTimeout(textdispear,2200);
+                        return 0;
+                    }
+
+                },
+                error:function (msg) {
+                    $(".submirpasswd-info").text("密码修改失败");
+                    setTimeout(textdispear,2200);
+                    return 0;
+
+                }
+
+            })
+
+
+            /* let emailrep=/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+             if(!emailrep.test(originalpasswd)){
+                 alert("原密码不符合格式");
+                 return 0;
+             }*/
+
+
+            /*  $.ajax({
+
+                  url:"",
+                  dataType:"text",
+                  method:"post",
+                  data:{'userId':userId}
+
+
+              })*/
+
+
+        })
+
+
+
+    })
+
+    /*    --------------------------------------------修改手机号码-----------------------------------------------*/
+
+    $(document).on("click",'.modifyitem-phone',function () {
+
+        let mdtext=$(".modifyitem-phone a").text();
+        let orginalphone=  $(".account_r-phone").text();
+        if(mdtext==="修改"){
+            $(".modifyitem-phone a").text("保存");
+            $(".account_r-phone").attr("contenteditable","true");
+            $(".account_r-phone").text("");
+            $(".account_r-phone").focus();
+
+        }
+        else{
+            //手机号正则表达式
+            let phonereg=/^[1-9][0-9]{10}$/;
+            let phonenumber=$(".account_r-phone").text().replace(/\s*/g,"");
+            if(phonereg.test(phonenumber)){
+                $.ajax({
+                    url:"/phonechange",
+                    dataType:"text",
+                    data:{'phonenumber':phonenumber},
+                    type:"post",
+                    success:function (msg) {
+                        if(msg==="true"){
+                            $(".modifyitem-phone a").text("修改");
+                            $(".account_r-phone").attr("contenteditable","false");
+                            $(".pm-info").text("手机修改成功");
+                            setTimeout(textduspear2,2200);
+                            return 0;
+                        }
+                        else
+                        {
+                            $(".modifyitem-phone a").text("修改");
+                            $(".account_r-phone").attr("contenteditable","false");
+                            $(".account_r-phone").text(orginalphone);
+                            $(".pm-info").text("手机已存在或修改失败");
+                            setTimeout(textduspear2,2200);
+                        }
+
+
+
+                    },
+                    error:function (msg) {
+
+                        $(".modifyitem-phone a").text("修改");
+                        $(".account_r-phone").attr("contenteditable","false");
+                        $(".account_r-phone").text(orginalphone);
+                        $(".pm-info").text("手机修改失败");
+                        setTimeout(textduspear2,2200);
+                    }
+
+                })
+            }
+            else{
+                $(".pm-info").text("新号码不符合格式");
+                $(".account_r-phone").text(orginalphone);
+                setTimeout(textduspear2,2200);
+            }
+
+        }
+
+    })
+
+    /*    --------------------------------------------修改邮箱号码-----------------------------------------------*/
+
+    $(document).on("click",'.modifyitem-email',function () {
+
+        let mdtext=$(".modifyitem-email a").text();
+        let orginalemail=  $(".account_r-email").text();
+        if(mdtext==="修改"){
+            $(".modifyitem-email a").text("保存");
+            $(".account_r-email").attr("contenteditable","true");
+            $(".account_r-email").text("");
+            $(".account_r-email").focus();
+
+        }
+        else{
+            //email正则表达式
+            let emailreg=/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+            let email=$(".account_r-email").text().replace(/\s*/g,"");
+            if(emailreg.test(email)){
+                $.ajax({
+                    url:"/emailchange",
+                    dataType:"text",
+                    data:{'emailr':email},
+                    type:"post",
+                    success:function (msg) {
+                        if(msg==="true"){
+                            $(".modifyitem-email a").text("修改");
+                            $(".account_r-email").attr("contenteditable","false");
+                            $(".pm-info").text("email修改成功");
+                            setTimeout(textduspear2,2200);
+                            return 0;
+                        }
+                        else
+                        {
+                            $(".modifyitem-email a").text("修改");
+                            $(".account_r-email").attr("contenteditable","false");
+                            $(".account_r-email").text(orginalemail);
+                            $(".pe-info").text("eamil已存在修改失败");
+                            setTimeout(textduspear2,2200);
+                        }
+
+
+
+                    },
+                    error:function (msg) {
+                        $(".modifyitem-email a").text("修改");
+                        $(".account_r-email").attr("contenteditable","false");
+                        $(".account_r-email").text(orginalemail);
+                        $(".pe-info").text("email修改失败");
+                        setTimeout(textduspear2,2200);
+                    }
+
+                })
+            }
+            else{
+                $(".modifyitem-email a").text("修改");
+                $(".account_r-email").attr("contenteditable","false");
+                $(".account_r-email").text(orginalemail);
+                $(".pe-info").text("新email不符合格式");
+                setTimeout(textduspear2,2200);
+            }
+
+        }
+
+    })
+
+
+    /*-------------------------------------------------------管理博客事件----------------------------------*/
+    /* 账号设置点击事件*/
+    $(document).on("click",'.myblog',function () {
+
+        $(".rightprofilebody").html("");
+        /*点击后改变当前点击栏目背景色*/
+        $(".myblog").css("background-color","#f0f0f5");
+        /*点击效果互斥*/
+        var flist=$(".leftprofilebody div");
+        for(var i=0;i<flist.length;i++){
+            if(flist[i]!==this){
+                flist[i].style.backgroundColor="white";
+            }
+
+        }
+
+        window.location.href="/myblog";
+        return 0;
+
+
+    })
+
+    /*  ---------------------------------------设置文字提示文字消失------------------------------------------*/
+    /* psswordifo*/
+    function textdispear() {
+        $(".oi-info").text("");
+        $(".cp-info").text("");
+        $(".np-info").text("");
+        $(".submirpasswd-info").text("")
+
+    }
+    function textduspear2() {
+        $(".pe-info").text("");
+        $(".pm-info").text("");
+
+
+    }
+
+</script>
+</html>

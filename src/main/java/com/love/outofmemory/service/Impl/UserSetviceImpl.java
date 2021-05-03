@@ -63,11 +63,16 @@ public class UserSetviceImpl implements IUserService {
     }
 
     @Override
-    public int followblogerByid(Integer userId, Integer blogauthorId) {
-        if(userMapper.isalreadyfollowed(userId,blogauthorId)==1){
-            return 2;
+    public int followblogerByid(Integer userId, Integer blogauthorId, Integer type) {
+        if(type==1){
+            if(userMapper.isalreadyfollowed(userId,blogauthorId)==1){
+                return 2;
+            }else {
+                return userMapper.followblogerByid(userId,blogauthorId);
+            }
         }else {
-            return userMapper.followblogerByid(userId,blogauthorId);
+
+            return userMapper.unfollowblogerByid(userId,blogauthorId);
         }
 
     }
