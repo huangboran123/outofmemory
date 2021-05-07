@@ -10,6 +10,7 @@ import com.love.outofmemory.annotation.LogInterceptor;
 import com.love.outofmemory.domain.User;
 import com.love.outofmemory.domain.view.ProfilePageUser;
 import com.love.outofmemory.service.IUserService;
+import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -438,6 +441,14 @@ public class UserController {
 
             return false;
         }
+    }
+
+    /*我的关注页面*/
+    @RequestMapping(value="/myfollowPage")
+    public String myfollowPage(Model model){
+
+
+        return "front/follow/myfollow";
     }
 
 

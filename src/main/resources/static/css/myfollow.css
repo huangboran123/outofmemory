@@ -1,0 +1,29 @@
+.p_head{
+    position: relative;
+    float: left;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 24%;
+    z-index: 1;
+    top:6%
+}
+.p_rbody{
+    position: relative;
+    float: left;
+    width: 70%;
+    height: 60%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+    top:10%;
+    left: 10%;
+}
+.p_lbody{
+    position: relative;
+    float: left;
+    width: 20%;
+    height: 60%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+    top:10%;
+
+}
