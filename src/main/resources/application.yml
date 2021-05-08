@@ -7,7 +7,7 @@ spring:
     ##password: Hbr709498
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://loaclhost:3306/outofmemory?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/outofmemory?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 709498
 
@@ -17,7 +17,7 @@ spring:
   redis:
     host: localhost
     port: 6379
-    password: hbr709498
+    #password: hbr709498
     database: 0
     lettuce:
         pool:
@@ -30,7 +30,7 @@ spring:
       enabled: true
       ##Linux服务器目录
       ##location: /home/huang/outofmemory/resources/static/common/image_cache/
-      location: /home/huang/outofmemory/resources/static/common/image_cache/
+      location: E:\JavaProject\springboot\outofmemory\src\main\resources\static\common\image_cache
       max-file-size: 8000000
 server:
   port: 8443

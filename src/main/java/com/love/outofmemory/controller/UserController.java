@@ -36,8 +36,12 @@ import java.util.UUID;
 @Controller
 public class UserController {
 
-   private String imgPathP = "/home/huang/outofmemory/resources/static/common/profile_image/";
+    //linux本机
+ /*  private String imgPathP = "/home/huang/outofmemory/resources/static/common/profile_image/";*/
+    //linux服务器
    /* private String imgPathP = "/home/admin/outofmemory/resources/static/common/profile_image/";*/
+   //windows本机
+    private String imgPathP = "E:\\JavaProject\\springboot\\outofmemory\\src\\main\\resources\\static\\common\\profile_image\\";
     @Autowired
     private IUserService iUserService;
 
