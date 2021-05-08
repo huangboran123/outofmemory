@@ -23,7 +23,24 @@
     </div>
 
     <!--个人介绍-->
-    <div class="p_head"></div>
+    <div class="p_head">
+        <div class="title_author"><span th:text="${session.user.username+'的博客'}"></span></div>
+        <div class="author_photo"><div class="p_photo"><img th:src="@{/common/profile_image/{image}(image=${session.user.image})}"></div></div>
+        <div class="author_detail">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+
+        </div>
+    </div>
 
     <!--左边推荐-->
     <div class="p_lbody"></div>
