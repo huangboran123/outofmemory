@@ -1,9 +1,15 @@
 spring:
+  ##阿里云mysql
+  ##datasource:
+    ##driver-class-name: com.mysql.cj.jdbc.Driver
+    ##url: jdbc:mysql://rm-f8zac57xoqum5j7nx0o.mysql.rds.aliyuncs.com:3306/outofmemory?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    ##username: huang_root
+    ##password: Hbr709498
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://rm-f8zac57xoqum5j7nx0o.mysql.rds.aliyuncs.com:3306/outofmemory?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
-    username: huang_root
-    password: Hbr709498
+    url: jdbc:mysql://loaclhost:3306/outofmemory?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 709498
 
   thymeleaf:
     cache: false
@@ -22,6 +28,8 @@ spring:
   servlet:
     multipart:
       enabled: true
+      ##Linux服务器目录
+      ##location: /home/huang/outofmemory/resources/static/common/image_cache/
       location: /home/huang/outofmemory/resources/static/common/image_cache/
       max-file-size: 8000000
 server:
