@@ -146,6 +146,19 @@
 
                 </div>
             </div>
+
+            <div class="pagination-bar">
+                <div class="total-page">共<span id="indexblogtotalpage" th:text="${tottalcount}"></span>页</div>
+                <div class="jump-page">
+                    <div>跳转倒:</div>
+                    <div><input id="willjump" type="text" ></div>
+                    <div id="jumpconfirm" onclick="changeindexblogpage(3)"><a href="javascript:void(0)">确认</a></div></div>
+
+                <div class="next-page" onclick="changeindexblogpage(2)" ><a href="javascript:void(0)">下一页</a></div>
+                <div class="current-page">当前页:<span id="currentpage">1</span></div>
+                <div class="pre-page" onclick="changeindexblogpage(1)"><a href="javascript:void(0)">上一页</a></div>
+
+            </div>
     </div>
         <div th:replace="/front/component/page::footer"></div>
 

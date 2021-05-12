@@ -314,7 +314,6 @@ public class BlogController {
    /* 首页博客分页*/
     @PostMapping(value = "/index/changeblogpage")
     @ResponseBody
-    @LogInterceptor
     public List<Blog> changeblogpage(Integer page,Integer pageSize) throws JSONException {
         if(!Objects.isNull(page)&&!Objects.isNull(pageSize)){
 

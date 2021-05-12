@@ -1,6 +1,7 @@
 package com.love.outofmemory.controller;
 
 import com.love.outofmemory.Utills.DateUtil;
+import com.love.outofmemory.annotation.LogInterceptor;
 import com.love.outofmemory.domain.Blog;
 import com.love.outofmemory.domain.Comment;
 import com.love.outofmemory.domain.ReplyComment;
@@ -18,17 +19,18 @@ import javax.servlet.http.HttpSession;
 public class CommentController {
     @Autowired
     private ICommentService iCommentService;
-    @Autowired
-    private IUserService iUserService;
+ /*   @Autowired
+    private IUserService iUserService;*/
 
 
 
     //提交评论
     @PostMapping(value = "/comment",produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
+    @LogInterceptor
     public String comment(String comment, Integer blogId, HttpSession session){
         User user=(User) session.getAttribute("user");
-        if(user!=null){
+
            Integer userId=user.getId();
           /* 新建评论实体*/
             Comment comment1=new Comment();
@@ -53,19 +55,16 @@ public class CommentController {
                return "评论提交失败";
            }
 
-        }
 
-        return "请先登录";
 
     }
   /*  提交回复*/
     @PostMapping(value = "/reply",produces ={"text/plain;charset=UTF-8"} )
     @ResponseBody
+    @LogInterceptor
     public String reply(Integer commentId,Integer toUId,String replyContent,Integer blogId,HttpSession session){
 
         User user=(User) session.getAttribute("user");
-        if(user!=null){
-
             /*新建回复实例对象*/
             ReplyComment replyComment=new ReplyComment();
             Comment comment=new Comment();
@@ -87,10 +86,6 @@ public class CommentController {
                 return "回复失败";
             }
 
-        }
-        else{
-            return "请先登录";
-        }
 
 
     }

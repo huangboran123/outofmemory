@@ -15,7 +15,10 @@
 <!--   使用模板model, 隐藏参数便于传参-->
     <input id="blogId" type="hidden" th:value="${blog.id}">
     <input id="blogauthorId" type="hidden" th:value="${blog.user.id}">
-    <input id="userId" type="hidden" th:value="${session.user.id}">
+    <div th:if="${session.user!=null}">
+        <input id="userId" type="hidden" th:value="${session.user.id}">
+    </div>
+
 
 
     <div id="model_message" class="model_window_message">
@@ -525,13 +528,15 @@
                 data: {'comment':comment,'blogId':blogId},
                 success:function (msg) {
                     /*刷新*/
-
                     location.reload();
 
                 },
                 error:function (msg) {
-                    alert(msg);
 
+                },
+                complete:function (xhr,status) {
+                    loginfirst(xhr,status);
+                    return 0;
                 }
 
 
@@ -707,16 +712,18 @@
                     setTimeout(refresh,1500);
                     return 0;
 
-
-
                 },
                 error:function (msg) {
-                 /*   $(".reply_info").text(msg);
-                    setTimeout(setBlankc(),1000);
                     closewindow();
-                    location.reload();*/
+
+                    return 0;
+                },
+                complete:function (xhr,status) {
+
+                    loginfirst(xhr,status);
                     return 0;
                 }
+
 
 
             })
@@ -782,7 +789,7 @@ $(document).on("click",'.goodcounts_image',function (e) {
             return 0;
         },
         complete:function (xhr,status) {
-            jumptologinPage(xhr, status);
+            loginfirst(xhr,status);
             return 0;
         }
     })
@@ -842,6 +849,7 @@ $(document).on("click",'.nofollowed',function () {
                 return 0;
             },
             complete:function (xhr,status) {
+
                 jumptologinPage(xhr, status);
                 return 0;
             }
@@ -854,6 +862,7 @@ $(document).on("click",'.nofollowed',function () {
 
  /*	--------------------------------拦截器跳转登录------------------------------------*/
     function  jumptologinPage(xhr, status) {
+
         //拦截器实现超时跳转到登录页面
         // 通过xhr取得响应头
         var REDIRECT = xhr.getResponseHeader("REDIRECT");
@@ -882,6 +891,14 @@ $(document).on("click",'.nofollowed',function () {
         $("#model_message").hide(sec*1000,null);
     }
 
+    /*请先登录*/
+   function loginfirst(xhr,status){
+    showMessage("请先登录","提示",0.5);
+    /*   hideMessage(2);*/
+    setTimeout(hideMessage,1500,0.5);
+
+    setTimeout(jumptologinPage,2000,xhr,status);
+}
 
 </script>
 </html>

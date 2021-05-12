@@ -1129,3 +1129,95 @@
     color:red;
 
 }
+
+/*分页组件*/
+.pagination-bar{
+    position: absolute;
+    bottom: 2%;
+    right: 0;
+    width: 100%;
+    height: 5%;
+    font-size: 14px;
+}
+.pre-page{
+    float: right;
+    position: relative;
+    height: 100%;
+    width: 6%;
+}
+
+.pre-page a{
+    text-decoration: none;
+    color: black;
+}
+.pre-page a:hover{
+    color: red;
+}
+
+.pre-page a:active{
+
+    color: orange;
+}
+.current-page{
+    float: right;
+    position: relative;
+    height: 100%;
+    width: 6%;
+
+}
+.next-page{
+    float: right;
+    position: relative;
+    height: 100%;
+    width: 6%;
+}
+.next-page a{
+    text-decoration: none;
+    color: black;
+}
+.next-page a:hover{
+    color: red;
+}
+.next-page a:active{
+    color: orange;
+}
+
+.jump-page{
+    float: right;
+    position: relative;
+    height: 100%;
+    width: 15%;
+}
+.total-page{
+    float: right;
+    position: relative;
+    height: 100%;
+    width: 6%;
+}
+#willjump{
+    height: 45%;
+    width: 45%;
+    margin-bottom: 2%;
+}
+
+#jumpconfirm{
+
+}
+#jumpconfirm a{
+    text-decoration: none;
+    color: black;
+
+}
+#jumpconfirm a:hover{
+    color: red;
+}
+#jumpconfirm a:active{
+    color: orange;
+}
+.jump-page div{
+    float: left;
+    position: relative;
+    width: 33.3%;
+    height: 90%;
+
+}

@@ -65,15 +65,21 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
                     addResourceLocations("classpath:/static/common/blog_image/");
             registry.addResourceHandler("/common/image_cache/**").
                     addResourceLocations("classpath:/static/common/image_cache/");
-           /* 某些请求路径下，在请求样式表等资源时会携带请求路径名，导致访问不到资源，我们可以加上路径名如/front*/
+            /* 某些请求路径下，在请求样式表等资源时会携带请求路径名，导致访问不到资源，我们可以加上路径名如/front*/
             /*粒子效果资源请求路径映射*/
             registry.addResourceHandler("/front/particles/**","/myblog/particles/**","/particles/**").
                     addResourceLocations("classpath:/static/particles/");
-            registry.addResourceHandler("/myblog/editor/**").
+            registry.addResourceHandler("/editor/**","/myblog/editor/**").
                     addResourceLocations("classpath:/static/editor/");
             //jquery映射
             registry.addResourceHandler("/myblog/js/**","/js/**").
                     addResourceLocations("classpath:/static/js/");
+            registry.addResourceHandler("/css/**").
+                    addResourceLocations("classpath:/static/css/");
+            registry.addResourceHandler("/common/**").
+                    addResourceLocations("classpath:/static/common/");
+            registry.addResourceHandler("/blog/**","/").
+                    addResourceLocations("classpath:/static/");
         } else {//linux和mac系统 可以根据逻辑再做处理
             /*图片资源请求路径映射*/
             registry.addResourceHandler("/common/blog_image/**").
