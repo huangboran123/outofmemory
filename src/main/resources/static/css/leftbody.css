@@ -36,7 +36,7 @@
     border:rgba(223,219,219,1.00) 1px solid;
 }
 
-.section li{
+.tagitem{
     float: left;
     list-style-type: none;
     margin: 3px 10px 3px 10px;

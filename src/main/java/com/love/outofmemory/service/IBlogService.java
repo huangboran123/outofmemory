@@ -48,13 +48,20 @@ public interface IBlogService {
     /*获取首页推荐博客,分页*/
     List<Blog> getIndexRecommandblogs(Integer page, Integer pagesize);
 
+    //查询博客不包含views
     Blog getblogByIdNoviews(Integer blogId);
 
     List<Integer> getRecommandBlogIds(Integer page, Integer pagesize);
 
+    /*点赞*/
     int likesblogbyid(Integer blogId);
 
-    Integer getTotalcountbyclass(Integer id);
+    /*获取所有博客工具博客类别*/
+    Integer getTotalcountbyclassanduser(Integer classId, Integer userId);
 
+   /* 保持浏览量一致*/
     Long saveredisViews(Map<Object, Object> viewmap);
+
+    /*根据用户和博客类型获取博客*/
+    List<Blog> getAllmyPagingblogs(Integer classification, Integer page, Integer pageSize, Integer userId, Integer sort,Integer tag);
 }

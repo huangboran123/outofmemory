@@ -44,13 +44,8 @@ server:
     key-password: 709498
     trust-store-type: PKCS12
 
-
-
-
-
-
 main:
-  allow-bean-definition-overriding: true
+   allow-bean-definition-overriding: true
 
 
 mybatis:

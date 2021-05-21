@@ -3,17 +3,22 @@ import com.mysql.cj.util.StringUtils;
 import org.apache.ibatis.jdbc.SQL;
 public class DynamicSQLProvider {
 
-    public String dynamicblogTypeSql(Integer id){
+    public String dynamicblogTypeSql(Integer classId,Integer userId){
         String sql=new SQL(){{
             SELECT("count(id)");
             FROM("o_blog");
-            if(!StringUtils.isNullOrEmpty(String.valueOf(id))){
-                if(id==0){
-                }
-                else{
-                    WHERE("classification=#{id}");
-                }
+            if(classId!=null&&userId==null){
+                WHERE("classification=#{classId}");
             }
+            if(classId==null&&userId!=null){
+                WHERE("user_id=#{userId}");
+            }
+            if(classId!=null&&userId!=null){
+                WHERE("user_id=#{userId} and classification=#{classId}");
+            }
+
+
+
         }
         }.toString();
 
@@ -21,6 +26,7 @@ public class DynamicSQLProvider {
 
     }
 
+   /* 是否关注*/
     public String dynamicblogfollowexitsSql(Integer userId,Integer id){
 
         String befollowed= new SQL(){{
@@ -64,6 +70,34 @@ public class DynamicSQLProvider {
 
         return sql;
 
+    }
 
+    /*博客id查询*/
+    public String dynamicmyblogSql(Integer classification,Integer page,Integer pageSize,Integer id,Integer sort,Integer tag){
+
+        String sql=new SQL(){{
+
+                SELECT("id");
+                FROM("o_blog");
+                if(classification!=null){
+                WHERE("classification=#{classification}");
+                }
+                if(tag!=null){
+                    WHERE("tag=#{tag}");
+                }
+                if(id!=null){
+                    WHERE("user_id=#{id}");
+                }
+                if(page!=null&&pageSize!=null){
+                    LIMIT("#{page} , #{pageSize}");
+                }
+                if(sort==0){
+                    ORDER_BY("publish_time desc");
+                }else{
+
+                    ORDER_BY("views desc");
+                }
+        }}.toString();
+        return sql;
     }
 }

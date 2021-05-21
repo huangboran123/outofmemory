@@ -50,7 +50,7 @@ public class FrontIndexController {
 
 
         /*根据博客类别来查询博客数*/
-        Integer totalcount=iBlogService.getTotalcountbyclass(0);
+        Integer totalcount=iBlogService.getTotalcountbyclassanduser(null,null);
         model.addAttribute("tottalcount",totalcount%pagesize>0 ? (totalcount/pagesize)+1:totalcount/pagesize);
 
 

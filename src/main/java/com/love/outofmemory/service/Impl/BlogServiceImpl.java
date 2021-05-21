@@ -142,8 +142,8 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    public Integer getTotalcountbyclass(Integer id) {
-        return blogMapper.getgetTotalcountbyclass(id);
+    public Integer getTotalcountbyclassanduser(Integer classId, Integer userId) {
+        return blogMapper.getTotalcountbyclassanduser(classId,userId);
     }
 
     @Override
@@ -159,5 +159,34 @@ public class BlogServiceImpl implements IBlogService {
             k++;
         }
         return k;
+    }
+
+    @Override
+    public List<Blog> getAllmyPagingblogs(Integer classification, Integer page, Integer pageSize, Integer userId, Integer sort,Integer tag) {
+        /* 博客查询redis优化*/
+        List<Integer> blogids=getmyPagingBlogIds(classification,page,pageSize, userId,sort,tag);
+        List<Blog> bloglistbetter=new ArrayList<>();
+
+        for (Integer i:blogids)
+        {
+            if(redisUtil.HashGet("Views",i.toString())==null){
+                Blog b=getblogById(i);
+                bloglistbetter.add(b);
+                redisUtil.HashPut("Views",i.toString(),b.getViews());
+            }
+            else{
+                Blog b=getblogByIdNoviews(i);
+                b.setViews((Integer)redisUtil.HashGet("Views",i.toString()));
+                bloglistbetter.add(b);
+            }
+        }
+
+        return bloglistbetter;
+
+
+    }
+
+    private List<Integer> getmyPagingBlogIds(Integer classification, Integer page, Integer pageSize, Integer id,Integer sort,Integer tag) {
+        return blogMapper.getmyPagingBlogIds(classification,(page-1)*pageSize,pageSize,id,sort,tag);
     }
 }

@@ -7,6 +7,7 @@
     <link href="/css/footer.css" rel="stylesheet" type="text/css">
     <link href="/css/header.css" rel="stylesheet" type="text/css">
     <link href="/css/blogshow.css" rel="stylesheet" type="text/css">
+    <link href="/css/common.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="editor/css/editormd.css" type="text/css">
 
 </head>
@@ -20,11 +21,10 @@
     </div>
 
 
-
+    <!--消息模态框-->
     <div id="model_message" class="model_window_message">
         <div class="msgtype"></div>
         <div class="msgcontent"></div>
-
     </div>
 
 
@@ -53,7 +53,6 @@
                     </div>
                     <div class="reply_photo">
                         <img >
-
                     </div>
                 </div>
                 <div class="reply_content" contenteditable="true">
@@ -63,22 +62,15 @@
                     <div onClick="showReplyEmoji()" class="showreplyemoji">
                         <a href="javascript:void(0)">插入表情</a>
                     </div>
-
                     <div class="publish_reply">
                         <a href="javascript:void(0)">发表回复</a>
                     </div>
-
                     <div class="emoji-Replycollection">
-
                     </div>
                 </div>
-
-
             </div>
             <!--消息返回-->
             <div class="reply_info"></div>
-
-
         </div>
     </div>
    <!-- 目录打开关.闭按钮,回到顶部-->
@@ -241,35 +233,27 @@
     </div>
 
     <!--评论输入区域-->
-    <div class="comment_input_area">
-        <div class="commenter">
-            <img th:src="@{/mycommon/getImage(image=${blog.user.image})}">
+    <div class="comment_input_area" th:if="${session.user!=null}">
+        <div class="commenter" >
+            <img th:src="@{/mycommon/getImage(image=${session.user.image})}">
         </div>
         <div class="comment_text"><span>发表评论：</span></div>
-
         <div class="comment_content" contenteditable="true">
-
         </div>
         <div class="comment_emoji">
             <div onClick="showEmoji()" class="showemoji">
                 <a href="javascript:void(0)">插入表情</a>
             </div>
-
             <div class="publish_comment">
                 <a href="javascript:void(0)">发表评论</a>
             </div>
-
             <div class="emoji-collection">
-
             </div>
         </div>
-
     </div>
    <!-- 显示评论区-->
     <div class="comment_area">
         <div class="comments">
-
-
             <div class="comment-wrapbox" th:each="c:${comments}">
                  <!--评论人头像-->
                 <div class="photo">
@@ -277,9 +261,7 @@
                 </div>
                 <!--评论人昵称-->
                 <div class="c_username">
-
                         <a href="javascript:void(0)" th:text="${c.critic.username}"></a>
-
                 </div>
                 <div class="comment-block">
                     <!--评论内容-->
@@ -298,7 +280,6 @@
                         <input type="hidden" th:value="${r.from.username}">
                         <input type="hidden" th:value="${r.from.image}">
                         <div class="subreplytime" th:text="${'回复时间: '+#dates.format(r.reply_time,'yyyy-MM-dd HH:mm')}"></div>
-
                     </div>
                     <div class="bottom-comment">
                         <div class="comment-date" th:text="${'评论时间: '+#dates.format(c.comment_time,'yyyy-MM-dd HH:mm')}" ></div>
@@ -309,12 +290,10 @@
                         <input type="hidden" th:value="${c.id}">
                         <input type="hidden" th:value="${c.critic.username}">
                         <input type="hidden" th:value="${c.critic.image}">
-
                     </div>
                 </div>
             </div>
         <div class="next_comment_page"></div>
-
     </div>
     </div>
     <div th:replace="/front/component/page::footer">
@@ -342,6 +321,7 @@
 <script src="js/plugin/emoji-lib/punycode.js"></script>
 <script src="js/plugin/emoji-lib/punycode.min.js"></script>
 <script src="js/plugin/emoji-lib/emoji.js"></script>
+<script src="js/common.js"></script>
 <script type="text/javascript">
 
     /*全局变量*/
@@ -860,45 +840,7 @@ $(document).on("click",'.nofollowed',function () {
     })
 
 
- /*	--------------------------------拦截器跳转登录------------------------------------*/
-    function  jumptologinPage(xhr, status) {
 
-        //拦截器实现超时跳转到登录页面
-        // 通过xhr取得响应头
-        var REDIRECT = xhr.getResponseHeader("REDIRECT");
-        //如果响应头中包含 REDIRECT 则说明是拦截器返回的需要重定向的请求
-        if (REDIRECT == "REDIRECT") {
-            var win = window;
-            while (win != win.top) {
-                win = win.top;
-            }
-            win.location.href = xhr.getResponseHeader("CONTEXTPATH");
-        }
-    }
-
-
-
-    /*    $("#model_message").hide(3000,null);*/
-
-/*==========================消息提示框==============================*/
-    function showMessage(msg,type,sec) {
-
-        $("#model_message").show(sec*1000,null);
-        $(".msgtype").text(type);
-        $(".msgcontent").text(msg);
-    }
-    function hideMessage(sec) {
-        $("#model_message").hide(sec*1000,null);
-    }
-
-    /*请先登录*/
-   function loginfirst(xhr,status){
-    showMessage("请先登录","提示",0.5);
-    /*   hideMessage(2);*/
-    setTimeout(hideMessage,1500,0.5);
-
-    setTimeout(jumptologinPage,2000,xhr,status);
-}
 
 </script>
 </html>

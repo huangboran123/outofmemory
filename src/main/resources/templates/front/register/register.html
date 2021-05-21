@@ -17,12 +17,8 @@
 
         <div class="register_box">
             <div id="register_title"> <span>注册</span></div>
-
-
             <form class="user_form" method="post" th:action="@{/register}" th:object="${user}"
                   enctype="multipart/form-data">
-
-                <!--//输入-->
                 <div class="input_item">
                     <label th:for="*{username}">
                         <img id="name_icon"  src="/common/system_icon/nick_name.png" alt="" />
@@ -67,7 +63,6 @@
                     </label>
                 </div>
                 <div class="input_item">
-
                     <label th:for="*{qq_number}">
                         <img id="qq_icon"  src="/common/system_icon/qq_icon.png" alt="" />
                         <span>QQ号:</span>
@@ -90,7 +85,6 @@
                         <span class="error_item" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                     </label>
                 </div>
-
                 <div class="input_item">
                     <label>
                         <img id="confirmpassword_icon"  src="/common/system_icon/confirmpassword_icon.png" alt="" />
@@ -99,7 +93,6 @@
                     </label>
                     <span class="match_info" th:text="${password_dismatch}"></span>
                 </div>
-
                 <div class="input_item">
                     <label >
                         <img id="profile_icon"  src="/common/system_icon/profile_icon.png" alt="" />
@@ -107,7 +100,6 @@
                         <input type="file" id="profile_image" onchange="Preview(this)" placeholder="不选则为默认"  name="profilepicture" accept="image/jpeg,image/png,image/gif"/>
                     </label >
                 </div>
-
                 <div class="input_item">
                     <label for="Verification_code">
                         <img id="Verification_icon"  src="/common/system_icon/verification_icon.png" alt="" />
@@ -117,14 +109,9 @@
                     <img src="/mycommon/code"  alt="" onclick="changecode()" id="code_img">
                     <span class="match_info" th:text="${code_dismatch}"></span>
                 </div>
-
-
-
                 <div id="submit">
                     <img id="submit_icon" alt="" onclick="SubMitUser()"  src="/common/system_icon/submitbig.png" >
                 </div>
-
-
             </form>
 
 

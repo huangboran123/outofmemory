@@ -93,3 +93,9 @@
 #cr{
     font-size: small;
 }
+.codechange{
+    margin-top: 5px;
+}
+.codechange img{
+    padding-top: 5px;
+}

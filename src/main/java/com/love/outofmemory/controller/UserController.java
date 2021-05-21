@@ -58,53 +58,36 @@ public class UserController {
             HttpSession session,
             String code
     ) {
-
         //启用Java校验的表单字段是否符合规范
         if (errors.hasErrors()) {
-
             return "/front/register/register";
         }
-
         if (iUserService.getUserByloginname(user.getPhone()) != null) {
             model.addAttribute("phoneconflict", "手机号码已存在");
             return "/front/register/register";
         }
-
         //生日是否为空串
         if ("".equals(str_birthday)) {
-
             model.addAttribute("birthday", "请输入生日");
             return "/front/register/register";
         }
-
         //密码是否一致
         if (!user.getPassword().equals(confirmpassword)) {
-
             model.addAttribute("password_dismatch", "密码输入不一致");
             return "front/register/register";
         }
-
-        //判断图片是否为空，这里可以使用默认图像
-       /* if(profilepicture.isEmpty()){
-
-            return "front/register/register";
-        }*/
-
         //验证码
         if (!session.getAttribute("code").equals(code)) {
             model.addAttribute("code_dismatch", "验证码输入错误");
             return "front/register/register";
 
         } else {
-
             String unique_Profile_name = "default_profile.png";
             //密码MD5加密
             String password_md5 = EncryptionUtils.encryptMD5(user.getPassword());
             //图片不为空则将图片转移到相应路径
             if (!profilepicture.isEmpty()) {
-
                 try {
-
                     //获取图像后缀名
                     String[] houzui = Objects.requireNonNull(profilepicture.getOriginalFilename()).split("[.]");
                     //生成图像唯一名
@@ -115,8 +98,6 @@ public class UserController {
                     e.printStackTrace();
                 }
             }
-
-            /* model.addFlashAttribute("spitter",spitter);*/
             user.setImage(unique_Profile_name);
             user.setPassword(password_md5);
             user.setBirthday(DateUtil.strToDateShort(str_birthday));
@@ -126,9 +107,7 @@ public class UserController {
             user.setFans(0);
             user.setFollow(0);
             user.setLevel(0);
-
             int i = iUserService.newUser(user);
-
             if (i == 0) {
                 model.addAttribute("service_error", "服务器故障");
                 return "front/register/register";
@@ -136,40 +115,28 @@ public class UserController {
                 //跳转到登录界面
                 model.addAttribute("register_info", "注册成功!");
                 return "front/login/login";
-
             }
-
         }
-
-
     }
 
     /*登录*/
-    //produces解决返回中文乱码
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
     public String login(String loginname, String password, String code,
                         String autologin, HttpSession session, HttpServletResponse response) {
-
         if (loginname.equals("")) {
             return "用户名错误";
         }
-
         User user = iUserService.getUserByloginname(loginname);
-
         if (user == null) {
-
             return "用户名错误";
         }
         if (!user.getPassword().equalsIgnoreCase(EncryptionUtils.encryptMD5(password))) {
-
             return "密码错误";
         }
-
         if (!session.getAttribute("code").equals(code)) {
             return "验证码输入有误";
         }
-
         if ("1".equals(autologin)) {
             //cookie的路径设置尤为重要，主要看你是在哪个请求资源的路径下调用request.getCookies()方法，否则无法获取到
             //如cookie1的路径为/front/login 而你想要获取cookie1就必须在/front/login的请求中获取。
@@ -191,7 +158,6 @@ public class UserController {
         }
         //服务的写入session
         session.setAttribute("user", user);
-
         return "登录成功";
     }
 

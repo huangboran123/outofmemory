@@ -9,6 +9,7 @@
 <link href="/css/header.css" rel="stylesheet" type="text/css">
 <link href="/css/leftbody.css" rel="stylesheet" type="text/css">
 <link href="/css/rightbody.css" rel="stylesheet" type="text/css">
+<link href="/css/common.css" rel="stylesheet" type="text/css">
 <link href="particles/style.css" rel="stylesheet" type="text/css">
 
 
@@ -16,6 +17,11 @@
 </head>
 <body >
 <div id="particles-js">
+	<!--消息模态框-->
+	<div id="model_message" class="model_window_message">
+		<div class="msgtype"></div>
+		<div class="msgcontent"></div>
+	</div>
 	<div th:replace="/front/component/page::header">
 	</div>
 
@@ -23,7 +29,7 @@
 		<div class="catalog">
 			<ul class="section">
 				<!--该部分由数据库查询得到-->
-				<li th:each="t:${blogTagList}"><a href="" th:text="${t.name}"></a></li>
+				<li class="tagitem" th:each="t:${blogTagList}"><a href="javascript:void(0)" th:text="${t.name}"></a></li>
 
 			</ul>
 
@@ -114,6 +120,7 @@
 <script src="js/plugin/jquery.js"></script>
 <script src="particles/particles.js"></script>
 <script src="particles/app.js"></script>
+<script src="js/common.js"></script>
 <script type="text/javascript">
 
 /*	particlesJS.onload("particles-js","particles/particles.json",function () {
@@ -177,10 +184,8 @@ $(document).on("click",'.blogs',function () {
 
 							console.log(error);
 							return 0;
-						},
-						complete : function(xhr, status) {
-							jumptologinPage(xhr,status);
 						}
+
 
 					})
 				}
@@ -211,10 +216,8 @@ $(document).on("click",'.blogs',function () {
 						error:function (error) {
 							console.log(error);
 							return 0;
-						},
-						complete : function(xhr, status) {
-							jumptologinPage(xhr,status);
 						}
+
 					})
 				}
 				break;
@@ -241,11 +244,8 @@ $(document).on("click",'.blogs',function () {
 
 							console.log(error);
 							return 0;
-						},
-						complete : function(xhr, status) {
-
-							jumptologinPage(xhr,status);
 						}
+
 					})
 				}
 				else{
@@ -258,20 +258,6 @@ $(document).on("click",'.blogs',function () {
 		return 0;
 	}
 
-/*	--------------------------------拦截器跳转登录------------------------------------*/
-function  jumptologinPage(xhr, status) {
-	//拦截器实现超时跳转到登录页面
-	// 通过xhr取得响应头
-	var REDIRECT = xhr.getResponseHeader("REDIRECT");
-	//如果响应头中包含 REDIRECT 则说明是拦截器返回的需要重定向的请求
-	if (REDIRECT == "REDIRECT") {
-		var win = window;
-		while (win != win.top) {
-			win = win.top;
-		}
-		win.location.href = xhr.getResponseHeader("CONTEXTPATH");
-	}
-}
 
 /*--------------------------------------分页前端渲染--------------------------------------*/
 	function showPageBlog(blogs) {
@@ -283,7 +269,7 @@ function  jumptologinPage(xhr, status) {
 					"\t\t\t\t<input type=\"hidden\" value='"+b.id+"'>\n" +
 					"\t\t\t\t<input type=\"hidden\" value='"+b.user.id+"'>\n" +
 					"\t\t\t\t<li class=\"title\"><a href=\"\" >"+b.title+"</a></li>\n" +
-					"\t\t\t\t<li class=\"author\"><img src=\"/common/profile_image/"+b.user.image+"\" alt=\"\"><a href=\"\" ></a></li>\n" +
+					"\t\t\t\t<li class=\"author\"><img src=\"/common/profile_image/"+b.user.image+"\" alt=\"\"><a href=\"\" >"+b.user.username+"</a></li>\n" +
 					"\t\t\t\t<li class=\"preview\"><p ></p>"+b.content.substr(25,38)+"</li>\n" +
 					"\t\t\t\t<li class=\"like\"><img src=\"/common/system_icon/good.png\" alt=\"点赞数\" title=\"点赞数\"><a href=\"\" >"+b.good_count+"</a></li>\n" +
 					"\t\t\t\t<li class=\"views\"><img src=\"/common/system_icon/views.png\" alt=\"浏览量\" title=\"浏览量\"><a href=\"\" >"+b.views+"</a></li>\n" +

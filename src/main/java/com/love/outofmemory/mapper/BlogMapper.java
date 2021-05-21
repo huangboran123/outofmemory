@@ -144,8 +144,11 @@ public interface BlogMapper {
 
 
     @SelectProvider(value = DynamicSQLProvider.class,method ="dynamicblogTypeSql" )
-    Integer getgetTotalcountbyclass(Integer id);
+    Integer getTotalcountbyclassanduser(Integer classId, Integer userId);
 
     @Update("update o_blog set views=#{views} where id=#{id}")
     int updateblogviewByid(String id, Integer views);
+
+    @SelectProvider(value = DynamicSQLProvider.class,method ="dynamicmyblogSql" )
+    List<Integer> getmyPagingBlogIds(Integer classification, Integer page, Integer pageSize, Integer id,Integer sort,Integer tag);
 }

@@ -20,8 +20,6 @@
             <div id="login_title"> <span>登录</span></div>
 
             <form class="login_form" method="post">
-
-                <!--//输入-->
                 <div class="input_item">
                     <label for="login_name">
                         <img id="loginname_icon"  src="/common/system_icon/loginname.png" alt="" />
@@ -30,7 +28,6 @@
                     </label>
                     <span id="lr"></span>
                 </div>
-
                 <div class="input_item">
                     <label for="passwordid">
                         <img id="password_icon"  src="/common/system_icon/password.png" alt="" />
@@ -45,26 +42,20 @@
                         <span>验证码:</span>
                         <input type="text" id="Verification_code"  name="code" />
                     </label >
-                    <div>
+                    <div class="codechange">
                         <span style="font-size: small">点击切换</span>
                         <img src="/mycommon/code"  alt="" onclick="changecode()" id="code_img">
                         <span id="cr" ></span>
                     </div>
-
                 </div>
-
                 <div id="submit">
                     <div id="autologin">
                         <span>免登录:</span><input type="checkbox" name="autologin" class="auto_login" >
                     </div>
-
                     <div id="login">
                         <img id="login_icon" alt="" onclick="UserLogin()"  src="/common/system_icon/login_btn.png">
                     </div>
-
                 </div>
-
-
             </form>
 
         </div>
@@ -119,7 +110,6 @@
                 $("#pr").text(msg);
                 setTimeout(resetP,4000);
 
-
             }
             if(msg==="验证码输入有误"){
 
@@ -153,8 +143,6 @@
         $code.attr("src","/mycommon/code?"+Math.random());
 
     }
-
-
 
 </script>
 </html>

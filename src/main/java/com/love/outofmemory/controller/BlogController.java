@@ -6,6 +6,7 @@ import com.love.outofmemory.Utills.DateUtil;
 import com.love.outofmemory.Utills.MarkDownUtil;
 import com.love.outofmemory.Utills.RedisUtil;
 import com.love.outofmemory.annotation.LogInterceptor;
+import com.love.outofmemory.controller.commonbean.AjaxResults;
 import com.love.outofmemory.domain.*;
 import com.love.outofmemory.domain.view.BlogPageUser;
 import com.love.outofmemory.domain.view.Classify;
@@ -14,6 +15,7 @@ import com.love.outofmemory.service.IBlogTagService;
 import com.love.outofmemory.service.IClassificationService;
 import com.love.outofmemory.service.ICommentService;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,42 +102,40 @@ public class BlogController {
         User user = (User) session.getAttribute("user");
         //防止非登录状态请求
         if (user != null) {
-
+            Integer pagesize=6;
+            Integer page=1;
             //个人博客分类信息
             List<Classify> classifyList = iBlogService.getClassifyBlogCount(user.getId());
             model.addAttribute("classifyList", classifyList);
-
             //查询所有博客取前n条按发布时间
-            List<Blog> allblogList = iBlogService.gettopnblogsorderBydate(user.getId(), 6);
+            List<Blog> allblogList = iBlogService.getAllmyPagingblogs(null,page,pagesize, user.getId(),0,null);
+
+            Integer totalcount=iBlogService.getTotalcountbyclassanduser(null, user.getId());
             //将查询到的Stringmarkdown格式转换为html格式
             for (Blog b : allblogList) {
                 String content = MarkDownUtil.markdownToHtml(b.getContent());
                 b.setContent(content);
             }
-
             model.addAttribute("allblogList", allblogList);
+            model.addAttribute("totalcount",totalcount%pagesize>0 ? (totalcount/pagesize)+1:totalcount/pagesize);
             return "front/blog/my_blog";
         }
-
-        return "redirect:/";
+        return "redirect:front/loginPage";
     }
 
     /* 查询博客分类*/
-    @PostMapping(value = "/myblog/classify", produces = {"text/plain;charset=UTF-8"})
+    @PostMapping(value = "/myblog/classify")
     @ResponseBody
     @LogInterceptor
-    public String queryClassify(HttpSession session, Integer classificationId) {
+    public AjaxResults queryClassify(HttpSession session, Integer classificationId,Integer page,Integer pageSize,Integer sortmethod) {
+
         User user = (User) session.getAttribute("user");
-        List<Blog> blogList = iBlogService.getblogsByuseridandclassify(user.getId(), classificationId);
-
-        ObjectMapper json = new ObjectMapper();
-
-        try {
-            return json.writeValueAsString(blogList);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "服务器错误";
+        List<Blog> blogList = iBlogService.getAllmyPagingblogs(classificationId,page,pageSize, user.getId(), sortmethod,null);
+        Integer totalcount=iBlogService.getTotalcountbyclassanduser(classificationId,user.getId());
+        AjaxResults results=new AjaxResults();
+        results.setBlogresults(blogList);
+        results.setTotalcount(totalcount%pageSize>0 ? (totalcount/pageSize)+1:totalcount/pageSize);
+        return results;
 
     }
 
@@ -317,6 +317,7 @@ public class BlogController {
     public List<Blog> changeblogpage(Integer page,Integer pageSize) throws JSONException {
         if(!Objects.isNull(page)&&!Objects.isNull(pageSize)){
 
+
             return iBlogService.getIndexRecommandblogs(page,pageSize);
 
         }
@@ -326,9 +327,29 @@ public class BlogController {
 
         }
 
-
-
     }
+
+   /* 我的博客页面分页展示*/
+   @PostMapping(value = "/myblog/changeblogpage")
+   @ResponseBody
+   @LogInterceptor
+   public List<Blog> changemyblogpage(HttpSession session,Integer page,Integer pageSize,Integer sortmethod,String classification) throws JSONException {
+       if(!Objects.isNull(page)&&!Objects.isNull(pageSize)){
+           User user = (User) session.getAttribute("user");
+           if("all".equals(classification)){
+               return iBlogService.getAllmyPagingblogs(null,page,pageSize,user.getId(), sortmethod,null);
+           }
+          else{
+               return iBlogService.getAllmyPagingblogs(Integer.valueOf(classification),page,pageSize,user.getId(), sortmethod,null);
+           }
+       }
+       else{
+
+           return null;
+
+       }
+
+   }
 
 
 }

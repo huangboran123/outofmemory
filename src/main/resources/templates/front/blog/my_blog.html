@@ -7,10 +7,23 @@
     <link href="/css/footer.css" rel="stylesheet" type="text/css">
     <link href="/css/header.css" rel="stylesheet" type="text/css">
     <link href="/css/myblog.css" rel="stylesheet" type="text/css">
+    <link href="/css/common.css" rel="stylesheet" type="text/css">
     <link href="particles/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="particles-js">
+
+   <!-- 该页面全局变量-->
+    <!--分类-->
+    <input id="p-classification" type="hidden" value="all">
+    <!--排序方式-->
+    <input id="p-sortmethod" type="hidden" value="0">
+
+    <div id="model_message" class="model_window_message">
+        <div class="msgtype"></div>
+        <div class="msgcontent"></div>
+
+    </div>
     <div th:replace="/front/component/page::header"></div>
 
         <!--左边分类专栏-->
@@ -77,8 +90,8 @@
             <div class="order">
                 <div class="order_type">
                     <div class="order_text"><span>排序:</span></div>
-                    <div class="order_date"><a href="">按发布时间</a></div>
-                    <div class="order_views"><a href="">按访问量</a></div>
+                    <div class="order_date"><a href="javascript:void(0)">按发布时间</a></div>
+                    <div class="order_views"><a href="javascript:void(0)">按访问量</a></div>
                 </div>
 
             </div>
@@ -148,15 +161,15 @@
             </div>
 
             <div class="pagination-bar">
-                <div class="total-page">共<span id="indexblogtotalpage" th:text="${tottalcount}"></span>页</div>
+                <div class="total-page">共<span id="myblogtotalpage" th:text="${totalcount}"></span>页</div>
                 <div class="jump-page">
                     <div>跳转倒:</div>
                     <div><input id="willjump" type="text" ></div>
-                    <div id="jumpconfirm" onclick="changeindexblogpage(3)"><a href="javascript:void(0)">确认</a></div></div>
+                    <div id="jumpconfirm" onclick="changemyblogpage(3)"><a href="javascript:void(0)">确认</a></div></div>
 
-                <div class="next-page" onclick="changeindexblogpage(2)" ><a href="javascript:void(0)">下一页</a></div>
+                <div class="next-page" onclick="changemyblogpage(2)" ><a href="javascript:void(0)">下一页</a></div>
                 <div class="current-page">当前页:<span id="currentpage">1</span></div>
-                <div class="pre-page" onclick="changeindexblogpage(1)"><a href="javascript:void(0)">上一页</a></div>
+                <div class="pre-page" onclick="changemyblogpage(1)"><a href="javascript:void(0)">上一页</a></div>
 
             </div>
     </div>
@@ -170,10 +183,13 @@
 <script src="js/plugin/date.js"></script>
 <script src="particles/particles.js"></script>
 <script src="particles/app.js"></script>
+<script src="js/common.js"></script>
 <script type="text/javascript">
+
  /*------------------------------------------------------------------------------------------------------*/
  /* hash 属性是一个可读可写的字符串，该字符串是 URL 的锚部分,去除地址栏锚点部分*/
  window.onload=function(){
+     $(".order_date a").css("color","red");
      if(window.location.hash!==""){
          window.location.hash="";
      }
@@ -271,7 +287,7 @@
              alert("出现错误");
          },
          complete:function (xhr,status) {
-             jumptologinPage(xhr, status);
+             loginfirst(xhr,status);
              return 0;
          }
      });
@@ -472,7 +488,7 @@ function setBlnakm(){
                return 0;
            },
            complete:function (xhr,status) {
-               jumptologinPage(xhr, status);
+               loginfirst(xhr,status);
                return 0;
            }
 
@@ -533,93 +549,34 @@ function setBlnakm(){
     /*分类栏查询事件*/
    $(document).on("click",".li_class",function () {
         var classificationId=this.getAttribute("id");
-       /*  $.post("/myblog/classify",{'classificationId':classificationId},function (msg) {
-            //转数组
-            if(msg==="[]") {
-                //空json字符串
-                $(".blog_item").text("暂无文章");
-                return 0;
-            }
-            else{
-
-                /!* $(".blog_item").text(msg);*!/
-                /!*处理json对象数组*!/
-                var blogList=JSON.parse(msg);
-                var blog=blogList[0];
-                $(".blog_item").html("");
-                var inneritemBlog="";
-                for(var i=0;i<blogList.length;i++){
-
-
-                    var b=blogList[i];
-                    $(".blog_item").html($(".blog_item").html()+
-                        "            <div class=\"item_div\" >\n" +
-                        "                <div class=\"item_left\" id='"+b.id+"'>\n" +
-                        "             <input type='hidden' value='"+b.user.id+"'>"+
-                        "                    <ul class=\"item\">\n" +
-                        "                        <li class=\"item_title\"><a href=\"\">"+b.title+"</a></li>\n" +
-                        "                        <li class=\"item_date\"><a href=\"\">发布时间:"+moment(b.publish_time).format('YYYY-MM-DD HH:mm:ss')+"</a></li>\n" +
-                        "                        <li class=\"item_content\"><a href=\"\">"+b.content.substr(25,38)+"</a></li>\n" +
-                        "                        <li class=\"item_good\"><img src=\"/common/system_icon/good.png\" alt=\"点赞数\" title=\"点赞数\"><a href=\"\">"+b.good_count+"</a></li>\n" +
-                        "                        <li class=\"item_view\"><img src=\"/common/system_icon/views.png\" alt=\"浏览量\" title=\"浏览量\"><a href=\"\">"+b.views+"</a></li>\n" +
-                        "                        <li class=\"item_comment\"><img src=\"/common/system_icon/comments.png\" alt=\"评论数\" title=\"评论数\"><a href=\"\" >"+b.comments+"</a></li>\n" +
-                        "                    </ul>\n" +
-                        "                </div>\n" +
-                        "                <div class=\"item_right\">\n" +
-                        "                    <div class=\"right_del\">\n" +
-                        "                        <a href='#delete_model'>删除</a>\n" +
-                        "                    </div>\n" +
-                        "                    <div class=\"right_mod\">\n" +
-                        "                        <a href='/myblog/modPage?blogId="+b.id+"'>修改</a>\n" +
-                        "                    </div>\n" +
-                        "                    <div class=\"right_mov\">\n" +
-                        "                             <input type=\"hidden\" value='"+b.id+"'>\n" +
-                        "                            <input type=\"hidden\" value='"+b.classification.id+"'>\n" +
-                        "                            <a href=\"#move_model\">移动</a>"+
-
-                        "                    </div>\n" +
-                        "                </div>\n" )
-
-                }
-
-                /!* 由于dom树改变新加入的么有鼠标移入事件需重新加入若设置为document事件就不用*!/
-                /!*鼠标hover经过blog编辑删除以及移动事件*!/
-               /!* $(document).on("mouseover",".item_div",function () {
-                    this.firstElementChild.nextElementSibling.setAttribute("style","display:inherit");
-                })
-
-                $(document).on("mouseout",".item_div",function () {
-                    this.firstElementChild.nextElementSibling.setAttribute("style","display:none");
-                })*!/
-                /!*alert(blog.id);*!/
-
-                return  0;
-            }
-
-
-        });*/
+        $("#p-classification").val(classificationId);
+        $("#currentpage").text('1');
+       let sortmethod=$("#p-sortmethod").val();
+        console.log(  $("#p-classification").val());
  /*分类栏查询事件*/
         $.ajax({
             url:"/myblog/classify",
             type:'POST',
-            data:{'classificationId':classificationId},
+            data:{'classificationId':classificationId,'sortmethod':sortmethod,'page':1,'pageSize':6},
             success:function (msg) {
                 //转数组
-                if(msg==="[]") {
+
+                $("#myblogtotalpage").text(msg.totalcount);
+                console.log(msg);
+                /*查询记录数为0*/
+                if(msg.totalcount==0) {
                     //空json字符串
                     $(".blog_item").text("暂无文章");
                     return 0;
                 }
+                /*博客写入页面*/
                 else{
 
                     /* $(".blog_item").text(msg);*/
                     /*处理json对象数组*/
-                    var blogList=JSON.parse(msg);
-                    var blog=blogList[0];
+                    var blogList=msg.blogresults;
                     $(".blog_item").html("");
-                    var inneritemBlog="";
                     for(var i=0;i<blogList.length;i++){
-
 
                         var b=blogList[i];
                         $(".blog_item").html($(".blog_item").html()+
@@ -649,7 +606,6 @@ function setBlnakm(){
 
                             "                    </div>\n" +
                             "                </div>\n" )
-
                     }
 
                     /* 由于dom树改变新加入的么有鼠标移入事件需重新加入若设置为document事件就不用*/
@@ -674,7 +630,7 @@ function setBlnakm(){
                 return 0;
             },
             complete:function (xhr,status) {
-                jumptologinPage(xhr, status);
+                loginfirst(xhr,status);
                 return 0;
             }
 
@@ -683,6 +639,147 @@ function setBlnakm(){
 
 
     });
+  /* ======================================================个人博客分页=========================================*/
+ function changemyblogpage(p) {
+
+     let tottalcount=$("#myblogtotalpage").text().replace(/s+/g,'');
+     let currentPage=$("#currentpage").text().replace(/s+/g,'');
+     let page;
+     let classification=$("#p-classification").val();
+     let sortmethod=$("#p-sortmethod").val();
+     switch (p) {
+
+         /*上一页*/
+         case 1:
+             page=parseInt(currentPage)-1;
+             if(page<=0){
+                 alert("当前为第一页!");
+                 return 0;
+             }
+             else{
+                 $.ajax({
+                     url:'/myblog/changeblogpage',
+                     dataType:"json",
+                     data:{'page':page,'pageSize':6,'classification':classification,'sortmethod':sortmethod},
+                     type:"post",
+                     success: function (result) {
+
+                         if(result!=null&&result!==""&&result!==undefined){
+                             /*渲染返回数据*/
+                             showPageBlog(result);
+                             $("#currentpage").text(page);
+                             return 0;
+                         }
+                         return 0;
+                     },
+                     error:function (error) {
+
+                         console.log(error);
+                         return 0;
+                     },
+                     complete : function(xhr, status) {
+                         loginfirst(xhr,status)
+                     }
+
+                 })
+             }
+             break;
+         /*下一页*/
+         case 2:
+             page=parseInt(currentPage)+1;
+             if(page>tottalcount){
+                 alert("当前为最后一页!");
+                 return 0;
+             }
+             else{
+                 $.ajax({
+                     url:'/myblog/changeblogpage',
+                     dataType:"json",
+                     data:{'page':page,'pageSize':6,'classification':classification,'sortmethod':sortmethod},
+                     type:"post",
+                     success: function (result) {
+
+                         if(result!=null&&result!==""&&result!==undefined){
+                             /*渲染返回数据*/
+                             showPageBlog(result);
+                             $("#currentpage").text(page);
+                             return 0;
+                         }
+                         return 0;
+                     },
+                     error:function (error) {
+                         console.log(error);
+                         return 0;
+                     },
+                     complete : function(xhr, status) {
+                         loginfirst(xhr,status);
+                     }
+                 })
+             }
+             break;
+         /*跳转*/
+         case 3:
+             page=parseInt($("#willjump").val());
+             if(page>0&&page<=tottalcount){
+                 $.ajax({
+                     url:'/myblog/changeblogpage',
+                     dataType:"json",
+                     data:{'page':page,'pageSize':6,'classification':classification,'sortmethod':sortmethod},
+                     type:"post",
+                     success: function (result) {
+
+                         if(result!=null&&result!==""&&result!==undefined){
+                             /*渲染返回数据*/
+                             showPageBlog(result);
+                             $("#currentpage").text(page);
+                             return 0;
+                         }
+                         return 0;
+                     },
+                     error:function (error) {
+
+                         console.log(error);
+                         return 0;
+                     },
+                     complete : function(xhr, status) {
+
+                         loginfirst(xhr,status);
+                     }
+                 })
+             }
+             else{
+
+                 alert("跳转页面不在范围内!")
+             }
+             break;
+
+     }
+     return 0;
+ }
+
+/* ===========================================博客排序方式===============================================*/
+      $(document).on("click",".order_date",function (){
+
+          var sortmethod=$("#p-sortmethod").val();
+          if(sortmethod==="1"){
+              $(".order_date a").css("color","red");
+              $(".order_views a").css("color","black");
+              $("#p-sortmethod").val("0");
+          }
+          console.log($("#p-sortmethod").val());
+
+      })
+
+ $(document).on("click",".order_views",function (){
+
+     var sortmethod=$("#p-sortmethod").val();
+     if(sortmethod==="0"){
+         $(".order_views a").css("color","red");
+         $(".order_date a").css("color","black");
+         $("#p-sortmethod").val("1");
+     }
+     console.log($("#p-sortmethod").val());
+ })
  /*------------------------------------------------------------------------------------------------------*/
     /*鼠标hover经过blog编辑删除以及移动事件*/
     $(document).on("mouseover",".item_div",function () {
@@ -707,19 +804,44 @@ function setBlnakm(){
     $(document).on("mouseout","#user_menu",function () {
      $("#user_menu").css("display","none");
  })
- /*	--------------------------------拦截器跳转登录------------------------------------*/
- function  jumptologinPage(xhr, status) {
-     //拦截器实现超时跳转到登录页面
-     // 通过xhr取得响应头
-     var REDIRECT = xhr.getResponseHeader("REDIRECT");
-     //如果响应头中包含 REDIRECT 则说明是拦截器返回的需要重定向的请求
-     if (REDIRECT == "REDIRECT") {
-         var win = window;
-         while (win != win.top) {
-             win = win.top;
-         }
-         win.location.href = xhr.getResponseHeader("CONTEXTPATH");
+
+ /*--------------------------------------分页前端渲染--------------------------------------*/
+ function showPageBlog(blogList) {
+     $(".blog_item").html("");
+     for(var i=0;i<blogList.length;i++){
+
+         var b=blogList[i];
+         $(".blog_item").html($(".blog_item").html()+
+             "            <div class=\"item_div\" >\n" +
+             "                <div class=\"item_left\" id='"+b.id+"'>\n" +
+             "             <input type='hidden' value='"+b.user.id+"'>"+
+             "                    <ul class=\"item\">\n" +
+             "                        <li class=\"item_title\"><a href=\"\">"+b.title+"</a></li>\n" +
+             "                        <li class=\"item_date\"><a href=\"\">发布时间:"+moment(b.publish_time).format('YYYY-MM-DD HH:mm:ss')+"</a></li>\n" +
+             "                        <li class=\"item_content\"><a href=\"\">"+b.content.substr(25,38)+"</a></li>\n" +
+             "                        <li class=\"item_good\"><img src=\"/common/system_icon/good.png\" alt=\"点赞数\" title=\"点赞数\"><a href=\"\">"+b.good_count+"</a></li>\n" +
+             "                        <li class=\"item_view\"><img src=\"/common/system_icon/views.png\" alt=\"浏览量\" title=\"浏览量\"><a href=\"\">"+b.views+"</a></li>\n" +
+             "                        <li class=\"item_comment\"><img src=\"/common/system_icon/comments.png\" alt=\"评论数\" title=\"评论数\"><a href=\"\" >"+b.comments+"</a></li>\n" +
+             "                    </ul>\n" +
+             "                </div>\n" +
+             "                <div class=\"item_right\">\n" +
+             "                    <div class=\"right_del\">\n" +
+             "                        <a href='#delete_model'>删除</a>\n" +
+             "                    </div>\n" +
+             "                    <div class=\"right_mod\">\n" +
+             "                        <a href='/myblog/modPage?blogId="+b.id+"'>修改</a>\n" +
+             "                    </div>\n" +
+             "                    <div class=\"right_mov\">\n" +
+             "                             <input type=\"hidden\" value='"+b.id+"'>\n" +
+             "                            <input type=\"hidden\" value='"+b.classification.id+"'>\n" +
+             "                            <a href=\"#move_model\">移动</a>"+
+
+             "                    </div>\n" +
+             "                </div>\n" )
      }
+
+
  }
+
 </script>
 </html>

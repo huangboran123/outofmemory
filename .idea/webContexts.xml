@@ -3,6 +3,7 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/src/main/resources/templates/front/blog/my_blog.html" value="file://$PROJECT_DIR$/src/main/resources/templates/front/blog" />
         <entry key="file://$PROJECT_DIR$/src/main/resources/templates/front/profile/profilepage.html" value="file://$PROJECT_DIR$/src/main/resources/templates/front/profile" />
       </map>
     </option>
