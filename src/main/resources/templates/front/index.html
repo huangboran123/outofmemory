@@ -17,6 +17,7 @@
 </head>
 <body >
 <div id="particles-js">
+	<input id="p-tag" type="hidden" value="all">
 	<!--消息模态框-->
 	<div id="model_message" class="model_window_message">
 		<div class="msgtype"></div>
@@ -29,7 +30,7 @@
 		<div class="catalog">
 			<ul class="section">
 				<!--该部分由数据库查询得到-->
-				<li class="tagitem" th:each="t:${blogTagList}"><a href="javascript:void(0)" th:text="${t.name}"></a></li>
+				<li class="tagitem" th:each="t:${blogTagList}" th:value="${t.id}"><a href="javascript:void(0)" th:text="${t.name}"></a></li>
 
 			</ul>
 
@@ -128,7 +129,7 @@
 	})*/
 
 
-
+console.log("reload");
 	/*头悬浮栏*/
 	$(".current_user_section").mouseover(function () {
 		$("#user_menu").css("display","block");
@@ -154,6 +155,7 @@ $(document).on("click",'.blogs',function () {
 
 		let tottalcount=$("#indexblogtotalpage").text().replace(/s+/g,'');
 		let currentPage=$("#currentpage").text().replace(/s+/g,'');
+		var tag=$("#p-tag").val();
 		let page;
 		switch (p) {
 
@@ -168,7 +170,7 @@ $(document).on("click",'.blogs',function () {
 					$.ajax({
 						url:'/index/changeblogpage',
 						dataType:"json",
-						data:{'page':page,'pageSize':5},
+						data:{'page':page,'pageSize':5,'tag':tag},
 						type:"post",
 						success: function (result) {
 
@@ -201,7 +203,7 @@ $(document).on("click",'.blogs',function () {
 					$.ajax({
 						url:'/index/changeblogpage',
 						dataType:"json",
-						data:{'page':page,'pageSize':5},
+						data:{'page':page,'pageSize':5,'tag':tag},
 						type:"post",
 						success: function (result) {
 
@@ -228,7 +230,7 @@ $(document).on("click",'.blogs',function () {
 					$.ajax({
 						url:'/index/changeblogpage',
 						dataType:"json",
-						data:{'page':page,'pageSize':5},
+						data:{'page':page,'pageSize':5,'tag':tag},
 						type:"post",
 						success: function (result) {
 
@@ -278,6 +280,38 @@ $(document).on("click",'.blogs',function () {
 		}
 
 	}
+/*================================博客分类查询===============================================*/
+$(document).on("click",'.tagitem',function () {
+	var tag=$(this).val();
+	$("#p-tag").val(tag);
 
+	var tagname=$(this).children('a').text();
+	$(".recommend_left").text(tagname);
+	/*console.log(tag);*/
+	$.ajax({
+		url:'/index/tagblogquery',
+		data:{'page':1,'pageSize':5,'tag':tag},
+		type:"post",
+		success:function (results){
+			let totalcount=results.totalcount;
+			let bloglist=results.blogresults;
+			$("#indexblogtotalpage").text(totalcount);
+			$("#currentpage").text(1);
+			if(totalcount<1){
+				var blogcontainner=$("#blogcontainner");
+				blogcontainner.html("暂无文章");
+			}else{
+
+				showPageBlog(bloglist);
+			}
+
+		},
+		error:function (error) {
+			console.log(error);
+		}
+
+	})
+
+})
 </script>
 </html>

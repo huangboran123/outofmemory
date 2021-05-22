@@ -71,9 +71,7 @@ public class CommonController {
         //若文件不为空
          String unique_Profile_name=null;
         if(!file.isEmpty()){
-
             try {
-
                 //获取图像后缀名
                 String[] houzui= Objects.requireNonNull(file.getOriginalFilename()).split("[.]");
                 //生成图像唯一名
@@ -92,10 +90,8 @@ public class CommonController {
                 e.printStackTrace();
 
             }
-
         }
         else{
-
             re.put("success",0);
             re.put("message","上传失败");
 

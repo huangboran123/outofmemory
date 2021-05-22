@@ -110,7 +110,7 @@ public class BlogController {
             //查询所有博客取前n条按发布时间
             List<Blog> allblogList = iBlogService.getAllmyPagingblogs(null,page,pagesize, user.getId(),0,null);
 
-            Integer totalcount=iBlogService.getTotalcountbyclassanduser(null, user.getId());
+            Integer totalcount=iBlogService.getTotalcountbyclassanduser(null, user.getId(),null);
             //将查询到的Stringmarkdown格式转换为html格式
             for (Blog b : allblogList) {
                 String content = MarkDownUtil.markdownToHtml(b.getContent());
@@ -131,7 +131,7 @@ public class BlogController {
 
         User user = (User) session.getAttribute("user");
         List<Blog> blogList = iBlogService.getAllmyPagingblogs(classificationId,page,pageSize, user.getId(), sortmethod,null);
-        Integer totalcount=iBlogService.getTotalcountbyclassanduser(classificationId,user.getId());
+        Integer totalcount=iBlogService.getTotalcountbyclassanduser(classificationId,user.getId(),null);
         AjaxResults results=new AjaxResults();
         results.setBlogresults(blogList);
         results.setTotalcount(totalcount%pageSize>0 ? (totalcount/pageSize)+1:totalcount/pageSize);
@@ -311,21 +311,35 @@ public class BlogController {
 
     }
 
-   /* 首页博客分页*/
+   /* 首页博客默认查询分页*/
     @PostMapping(value = "/index/changeblogpage")
     @ResponseBody
-    public List<Blog> changeblogpage(Integer page,Integer pageSize) throws JSONException {
+    public List<Blog> changeblogpage(Integer page,Integer pageSize,String tag) throws JSONException {
+        Integer ptag;
         if(!Objects.isNull(page)&&!Objects.isNull(pageSize)){
-
-
-            return iBlogService.getIndexRecommandblogs(page,pageSize);
-
+            if("all".equals(tag)){
+                ptag=null;
+            }else
+            {
+                ptag=Integer.valueOf(tag);
+            }
+            return iBlogService.getIndexRecommandblogs(page,pageSize,ptag);
         }
         else{
-
             return null;
-
         }
+    }
+    /* 首页博客分类查询分页*/
+    @PostMapping(value = "/index/tagblogquery")
+    @ResponseBody
+    public AjaxResults tagblogquery(Integer page,Integer pageSize,Integer tag) throws JSONException {
+            List<Blog> blogresults=iBlogService.getIndexRecommandblogs(page,pageSize,tag);
+            Integer totalcount=iBlogService.getTotalcountbyclassanduser(null,null,tag);
+            AjaxResults results=new AjaxResults();
+            results.setBlogresults(blogresults);
+            results.setTotalcount(totalcount%pageSize>0 ? (totalcount/pageSize)+1:totalcount/pageSize);
+            return results;
+
 
     }
 

@@ -3,20 +3,20 @@ import com.mysql.cj.util.StringUtils;
 import org.apache.ibatis.jdbc.SQL;
 public class DynamicSQLProvider {
 
-    public String dynamicblogTypeSql(Integer classId,Integer userId){
+   /* 查询某类博客数量*/
+    public String dynamicblogTypeSql(Integer classId,Integer userId,Integer tag){
         String sql=new SQL(){{
             SELECT("count(id)");
             FROM("o_blog");
-            if(classId!=null&&userId==null){
+            if(classId!=null){
                 WHERE("classification=#{classId}");
             }
-            if(classId==null&&userId!=null){
+            if(userId!=null){
                 WHERE("user_id=#{userId}");
             }
-            if(classId!=null&&userId!=null){
-                WHERE("user_id=#{userId} and classification=#{classId}");
+            if(tag!=null){
+                WHERE("tag=#{tag}");
             }
-
 
 
         }
@@ -26,7 +26,7 @@ public class DynamicSQLProvider {
 
     }
 
-   /* 是否关注*/
+   /* 查询是否关注*/
     public String dynamicblogfollowexitsSql(Integer userId,Integer id){
 
         String befollowed= new SQL(){{
@@ -41,7 +41,6 @@ public class DynamicSQLProvider {
         }else {
             befollowed="";
         }
-
 
         String sql="";
         String finalBefollowed = befollowed;
@@ -72,7 +71,7 @@ public class DynamicSQLProvider {
 
     }
 
-    /*博客id查询*/
+    /*博客id查询（偏向于个人）*/
     public String dynamicmyblogSql(Integer classification,Integer page,Integer pageSize,Integer id,Integer sort,Integer tag){
 
         String sql=new SQL(){{
@@ -97,6 +96,27 @@ public class DynamicSQLProvider {
 
                     ORDER_BY("views desc");
                 }
+        }}.toString();
+        return sql;
+    }
+
+    /*博客id查询（偏向于个人）*/
+    public String dynamicindexblogSql(Integer page,Integer pageSize,Integer tag){
+
+        String sql=new SQL(){{
+
+            SELECT("id");
+            FROM("o_blog");
+
+            if(tag!=null){
+                WHERE("tag=#{tag}");
+            }
+
+            ORDER_BY("good_count+views+comments desc");
+            if(page!=null&&pageSize!=null){
+                LIMIT("#{page} , #{pageSize}");
+            }
+
         }}.toString();
         return sql;
     }
