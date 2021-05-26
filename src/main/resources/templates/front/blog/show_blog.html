@@ -101,9 +101,9 @@
             </div>
         </div>
         <div class="aside_rank">
-            <div class="userblognum"><a href="" th:text="${'原创:'+blogPageuser.userblogcount}"></a></div>
-            <div class="userrank"><a href="" th:text="${'排名:'+blogPageuser.userblogcount}"></a></div>
-            <div class="usergrade"><a href="" th:text="${'等级:'+blogPageuser.userblogcount}"></a></div>
+            <div class="userblognum"><a href="" th:text="${'原创:'+blogPageuser.originals}"></a></div>
+            <div class="userrank"><a href="" th:text="${'排名:'+blogPageuser.rank}"></a></div>
+            <div class="usergrade"><a href="" th:text="${'等级:'+blogPageuser.level}"></a></div>
         </div>
         <div class="line"></div>
         <div class="aside_fgc">
@@ -177,13 +177,13 @@
     <div class="recomandblog">
         <div class="blogSpan"><a href="javascript:void(0)">推荐文章</a></div>
         <div class="blogShow">
-            <div class="blogitem" th:each="r : ${recomandblogs}">
-                <a href="" th:text="${r.title}"></a>
+            <div class="blogitem" th:each="r : ${recomandblogs}" th:blogid="${r.id}" th:userid="${r.user.id}">
+                <a href="javascript:void(0)" th:text="${r.title}"></a>
             </div>
         </div>
     </div>
 
-<!--    博客主体内容-->
+<!--  博客主体内容-->
     <div class="blog_content" id="content">
             <textarea id="appendcontent" style="display:none;" th:text="${blog.content}"></textarea>
     </div>
@@ -507,8 +507,10 @@
                 type: "post",
                 data: {'comment':comment,'blogId':blogId},
                 success:function (msg) {
-                    /*刷新*/
-                    location.reload();
+
+                    showMessage(msg,'提示',0.5);
+                    setTimeout(hideMessage,1500,0.5);
+                    setTimeout(refresh,1800);
 
                 },
                 error:function (msg) {
@@ -520,12 +522,13 @@
                 }
 
 
-            })
+            });
+            /*刷新*/
+
         }
         else{
             alert("输入评论为空或空串");
         }
-
     })
 /*    ----------------------------------------------------------------------------------*/
 // 回复框关闭按钮
@@ -765,7 +768,6 @@ $(document).on("click",'.goodcounts_image',function (e) {
 
         },
         error:function (e) {
-            alert(e);
             return 0;
         },
         complete:function (xhr,status) {
@@ -799,7 +801,7 @@ $(document).on("click",'.nofollowed',function () {
            return 0;
        },
        complete:function (xhr,status) {
-           jumptologinPage(xhr, status);
+           loginfirst(xhr, status);
            return 0;
        }
 
@@ -830,7 +832,7 @@ $(document).on("click",'.nofollowed',function () {
             },
             complete:function (xhr,status) {
 
-                jumptologinPage(xhr, status);
+                loginfirst(xhr, status);
                 return 0;
             }
 
@@ -839,8 +841,19 @@ $(document).on("click",'.nofollowed',function () {
 
     })
 
+/*================================推荐博客==========================*/
+    $(document).on("click",'.blogitem',function () {
+
+        var blogId=$(this).attr("blogid");
+        var userId=$(this).attr("userid");
+        console.log(blogId+'\n'+userId);
+        if(blogId != null&&userId!=null){
+            window.location.href="/blog/viewblog?blogId="+blogId+"&userId="+userId+"";
+        }
 
 
+
+    })
 
 </script>
 </html>

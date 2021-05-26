@@ -1,16 +1,16 @@
 package com.love.outofmemory.controller;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.love.outofmemory.Utills.CodeUtil;
 import com.love.outofmemory.Utills.DateUtil;
 import com.love.outofmemory.Utills.EncryptionUtils;
 import com.love.outofmemory.annotation.LogInterceptor;
 import com.love.outofmemory.domain.User;
+import com.love.outofmemory.domain.view.BlogPageUser;
+import com.love.outofmemory.domain.view.Classify;
 import com.love.outofmemory.domain.view.ProfilePageUser;
+import com.love.outofmemory.service.IBlogService;
 import com.love.outofmemory.service.IUserService;
-import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +25,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -44,6 +43,8 @@ public class UserController {
     private String imgPathP = "E:\\JavaProject\\springboot\\outofmemory\\src\\main\\resources\\static\\common\\profile_image\\";
     @Autowired
     private IUserService iUserService;
+    @Autowired
+    private IBlogService iBlogService;
 
 
     /* 注册*/
@@ -415,10 +416,24 @@ public class UserController {
 
     /*我的关注页面*/
     @RequestMapping(value="/myfollowPage")
-    public String myfollowPage(Model model){
+
+    public String myfollowPage(HttpSession session,Model model){
+        User user=(User)session.getAttribute("user");
+        if(user==null){
+            return "front/login/login";
+        }else {
+            /*个人基本统计信息*/
+            BlogPageUser mydetail=iBlogService.getUserMoreById(user.getId(),null);
+            model.addAttribute("mydetail",mydetail);
+            /*   作者博客分类信息*/
+            List<Classify> classlistcount = iBlogService.getClassifyBlogCount(user.getId());
+            model.addAttribute("classlistcount",classlistcount);
 
 
-        return "front/follow/myfollow";
+            return "front/follow/myfollow";
+        }
+
+
     }
 
 

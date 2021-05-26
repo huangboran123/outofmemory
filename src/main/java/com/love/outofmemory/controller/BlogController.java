@@ -339,8 +339,6 @@ public class BlogController {
             results.setBlogresults(blogresults);
             results.setTotalcount(totalcount%pageSize>0 ? (totalcount/pageSize)+1:totalcount/pageSize);
             return results;
-
-
     }
 
    /* 我的博客页面分页展示*/

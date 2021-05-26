@@ -110,11 +110,12 @@ public interface BlogMapper {
 
             //(可省略)
             @Result(column ="userviews" ,property = "userviews"),
-            @Result(column ="userblogcount" ,property = "userblogcount"),
+            @Result(column ="originals" ,property = "originals"),
             @Result(column ="usercomments" ,property = "usercomments"),
             @Result(column ="usergoodcounts" ,property = "usergoodcounts"),
             @Result(column ="usercollections" ,property = "usercollections"),
             @Result(column ="codeage" ,property = "codeage"),
+            @Result(column = "rownum",property = "rank"),
             @Result(column = "befollowed",property = "befollowed")
 
     })
@@ -126,6 +127,7 @@ public interface BlogMapper {
     int updateblogByid(Integer blogId, String title, String content, Integer tagId, Integer classId,Integer isoriginal);
 
     @Select("select id,user_id,title,good_count+views+comments AS recommendation from o_blog ORDER BY recommendation DESC LIMIT 0,6")
+    @ResultMap("blog")
     List<Blog> getSideRecommandblogs();
 
 

@@ -28,25 +28,48 @@
         <div class="author_photo"><div class="p_photo"><img th:src="@{/common/profile_image/{image}(image=${session.user.image})}"></div></div>
         <div class="author_detail">
             <div></div>
+            <div class="p-codeage" th:text="${'码龄: '+mydetail.codeage}"></div>
+            <div class="p-totaloriginal" th:text="${'原创: '+mydetail.originals}"></div>
+            <div class="p-rank" th:text="${'排名: '+mydetail.rank}"></div>
+            <div class="p-level" th:text="${'等级: '+mydetail.level}"></div>
+            <div class="p-totalgoodcounts" th:text="${'点赞量: '+mydetail.usergoodcounts}"></div>
+            <div class="p-totalviews" th:text="${'浏览量: '+mydetail.userviews}"></div>
+            <div class="p-totalcomments" th:text="${'评论量: '+mydetail.usercomments}"></div>
+            <div class="p-totalcollections" th:text="${'收藏量: '+mydetail.usercollections}"></div>
             <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-
         </div>
     </div>
 
     <!--左边推荐-->
-    <div class="p_lbody"></div>
+    <div class="p_lbody">
+        <div class="p-recblog">分类专栏</div>
+        <div class="classShow">
+            <div class="classitem" th:each="c:${classlistcount}">
+
+                <div class="classname">
+                    <a href="javascript:void(0)" th:text="${c.name}"></a>
+                </div>
+                <div class="classblogcount">
+                    <a href="javascript:void(0)" th:text="${c.counts}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--右边关注-->
-    <div class="p_rbody"></div>
+    <div class="p_rbody">
+        <div class="p-myfollow">我的关注</div>
+        <div class="p-followcontainer">
+            <div class="p-followitem">
+                <div class="p-nickname">李白爱喝酒</div>
+                <div class="p-reputation">著名流浪诗人</div>
+                <div class="p-followed">已关注</div>
+                <div class="p-contact">私信</div>
+            </div>
+
+
+        </div>
+    </div>
 
     <div th:replace="/front/component/page::footer">
     </div>

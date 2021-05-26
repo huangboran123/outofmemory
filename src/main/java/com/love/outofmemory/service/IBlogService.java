@@ -39,7 +39,7 @@ public interface IBlogService {
     /*根据博客ID修改博客某些内容*/
     int updateBlogByid(Integer userId, Integer blogId, String title, String content, String tag, String classify,Integer isorignal);
 
-    /*博客页面的视图，查询博客作者的相关信息*/
+    /*博客页面的视图，查询博客作者的相关信息userId为博客作者，id为用户自己*/
     BlogPageUser getUserMoreById(Integer userId, Integer id);
 
   /*  获取推荐的博客，依据浏览量，点赞数和评论数之和*/
@@ -51,6 +51,7 @@ public interface IBlogService {
     //查询博客不包含views
     Blog getblogByIdNoviews(Integer blogId);
 
+    //获取首页博客id
     List<Integer> getRecommandBlogIds(Integer page, Integer pageSize,Integer tag);
 
     /*点赞*/

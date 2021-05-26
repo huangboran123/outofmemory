@@ -1,6 +1,7 @@
 package com.love.outofmemory.service.Impl;
 
 import com.love.outofmemory.domain.User;
+import com.love.outofmemory.domain.view.BlogPageUser;
 import com.love.outofmemory.domain.view.ProfilePageUser;
 import com.love.outofmemory.mapper.UserMapper;
 import com.love.outofmemory.service.IUserService;
@@ -75,5 +76,10 @@ public class UserServiceImpl implements IUserService {
             return userMapper.unfollowblogerByid(userId,blogauthorId);
         }
 
+    }
+
+    @Override
+    public BlogPageUser getProfileMoreUserById(Integer userId) {
+        return userMapper.getProfileMoreUserById(userId);
     }
 }

@@ -46,7 +46,7 @@ public class DynamicSQLProvider {
         String finalBefollowed = befollowed;
         if("".equals(finalBefollowed)){
             sql=new SQL(){{
-                SELECT("COUNT(o_blog.id) AS userblogcount","(select count(*) from o_collection where user_id=#{userId}) as usercollections","SUM(views) AS userviews","SUM(comments) AS usercomments"," SUM(good_count) AS usergoodcounts","TIMESTAMPDIFF(YEAR,o_user.create_time,NOW()) AS codeage ");
+                SELECT("(SELECT COUNT(o_blog.id) FROM o_blog WHERE isoriginal=1 AND user_id=#{userId}) AS originals","(select count(*) from o_collection where user_id=#{userId}) as usercollections","SUM(views) AS userviews","SUM(comments) AS usercomments","level"," SUM(good_count) AS usergoodcounts","TIMESTAMPDIFF(YEAR,o_user.create_time,NOW()) AS codeage","(SELECT rownum FROM(SELECT a.*,@rownum:=@rownum+1 AS rownum FROM (SELECT SUM(good_count) AS rankbase ,user_id FROM o_blog GROUP BY user_id ORDER BY rankbase DESC)AS a,(SELECT @rownum := 0) r) AS b WHERE b.user_id=#{userId}) as rownum");
                 FROM("o_blog");
                 INNER_JOIN("o_user on o_blog.user_id=o_user.id");
                 WHERE("o_blog.user_id=#{userId}");
@@ -56,7 +56,7 @@ public class DynamicSQLProvider {
         }
         else{
               sql=new SQL(){{
-                SELECT("COUNT(o_blog.id) AS userblogcount","(select count(*) from o_collection where user_id=#{userId}) as usercollections","SUM(views) AS userviews","SUM(comments) AS usercomments"," SUM(good_count) AS usergoodcounts","TIMESTAMPDIFF(YEAR,o_user.create_time,NOW()) AS codeage", finalBefollowed);
+                SELECT("(SELECT COUNT(o_blog.id) FROM o_blog WHERE isoriginal=1 AND user_id=#{userId}) AS originals","(select count(*) from o_collection where user_id=#{userId}) as usercollections","SUM(views) AS userviews","SUM(comments) AS usercomments","level"," SUM(good_count) AS usergoodcounts","TIMESTAMPDIFF(YEAR,o_user.create_time,NOW()) AS codeage","(SELECT rownum FROM(SELECT a.*,@rownum:=@rownum+1 AS rownum FROM (SELECT SUM(good_count) AS rankbase ,user_id FROM o_blog GROUP BY user_id ORDER BY rankbase DESC)AS a,(SELECT @rownum := 0) r) AS b WHERE b.user_id=#{userId}) as rownum", finalBefollowed);
                 FROM("o_blog");
                 INNER_JOIN("o_user on o_blog.user_id=o_user.id");
                 WHERE("o_blog.user_id=#{userId}");

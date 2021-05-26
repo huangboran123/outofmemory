@@ -2,11 +2,10 @@ package com.love.outofmemory.mapper;
 
 
 import com.love.outofmemory.domain.User;
+import com.love.outofmemory.domain.view.BlogPageUser;
 import com.love.outofmemory.domain.view.ProfilePageUser;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import com.love.outofmemory.mapper.provider.DynamicSQLProvider;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -21,7 +20,6 @@ public interface UserMapper {
 
     @Select("select * from o_user where email=#{email}")
     User getUserByEmail(String email);
-
 
     @Select("select id,username,sex,birthday,reputation,qq_number,address,image,level,TIMESTAMPDIFF(YEAR,create_time,NOW()) AS codeage from o_user where id=#{userId}")
     ProfilePageUser getProfileUserById(Integer userId);
@@ -46,4 +44,20 @@ public interface UserMapper {
 
     @Delete("delete from o_follow where user_id=#{userId} and follow_id=#{blogauthorId}")
     int unfollowblogerByid(Integer userId, Integer blogauthorId);
+
+    @SelectProvider(value = DynamicSQLProvider.class,method ="dynamicblogfollowexitsSql" )
+    @Results(id="usermore",value = {
+
+            //(可省略)
+            @Result(column ="userviews" ,property = "userviews"),
+            @Result(column ="originals" ,property = "originals"),
+            @Result(column ="usercomments" ,property = "usercomments"),
+            @Result(column ="usergoodcounts" ,property = "usergoodcounts"),
+            @Result(column ="usercollections" ,property = "usercollections"),
+            @Result(column ="codeage" ,property = "codeage"),
+            @Result(column = "rownum",property = "rank"),
+            @Result(column = "befollowed",property = "befollowed")
+
+    })
+    BlogPageUser getProfileMoreUserById(Integer userId);
 }

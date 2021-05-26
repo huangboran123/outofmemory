@@ -36,6 +36,7 @@ public class TimeTask {
     public void syncPostViews(){
         log.info("======================开始 同步文章访问量======================");
         Long startTime = System.nanoTime();
+        log.info(startTime.toString());
         Map<Object,Object> viewmap=redisUtil.HashGetMapEntries("Views");
 
         Long i=iBlogService.saveredisViews(viewmap);
