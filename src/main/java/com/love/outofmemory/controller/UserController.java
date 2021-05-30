@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.love.outofmemory.Utills.DateUtil;
 import com.love.outofmemory.Utills.EncryptionUtils;
 import com.love.outofmemory.annotation.LogInterceptor;
+import com.love.outofmemory.controller.commonbean.AjaxResults;
 import com.love.outofmemory.domain.User;
 import com.love.outofmemory.domain.view.BlogPageUser;
 import com.love.outofmemory.domain.view.Classify;
@@ -416,7 +417,6 @@ public class UserController {
 
     /*我的关注页面*/
     @RequestMapping(value="/myfollowPage")
-
     public String myfollowPage(HttpSession session,Model model){
         User user=(User)session.getAttribute("user");
         if(user==null){
@@ -428,13 +428,35 @@ public class UserController {
             /*   作者博客分类信息*/
             List<Classify> classlistcount = iBlogService.getClassifyBlogCount(user.getId());
             model.addAttribute("classlistcount",classlistcount);
-
+            /*用户关注查询*/
+            Integer page=1;
+            Integer pageSize=7;
+            List<User> followlist=iUserService.getPagingFollowsByUserId(page,pageSize,user.getId());
+            model.addAttribute("followlist",followlist);
+            /*查询用户所有关注数量*/
+            Integer totalcount=iUserService.getFollowTotalcountByUserId(user.getId());
+            model.addAttribute("totalcount",totalcount%pageSize>0 ? (totalcount/pageSize)+1:totalcount/pageSize);
 
             return "front/follow/myfollow";
         }
+    }
+    /*我的关注页面*/
+    @RequestMapping(value="/pagingmyfollow")
+    @ResponseBody
+    @LogInterceptor
+    public AjaxResults pagingmyfollow(HttpSession session,Integer page,Integer pageSize) {
+        User user = (User) session.getAttribute("user");
+
+        AjaxResults results = new AjaxResults();
+
+
+        List<User> followlist = iUserService.getPagingFollowsByUserId(page, pageSize, user.getId());
+        results.setUserresults(followlist);
+        results.setSuccess(true);
+
+        return results;
 
 
     }
-
 
 }

@@ -4,6 +4,8 @@ import com.love.outofmemory.domain.User;
 import com.love.outofmemory.domain.view.BlogPageUser;
 import com.love.outofmemory.domain.view.ProfilePageUser;
 
+import java.util.List;
+
 /**
  * @author huang
  */
@@ -35,4 +37,9 @@ public interface IUserService {
 
     //个人关注页个人信息
     BlogPageUser getProfileMoreUserById(Integer userId);
+
+    /* 获取用户关注*/
+    List<User> getPagingFollowsByUserId(Integer page, Integer pageSize, Integer userId);
+
+    Integer getFollowTotalcountByUserId(Integer userId);
 }

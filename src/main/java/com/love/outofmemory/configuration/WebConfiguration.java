@@ -67,18 +67,18 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
                     addResourceLocations("classpath:/static/common/image_cache/");
             /* 某些请求路径下，在请求样式表等资源时会携带请求路径名，导致访问不到资源，我们可以加上路径名如/front*/
             /*粒子效果资源请求路径映射*/
-            registry.addResourceHandler("/front/particles/**","/myblog/particles/**","/particles/**").
+            registry.addResourceHandler("/front/particles/**","/myblog/particles/**","/particles/**","/chatPage/particles/**").
                     addResourceLocations("classpath:/static/particles/");
             registry.addResourceHandler("/editor/**","/myblog/editor/**").
                     addResourceLocations("classpath:/static/editor/");
             //jquery映射
-            registry.addResourceHandler("/myblog/js/**","/js/**").
+            registry.addResourceHandler("/myblog/js/**","/js/**","/chatPage/js/**").
                     addResourceLocations("classpath:/static/js/");
             registry.addResourceHandler("/css/**").
                     addResourceLocations("classpath:/static/css/");
             registry.addResourceHandler("/common/**").
                     addResourceLocations("classpath:/static/common/");
-            registry.addResourceHandler("/blog/**","/").
+            registry.addResourceHandler("/blog/**","/","/chatPage/**").
                     addResourceLocations("classpath:/static/");
         } else {//linux和mac系统 可以根据逻辑再做处理
             /*图片资源请求路径映射*/
@@ -88,18 +88,18 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
                     addResourceLocations("classpath:/static/common/image_cache/");
             /* 某些请求路径下，在请求样式表等资源时会携带请求路径名，导致访问不到资源，我们可以加上路径名如/front*/
             /*粒子效果资源请求路径映射*/
-            registry.addResourceHandler("/front/particles/**","/myblog/particles/**","/particles/**").
+            registry.addResourceHandler("/front/particles/**","/myblog/particles/**","/particles/**","/chatPage/particles/**").
                     addResourceLocations("classpath:/static/particles/");
             registry.addResourceHandler("/editor/**","/myblog/editor/**").
                     addResourceLocations("classpath:/static/editor/");
             //jquery映射
-            registry.addResourceHandler("/myblog/js/**","/js/**").
+            registry.addResourceHandler("/myblog/js/**","/js/**","/chatPage/js/**").
                     addResourceLocations("classpath:/static/js/");
             registry.addResourceHandler("/css/**").
                     addResourceLocations("classpath:/static/css/");
            registry.addResourceHandler("/common/**").
                   addResourceLocations("classpath:/static/common/");
-            registry.addResourceHandler("/blog/**","/").
+            registry.addResourceHandler("/blog/**","/","/chatPage/**").
                     addResourceLocations("classpath:/static/");
         }
         super.addResourceHandlers(registry);
@@ -113,12 +113,12 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         registry.addInterceptor(new VisitInterceptor())
                 .excludePathPatterns("/common/blog_image/**")
                 .excludePathPatterns("/common/image_cache/**")
-                .excludePathPatterns("/front/particles/**","/myblog/particles/**","/particles/**")
+                .excludePathPatterns("/front/particles/**","/myblog/particles/**","/particles/**","/chatPage/particles/**")
                 .excludePathPatterns("/editor/**","/myblog/editor/**")
-                .excludePathPatterns("/myblog/js/**","/js/**")
+                .excludePathPatterns("/myblog/js/**","/js/**","/chatPage/js/**")
                 .excludePathPatterns("/css/**")
                 .excludePathPatterns("/common/**")
-                .excludePathPatterns("/blog/**","/");
+                .excludePathPatterns("/blog/**","/","/chatPage/**");
     }
 }
 

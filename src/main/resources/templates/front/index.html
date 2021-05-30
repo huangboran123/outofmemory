@@ -18,6 +18,9 @@
 <body >
 <div id="particles-js">
 	<input id="p-tag" type="hidden" value="all">
+	<div th:if="${session.user!=null}">
+		<input id="userId" type="hidden" th:value="${session.user.id}">
+	</div>
 	<!--消息模态框-->
 	<div id="model_message" class="model_window_message">
 		<div class="msgtype"></div>
@@ -121,6 +124,9 @@
 <script src="particles/app.js"></script>
 <script src="js/common.js"></script>
 <script type="text/javascript">
+/*当前页面全局变量	*/
+var userId=$("#userId").val();
+var socket=null;
 
 /*	particlesJS.onload("particles-js","particles/particles.json",function () {
 		console.log('callback - particles.js config loaded');
@@ -280,7 +286,7 @@ $(document).on("click",'.blogs',function () {
 	}
 /*================================博客分类查询===============================================*/
 $(document).on("click",'.tagitem',function () {
-	var tag=$(this).val();
+	var tag=$(this).val();com
 	$("#p-tag").val(tag);
 
 	var tagname=$(this).children('a').text();
@@ -309,7 +315,11 @@ $(document).on("click",'.tagitem',function () {
 		}
 
 	})
-
 })
+/*-------------------------------------判断用户是否登录进行websocket连接---------------------------------*/
+if(userId != null&&userId!==''){
+	openSocket();
+}
+
 </script>
 </html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的关注</title>
+    <link rel="short icon"  href="/common/system_icon/favicon.ico"/>
+    <link href="/css/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/header.css" rel="stylesheet" type="text/css">
+    <link href="/particles/style.css" rel="stylesheet" type="text/css">
+    <link href="/css/profile.css" rel="stylesheet" type="text/css">
+    <link href="/css/myfollow.css" rel="stylesheet" type="text/css">
+    <link href="/css/common.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+<div id="particles-js">
+    <!--   使用模板model, 隐藏参数便于传参-->
+    <input type="hidden" id="userId" th:value="${session.user.id}">
+
+    <!--消息模态框-->
+    <div id="model_message" class="model_window_message">
+        <div class="msgtype"></div>
+        <div class="msgcontent"></div>
+    </div>
+
+    <div th:replace="/front/component/page::header">
+    </div>
+
+
+
+
+    <div th:replace="/front/component/page::footer">
+    </div>
+
+</div>
+</body>
+
+
+
+<script src="js/plugin/jquery.js"></script>
+<!--打字效果引入-->
+<script src="js/plugin/commentTyping.js"></script>
+<!--粒子效果引入-->
+<script src="particles/particles.js"></script>
+<script src="particles/app.js"></script>
+<script src="js/plugin/date.js"></script>
+<script src="js/common.js"></script>
+
+<script type="text/javascript">
+    /*全局变量*/
+    var userId=$("#userId").val();
+    var socket=null;
+
+
+    /*------------------------------------------------------------------------------------------------------*/
+    /*头悬浮栏*/
+    $(document).on("mouseover",".current_user_section",function () {
+        $("#user_menu").css("display","block");
+    })
+    $(document).on("mouseout",".current_user_section",function () {
+        $("#user_menu").css("display","none");
+    })
+
+    $(document).on("mouseout","#user_menu",function () {
+        $("#user_menu").css("display","none");
+    })
+
+   /* 消息发送*/
+    function sendMessage() {
+        if(typeof(WebSocket) == "undefined") {
+            console.log("您的浏览器不支持WebSocket");
+        }else {
+            console.log("您的浏览器支持WebSocket");
+            console.log('{"toUserId":"'+$("#toUserId").val()+'","contentText":"'+$("#contentText").val()+'"}');
+            socket.send('{"toUserId":"'+$("#toUserId").val()+'","contentText":"'+$("#contentText").val()+'"}');
+        }
+    }
+/*-------------------------------------websocket连接-------------------------------------*/
+    if(userId != null&&userId!==''){
+        openSocket();
+    }
+</script>
+</html>

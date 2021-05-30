@@ -9,6 +9,7 @@
     <link href="/particles/style.css" rel="stylesheet" type="text/css">
     <link href="/css/profile.css" rel="stylesheet" type="text/css">
     <link href="/css/myfollow.css" rel="stylesheet" type="text/css">
+    <link href="/css/common.css" rel="stylesheet" type="text/css">
 
 
 </head>
@@ -17,7 +18,11 @@
     <!--   使用模板model, 隐藏参数便于传参-->
     <input type="hidden" id="userId" th:value="${session.user.id}">
 
-
+    <!--消息模态框-->
+    <div id="model_message" class="model_window_message">
+        <div class="msgtype"></div>
+        <div class="msgcontent"></div>
+    </div>
 
     <div th:replace="/front/component/page::header">
     </div>
@@ -60,14 +65,23 @@
     <div class="p_rbody">
         <div class="p-myfollow">我的关注</div>
         <div class="p-followcontainer">
-            <div class="p-followitem">
-                <div class="p-nickname">李白爱喝酒</div>
-                <div class="p-reputation">著名流浪诗人</div>
-                <div class="p-followed">已关注</div>
-                <div class="p-contact">私信</div>
+            <div class="p-followitem" th:each="f:${followlist}" th:userid="${f.id}">
+                <div class="p-image"><img th:src="@{/mycommon/getImage(image=${f.image})}" title="用户头像" alt="用户头像"></div>
+                <div class="p-nickname"><a href="javascript:void(0)" title="用户名" th:text="${f.username}"></a></div>
+                <div class="p-reputation"><a href="javascript:void(0)" title="描述" th:text="${f.reputation}"></a></div>
+                <div class="p-followed"><a href="javascript:void(0)">取消关注</a></div>
+                <div class="p-contact"><a href="javascript:void(0)">私信</a></div>
             </div>
-
-
+        </div>
+        <div class="pagination-bar">
+            <div class="total-page">共<span id="indexblogtotalpage" th:text="${totalcount}" ></span>页</div>
+            <div class="jump-page">
+                <div>跳转倒:</div>
+                <div><input id="willjump" type="text" ></div>
+                <div id="jumpconfirm" onclick="changefollowpage(3)"><a href="javascript:void(0)">确认</a></div></div>
+            <div class="next-page" onclick="changefollowpage(2)" ><a href="javascript:void(0)">下一页</a></div>
+            <div class="current-page">当前页:<span id="currentpage">1</span></div>
+            <div class="pre-page" onclick="changefollowpage(1)"><a href="javascript:void(0)">上一页</a></div>
         </div>
     </div>
 
@@ -76,6 +90,9 @@
 
 </div>
 </body>
+
+
+
 <script src="js/plugin/jquery.js"></script>
 <!--打字效果引入-->
 <script src="js/plugin/commentTyping.js"></script>
@@ -83,7 +100,7 @@
 <script src="particles/particles.js"></script>
 <script src="particles/app.js"></script>
 <script src="js/plugin/date.js"></script>
-
+<script src="js/common.js"></script>
 
 <script type="text/javascript">
     /*------------------------------------------------------------------------------------------------------*/
@@ -98,6 +115,217 @@
     $(document).on("mouseout","#user_menu",function () {
         $("#user_menu").css("display","none");
     })
+/*------------------------------------------关注分页--------------------------------------------*/
 
+    function changefollowpage(p) {
+
+        let tottalcount=$("#indexblogtotalpage").text().replace(/s+/g,'');
+        let currentPage=$("#currentpage").text().replace(/s+/g,'');
+        let page;
+        switch (p) {
+
+            /*上一页*/
+            case 1:
+                page=parseInt(currentPage)-1;
+                if(page<=0){
+                    alert("当前为第一页!");
+                    return 0;
+                }
+                else{
+                    $.ajax({
+                        url:'/pagingmyfollow',
+                        dataType:"json",
+                        data:{'page':page,'pageSize':7},
+                        type:"post",
+                        success: function (result) {
+
+                            if(result.success&&result.success===true){
+                                /*渲染返回数据*/
+                                showPageFollow(result.userresults);
+                                $("#currentpage").text(page);
+                                return 0;
+                            }
+                            return 0;
+                        },
+                        error:function (error) {
+
+                            console.log(error);
+                            return 0;
+                        },
+                        complete:function (xhr,status) {
+                            loginfirst(xhr,status)
+                        }
+
+                    })
+                }
+                break;
+            /*下一页*/
+            case 2:
+                page=parseInt(currentPage)+1;
+                if(page>tottalcount){
+                    alert("当前为最后一页!");
+                    return 0;
+                }
+                else{
+                    $.ajax({
+                        url:'/pagingmyfollow',
+                        dataType:"json",
+                        data:{'page':page,'pageSize':7},
+                        type:"post",
+                        success: function (result) {
+
+                            if(result.success&&result.success===true){
+                                /*渲染返回数据*/
+                                showPageFollow(result.userresults);
+                                $("#currentpage").text(page);
+                                return 0;
+                            }
+                            return 0;
+                        },
+                        error:function (error) {
+                            console.log(error);
+                            return 0;
+                        },
+                        complete:function (xhr,status) {
+                            loginfirst(xhr,status)
+                        }
+
+
+                    })
+                }
+                break;
+            /*跳转*/
+            case 3:
+                page=parseInt($("#willjump").val());
+                if(page>0&&page<=tottalcount){
+                    $.ajax({
+                        url:'/pagingmyfollow',
+                        dataType:"json",
+                        data:{'page':page,'pageSize':7},
+                        type:"post",
+                        success: function (result) {
+
+                            if(result.success&&result.success===true){
+                                /*渲染返回数据*/
+                                showPageFollow(result.userresults);
+                                $("#currentpage").text(page);
+                                return 0;
+                            }
+                            return 0;
+                        },
+                        error:function (error) {
+
+                            console.log(error);
+                            return 0;
+                        },
+                        complete:function (xhr,status) {
+                            loginfirst(xhr,status)
+                        }
+
+                    })
+                }
+                else{
+
+                    alert("跳转页面不在范围内!")
+                }
+                break;
+
+        }
+        return 0;
+    }
+  /*  ----------------------------------渲染关注----------------------------------------------*/
+    function showPageFollow(results){
+        var followcontainer=$(".p-followcontainer");
+        followcontainer.html("");
+        for(let i=0;i<results.length;i++){
+            let f=results[i];
+            followcontainer.html(followcontainer.html()+"<div class=\"p-followitem\" userid='"+f.id+"'>\n" +
+                "    <div class=\"p-image\"><img src='/common/profile_image/"+f.image+"' title=\"用户头像\" alt=\"用户头像\"></div>\n" +
+                "    <div class=\"p-nickname\"><a href=\"javascript:void(0)\" title=\"用户名\" >"+f.username+"</a></div>\n" +
+                "    <div class=\"p-reputation\"><a href=\"javascript:void(0)\" title=\"描述\" >"+f.reputation+"</a></div>\n" +
+                "    <div class=\"p-followed\"><a href=\"javascript:void(0)\">取消关注</a></div>\n" +
+                "    <div class=\"p-contact\"><a href=\"javascript:void(0)\">私信</a></div>\n" +
+                "</div>")
+        }
+    }
+    
+  /*  -------------------------------取消关注----------------------------------------------------*/
+    $(document).on("click",'.p-followed',function () {
+        var blogauthorId=$(this).parent().attr('userid');
+        var userId=$("#userId").val();
+        if($(this).children("a").text()==="取消关注"){
+            if(blogauthorId!=null&&blogauthorId!==''&&blogauthorId!==undefined){
+
+                $.ajax({
+                    url:"/changefollow",
+                    data:{'blogauthorId':blogauthorId,'userId':userId,'type':2},
+                    type:"post",
+                    success:function (result) {
+                        if(result==true){
+
+                            showMessage("取消关注成功","提示",0.5);
+                            setTimeout(hideMessage,1500,0.5);
+                        }else{
+                            showMessage("取消关注失败","提示",0.5);
+                            setTimeout(hideMessage,1500,0.5)
+                        }
+                    },
+                    error:function (error) {
+
+                        console.log(error);
+                        return 0;
+                    },
+                    complete:function (xhr,status) {
+                        loginfirst(xhr,status)
+                    }
+                })
+
+                $(this).children("a").text("关注");
+            }else{
+                return 0;
+            }
+        }else{
+            if(blogauthorId!=null&&blogauthorId!==''&&blogauthorId!==undefined){
+
+                $.ajax({
+                    url:"/changefollow",
+                    data:{'blogauthorId':blogauthorId,'userId':userId,'type':1},
+                    type:"post",
+                    success:function (result) {
+                        if(result==true){
+
+                            showMessage("关注成功","提示",0.5);
+                            setTimeout(hideMessage,1500,0.5);
+                        }else{
+                            showMessage("关注失败","提示",0.5);
+                            setTimeout(hideMessage,1500,0.5)
+                        }
+                    },
+                    error:function (error) {
+
+                        console.log(error);
+                        return 0;
+                    },
+                    complete:function (xhr,status) {
+                        loginfirst(xhr,status)
+                    }
+                })
+
+                $(this).children("a").text("取消关注");
+            }else{
+                return 0;
+            }
+        }
+
+    })
+
+ /*   ----------------------------------跳转私信页面-------------------------------------*/
+    $(document).on("click",'.p-contact',function(){
+        var followId=$(this).parent().attr("userid");
+
+        window.location.href="/chatPage/"+followId+"";
+
+
+    })
 </script>
 </html>

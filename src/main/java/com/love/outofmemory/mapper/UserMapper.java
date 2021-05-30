@@ -8,6 +8,8 @@ import com.love.outofmemory.mapper.provider.DynamicSQLProvider;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserMapper {
 
@@ -60,4 +62,10 @@ public interface UserMapper {
 
     })
     BlogPageUser getProfileMoreUserById(Integer userId);
+
+    @Select("SELECT a.follow_id id, username,phone,image,reputation,sex FROM o_follow a INNER JOIN o_user b ON a.follow_id=b.id WHERE user_id=#{userId} limit #{page},#{pageSize}")
+    List<User> getPagingFollowsByUserId(Integer page, Integer pageSize,Integer userId);
+
+    @Select("select count(*) from o_follow where user_id=#{userId}")
+    Integer getFollowTotalcountByUserId(Integer userId);
 }

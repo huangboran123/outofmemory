@@ -1,6 +1,7 @@
 package com.love.outofmemory.service;
 
 import com.love.outofmemory.domain.Blog;
+import com.love.outofmemory.domain.User;
 import com.love.outofmemory.domain.view.Classify;
 import com.love.outofmemory.domain.view.BlogPageUser;
 
@@ -65,4 +66,6 @@ public interface IBlogService {
 
     /*根据用户和博客类型获取博客*/
     List<Blog> getAllmyPagingblogs(Integer classification, Integer page, Integer pageSize, Integer userId, Integer sort,Integer tag);
+
+
 }

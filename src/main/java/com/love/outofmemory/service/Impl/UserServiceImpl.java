@@ -8,6 +8,8 @@ import com.love.outofmemory.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author huang
  */
@@ -81,5 +83,15 @@ public class UserServiceImpl implements IUserService {
     @Override
     public BlogPageUser getProfileMoreUserById(Integer userId) {
         return userMapper.getProfileMoreUserById(userId);
+    }
+
+    @Override
+    public List<User> getPagingFollowsByUserId(Integer page, Integer pageSize, Integer userId) {
+        return userMapper.getPagingFollowsByUserId((page-1)*pageSize,pageSize,userId);
+    }
+
+    @Override
+    public Integer getFollowTotalcountByUserId(Integer userId) {
+        return userMapper.getFollowTotalcountByUserId(userId);
     }
 }
