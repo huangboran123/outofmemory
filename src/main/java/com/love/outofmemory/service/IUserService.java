@@ -41,5 +41,8 @@ public interface IUserService {
     /* 获取用户关注*/
     List<User> getPagingFollowsByUserId(Integer page, Integer pageSize, Integer userId);
 
+   /* 获取总关注数*/
     Integer getFollowTotalcountByUserId(Integer userId);
+    /*根据id获取user*/
+    User getUserById(Integer followId);
 }

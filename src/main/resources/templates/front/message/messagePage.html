@@ -8,7 +8,7 @@
     <link href="/css/header.css" rel="stylesheet" type="text/css">
     <link href="/particles/style.css" rel="stylesheet" type="text/css">
     <link href="/css/profile.css" rel="stylesheet" type="text/css">
-    <link href="/css/myfollow.css" rel="stylesheet" type="text/css">
+    <link href="/css/message.css" rel="stylesheet" type="text/css">
     <link href="/css/common.css" rel="stylesheet" type="text/css">
 
 
@@ -17,6 +17,10 @@
 <div id="particles-js">
     <!--   使用模板model, 隐藏参数便于传参-->
     <input type="hidden" id="userId" th:value="${session.user.id}">
+    <input type="hidden" id="username" th:value="${session.user.username}">
+    <input type="hidden" id="userimage" th:value="${session.user.image}">
+    <input type="hidden" id="currentimage" th:value="${CurrentContact.image}">
+    <input type="hidden" id="currentname" th:value="${CurrentContact.username}">
 
     <!--消息模态框-->
     <div id="model_message" class="model_window_message">
@@ -27,7 +31,54 @@
     <div th:replace="/front/component/page::header">
     </div>
 
+    <div class="m-followlist">
+        <div class="m-current">当前联系人</div>
+        <div class="m-current-contact">
+            <div class="current-chat-image"><img th:src="@{/mycommon/getImage(image=${CurrentContact.image})}"></div>
+            <div class="current-chat-name"><a href="javascript:void(0)" th:text="${CurrentContact.username}"></a></div>
+        </div>
+        <div class="m-recent">最近联系人</div>
+        <div class="m-recent-contact" >
+         <!--   <div class="m-recent-item" >
+                <div class="recent-chat-image"><img th:src="@{/mycommon/getImage(image=${session.user.image})}"></div>
+                <div class="recent-chat-name"><a href="javascript:void(0)" th:text="${session.user.username}"></a></div>
+            </div>-->
+            <div class="m-recent-item" th:each="r:${RecentContact}">
+                <div class="recent-chat-image"><img th:src="@{/mycommon/getImage(image=${r.image})}"></div>
+                <div class="recent-chat-name"><a href="javascript:void(0)" th:text="${r.username}"></a></div>
+            </div>
+        </div>
+        <div class="m-recent-page"></div>
+    </div>
+    <div class="m-chat-window">
+        <div class="m-chat-follow" th:touserId="${CurrentContact.id}">
+            <div class="w-name"><a href="javascript:void(0)" th:text="${CurrentContact.username}">金旭</a></div>
+            <div class="w-isonline">
+                <a href="javascript:void(0)" th:if="${isonline==true}">在线</a>
+                <a href="javascript:void(0)" th:if="${isonline==false}">离线</a>
+            </div>
+        </div>
+        <div class="m-chat-message">
+ <!--           <div class="m-chatobject-message">
+                <div class="mc-image"><img th:src="@{/mycommon/getImage(image=${session.user.image})}"></div>
+                <div class="mc-name">黄博然</div>
+                <div class="mc-content">你好</div>
+                <div class="mc-time">上午12:54</div>
+            </div>
+            <div class="m-self-message">
+                <div class="mr-image"><img th:src="@{/mycommon/getImage(image=${session.user.image})}"></div>
+                <div class="mr-name">黄博然</div>
+                <div class="mr-content">你好</div>
+                <div class="mr-time">上午12:54</div>
+            </div>-->
 
+        </div>
+        <div class="m-chat-editor">
+            <div class="me-image"><img th:src="@{/mycommon/getImage(image=${session.user.image})}"></div>
+            <div contenteditable="true" class="m-send-content"></div>
+            <div class="m-send"><a href="javascript:void(0)">发送</a></div>
+        </div>
+    </div>
 
 
     <div th:replace="/front/component/page::footer">
@@ -50,6 +101,10 @@
 <script type="text/javascript">
     /*全局变量*/
     var userId=$("#userId").val();
+    var username=$("#username").val();
+    var userimage=$("#userimage").val();
+    var currentimage=$("#currentimage").val();
+    var currentname=$("#currentname").val();
     var socket=null;
 
 
@@ -65,20 +120,55 @@
     $(document).on("mouseout","#user_menu",function () {
         $("#user_menu").css("display","none");
     })
-
+/*----------------------------消息发送函数-----------------------------------------*/
    /* 消息发送*/
     function sendMessage() {
         if(typeof(WebSocket) == "undefined") {
             console.log("您的浏览器不支持WebSocket");
         }else {
+            var toUserId=$(".m-chat-follow").attr("touserid");
+            var content=$(".m-send-content").text().replace(/^\s+|\s+$/g,'');
+            var time=new Date();
+            var sendtime=time.toLocaleString();
+            var message={'fromUserId':userId,'toUserId':toUserId,"content":content,'sendtime':sendtime};
             console.log("您的浏览器支持WebSocket");
-            console.log('{"toUserId":"'+$("#toUserId").val()+'","contentText":"'+$("#contentText").val()+'"}');
-            socket.send('{"toUserId":"'+$("#toUserId").val()+'","contentText":"'+$("#contentText").val()+'"}');
+            console.log();
+            socket.send(JSON.stringify(message));
+            $(".m-chat-message").html($(".m-chat-message").html()+"<div class=\"m-self-message\">\n" +
+                "                <div class=\"mr-image\"><img src=\"/common/profile_image/"+userimage+"\"></div>\n" +
+                "                <div class=\"mr-name\">"+"我"+"</div>\n" +
+                "                <div class=\"mr-content\">"+content+"</div>\n" +
+                "                <div class=\"mr-time\">"+sendtime+"</div>\n" +
+                "            </div>");
+            $(".m-send-content").text('');
         }
     }
+/*    -------------------------------------消息发送事件-------------------------------------*/
+    $(document).on("click",'.m-send',function (){
+        sendMessage();
+    })
 /*-------------------------------------websocket连接-------------------------------------*/
     if(userId != null&&userId!==''){
         openSocket();
+        //获取消息事件
+        socket.onmessage = function(msg) {
+            console.log(msg.data);
+            var messageinfo=eval("("+msg.data+")");
+            console.log(messageinfo);
+            if(messageinfo.content!=undefined){
+
+                $(".m-chat-message").html($(".m-chat-message").html()+"  <div class=\"m-chatobject-message\">\n" +
+                    "                <div class=\"mc-image\"><img src=\"/common/profile_image/"+currentimage+"\"></div>\n" +
+                    "                <div class=\"mc-name\">"+currentname+"</div>\n" +
+                    "                <div class=\"mc-content\">"+messageinfo.content+"</div>\n" +
+                    "                <div class=\"mc-time\">"+messageinfo.sendtime+"</div>\n" +
+                    "            </div>");
+
+            }
+
+
+            //发现消息进入   开始处理前端触发逻辑
+        };
     }
 </script>
 </html>

@@ -94,4 +94,9 @@ public class UserServiceImpl implements IUserService {
     public Integer getFollowTotalcountByUserId(Integer userId) {
         return userMapper.getFollowTotalcountByUserId(userId);
     }
+
+    @Override
+    public User getUserById(Integer followId) {
+        return userMapper.getUserById(followId);
+    }
 }

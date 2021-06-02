@@ -102,11 +102,11 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    public List<Blog> getIndexRecommandblogs(Integer page, Integer pageSize,Integer tag) {
+    public List<Blog> getIndexRecommandblogs(Integer page, Integer pageSize,Integer tag,String keyword) {
 
 
        /* 博客查询redis优化*/
-        List<Integer> blogids=getRecommandBlogIds(page,pageSize,tag);
+        List<Integer> blogids=getRecommandBlogIds(page,pageSize,tag,keyword);
         List<Blog> bloglistbetter=new ArrayList<>();
 
         for (Integer i:blogids)
@@ -132,8 +132,8 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    public List<Integer> getRecommandBlogIds(Integer page, Integer pageSize,Integer tag) {
-        return blogMapper.getRecommandBlogIds((page-1)*pageSize,pageSize,tag);
+    public List<Integer> getRecommandBlogIds(Integer page, Integer pageSize,Integer tag,String keyword) {
+        return blogMapper.getRecommandBlogIds((page-1)*pageSize,pageSize,tag,keyword);
     }
 
     @Override
@@ -142,8 +142,8 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    public Integer getTotalcountbyclassanduser(Integer classId, Integer userId,Integer tag) {
-        return blogMapper.getTotalcountbyclassanduser(classId,userId,tag);
+    public Integer getTotalcountbyclassanduser(Integer classId, Integer userId,Integer tag,String keyword) {
+        return blogMapper.getTotalcountbyclassanduser(classId,userId,tag,keyword);
     }
 
     @Override

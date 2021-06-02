@@ -35,10 +35,14 @@ public class CommonController {
     private String imgPathS ="/home/admin/outofmemory/resources/static/common/blog_image/";
     private String imgPathC ="/home/admin/outofmemory/resources/static/common/image_cache/";*/
 //    Windows本机测试
-    private String imgPathP ="E:\\JavaProject\\springboot\\outofmemory\\src\\main\\resources\\static\\common\\profile_image\\";
+/*    private String imgPathP ="E:\\JavaProject\\springboot\\outofmemory\\src\\main\\resources\\static\\common\\profile_image\\";
     private String imgPathS ="E:\\JavaProject\\springboot\\outofmemory\\src\\main\\resources\\static\\common\\blog_image\\";
-    private String imgPathC ="E:\\JavaProject\\springboot\\outofmemory\\src\\main\\resources\\static\\common\\image_cache\\";
+    private String imgPathC ="E:\\JavaProject\\springboot\\outofmemory\\src\\main\\resources\\static\\common\\image_cache\\";*/
 
+    /*Windows部署*/
+    private String imgPathP ="D:\\outofmemory\\resources\\static\\common\\profile_image\\";
+    private String imgPathS ="D:\\outofmemory\\resources\\static\\common\\blog_image\\";
+    private String imgPathC ="D:\\outofmemory\\resources\\static\\common\\image_cache\\";
     //参数：图片名称 响应图片给客户端
     @RequestMapping("/getImage")
     @ResponseBody

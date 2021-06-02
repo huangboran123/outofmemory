@@ -286,7 +286,7 @@ $(document).on("click",'.blogs',function () {
 	}
 /*================================博客分类查询===============================================*/
 $(document).on("click",'.tagitem',function () {
-	var tag=$(this).val();com
+	var tag=$(this).val();
 	$("#p-tag").val(tag);
 
 	var tagname=$(this).children('a').text();
@@ -320,6 +320,26 @@ $(document).on("click",'.tagitem',function () {
 if(userId != null&&userId!==''){
 	openSocket();
 }
+/*--------------------------------------------首页搜索-----------------------------------------------------*/
+$(document).on("click",".keyword_search img",function (){
+	var keyword=$(this).prev().val().replace(/^\s+|\s+$/g,'');
+	console.log(keyword);
+	if(keyword!==null||keyword!==''||keyword!==undefined){
+		$.ajax({
+			url:"/index/blogsearch",
+			data:{'keyword':keyword,'page':1,'pageSize':5},
+			type:"get",
+			dataType:'json',
+			contentType:"application/x-www-form-urlencoded",
+			success:function (result){
 
+			},
+			error:function (error){
+				console.log(error);
+			}
+		})
+	}
+
+})
 </script>
 </html>

@@ -110,7 +110,7 @@ public class BlogController {
             //查询所有博客取前n条按发布时间
             List<Blog> allblogList = iBlogService.getAllmyPagingblogs(null,page,pagesize, user.getId(),0,null);
 
-            Integer totalcount=iBlogService.getTotalcountbyclassanduser(null, user.getId(),null);
+            Integer totalcount=iBlogService.getTotalcountbyclassanduser(null, user.getId(),null,null);
             //将查询到的Stringmarkdown格式转换为html格式
             for (Blog b : allblogList) {
                 String content = MarkDownUtil.markdownToHtml(b.getContent());
@@ -131,7 +131,7 @@ public class BlogController {
 
         User user = (User) session.getAttribute("user");
         List<Blog> blogList = iBlogService.getAllmyPagingblogs(classificationId,page,pageSize, user.getId(), sortmethod,null);
-        Integer totalcount=iBlogService.getTotalcountbyclassanduser(classificationId,user.getId(),null);
+        Integer totalcount=iBlogService.getTotalcountbyclassanduser(classificationId,user.getId(),null,null);
         AjaxResults results=new AjaxResults();
         results.setBlogresults(blogList);
         results.setTotalcount(totalcount%pageSize>0 ? (totalcount/pageSize)+1:totalcount/pageSize);
@@ -323,7 +323,7 @@ public class BlogController {
             {
                 ptag=Integer.valueOf(tag);
             }
-            return iBlogService.getIndexRecommandblogs(page,pageSize,ptag);
+            return iBlogService.getIndexRecommandblogs(page,pageSize,ptag,null);
         }
         else{
             return null;
@@ -333,8 +333,8 @@ public class BlogController {
     @PostMapping(value = "/index/tagblogquery")
     @ResponseBody
     public AjaxResults tagblogquery(Integer page,Integer pageSize,Integer tag) throws JSONException {
-            List<Blog> blogresults=iBlogService.getIndexRecommandblogs(page,pageSize,tag);
-            Integer totalcount=iBlogService.getTotalcountbyclassanduser(null,null,tag);
+            List<Blog> blogresults=iBlogService.getIndexRecommandblogs(page,pageSize,tag,null);
+            Integer totalcount=iBlogService.getTotalcountbyclassanduser(null,null,tag,null);
             AjaxResults results=new AjaxResults();
             results.setBlogresults(blogresults);
             results.setTotalcount(totalcount%pageSize>0 ? (totalcount/pageSize)+1:totalcount/pageSize);
@@ -362,6 +362,26 @@ public class BlogController {
        }
 
    }
+
+    /* 首页博客关键字查询*/
+    @GetMapping(value = "/index/blogsearch")
+    @ResponseBody
+    public AjaxResults blogsearch(HttpSession session,String keyword,Integer page,Integer pageSize) {
+        AjaxResults results=new AjaxResults();
+        try {
+
+            List<Blog> blogList=iBlogService.getIndexRecommandblogs(page,pageSize,null,keyword);
+            Integer totalcount=iBlogService.getTotalcountbyclassanduser(null,null,null,keyword);
+            results.setBlogresults(blogList);
+            results.setTotalcount(totalcount%pageSize>0 ? (totalcount/pageSize)+1:totalcount/pageSize);
+            results.setSuccess(true);
+        }catch (Exception e){
+            e.printStackTrace();
+            results.setSuccess(false);
+        }
+
+        return results;
+    }
 
 
 }

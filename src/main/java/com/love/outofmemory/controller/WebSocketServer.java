@@ -1,7 +1,9 @@
 package com.love.outofmemory.controller;
 
+import com.love.outofmemory.service.IMessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.platform.commons.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -17,8 +19,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class WebSocketServer {
 
+    @Autowired
+    private IMessageService iMessageService;
+
     /**concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。*/
-    private static ConcurrentHashMap<String,WebSocketServer> webSocketMap = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<String,WebSocketServer> webSocketMap = new ConcurrentHashMap<>();
     /**与某个客户端的连接会话，需要通过它来给客户端发送数据*/
     private Session session;
     /**接收userId*/
@@ -40,7 +45,7 @@ public class WebSocketServer {
         }
 
         try {
-            sendMessage("连接成功");
+            sendMessage("{"+"msg:"+"'连接成功'}");
         } catch (IOException e) {
             log.error("用户:"+userId+",网络异常!!!!!!");
         }
@@ -72,16 +77,22 @@ public class WebSocketServer {
             try {
                 //解析发送的报文
                 JSONObject jsonObject = JSON.parseObject(message);
-                //追加发送人(防止串改)
-                jsonObject.put("fromUserId",this.userId);
-                String toUserId=jsonObject.getString("toUserId");
-                //传送给对应toUserId用户的websocket
-                if(StringUtils.isNotBlank(toUserId)&&webSocketMap.containsKey(toUserId)){
-                    webSocketMap.get(toUserId).sendMessage(jsonObject.toJSONString());
+
+                if(jsonObject.containsKey("msg")){
+                    log.info(jsonObject.get("msg").toString());
                 }else{
-                    log.error("请求的userId:"+toUserId+"不在该服务器上");
-                    //否则不在这个服务器上，发送到mysql或者redis
+                    //追加发送人(防止串改)
+                    jsonObject.put("fromUserId",this.userId);
+                    String toUserId=jsonObject.getString("toUserId");
+                    //传送给对应toUserId用户的websocket
+                    if(StringUtils.isNotBlank(toUserId)&&webSocketMap.containsKey(toUserId)){
+                        webSocketMap.get(toUserId).sendMessage(jsonObject.toJSONString());
+                    }else{
+                        log.error("请求的userId:"+toUserId+"不在该服务器上");
+                        //否则不在这个服务器上，发送到mysql或者redis
+                    }
                 }
+
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -116,6 +127,7 @@ public class WebSocketServer {
             log.error("用户"+userId+",不在线！");
         }
     }
+
 
 
 }

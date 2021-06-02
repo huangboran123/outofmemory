@@ -4,7 +4,7 @@ import org.apache.ibatis.jdbc.SQL;
 public class DynamicSQLProvider {
 
    /* 查询某类博客数量*/
-    public String dynamicblogTypeSql(Integer classId,Integer userId,Integer tag){
+    public String dynamicblogTypeSql(Integer classId,Integer userId,Integer tag,String keyword){
         String sql=new SQL(){{
             SELECT("count(id)");
             FROM("o_blog");
@@ -16,6 +16,9 @@ public class DynamicSQLProvider {
             }
             if(tag!=null){
                 WHERE("tag=#{tag}");
+            }
+            if(keyword!=null){
+                WHERE("(title like CONCAT('%',#{keyword},'%')) or (content like CONCAT('%',#{keyword},'%') ) ");
             }
 
 
@@ -101,7 +104,7 @@ public class DynamicSQLProvider {
     }
 
     /*博客id查询（偏向于个人）*/
-    public String dynamicindexblogSql(Integer page,Integer pageSize,Integer tag){
+    public String dynamicindexblogSql(Integer page,Integer pageSize,Integer tag,String keyword){
 
         String sql=new SQL(){{
 
@@ -111,6 +114,10 @@ public class DynamicSQLProvider {
             if(tag!=null){
                 WHERE("tag=#{tag}");
             }
+            if(keyword!=null){
+                WHERE("(title like CONCAT('%',#{keyword},'%')) or (content like CONCAT('%',#{keyword},'%') ) ");
+            }
+
 
             ORDER_BY("good_count+views+comments desc");
             if(page!=null&&pageSize!=null){

@@ -47,19 +47,19 @@ public interface IBlogService {
     List<Blog> getSideRecommandblogs();
 
     /*获取首页推荐博客,分页*/
-    List<Blog> getIndexRecommandblogs(Integer page, Integer pageSize,Integer tag);
+    List<Blog> getIndexRecommandblogs(Integer page, Integer pageSize,Integer tag,String keyword);
 
     //查询博客不包含views
     Blog getblogByIdNoviews(Integer blogId);
 
     //获取首页博客id
-    List<Integer> getRecommandBlogIds(Integer page, Integer pageSize,Integer tag);
+    List<Integer> getRecommandBlogIds(Integer page, Integer pageSize,Integer tag,String keyword);
 
     /*点赞*/
     int likesblogbyid(Integer blogId);
 
     /*获取所有博客工具博客类别*/
-    Integer getTotalcountbyclassanduser(Integer classId, Integer userId,Integer tag);
+    Integer getTotalcountbyclassanduser(Integer classId, Integer userId,Integer tag,String keyword);
 
    /* 保持浏览量一致*/
     Long saveredisViews(Map<Object, Object> viewmap);

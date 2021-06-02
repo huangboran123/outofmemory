@@ -41,7 +41,7 @@ public class UserController {
     //linux服务器
    /* private String imgPathP = "/home/admin/outofmemory/resources/static/common/profile_image/";*/
    //windows本机
-    private String imgPathP = "E:\\JavaProject\\springboot\\outofmemory\\src\\main\\resources\\static\\common\\profile_image\\";
+    private String imgPathP = "D:\\outofmemory\\resources\\static\\common\\profile_image\\";
     @Autowired
     private IUserService iUserService;
     @Autowired

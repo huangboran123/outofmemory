@@ -33,7 +33,7 @@ spring:
       enabled: true
       ##Linux服务器目录
       ##location: /home/huang/outofmemory/resources/static/common/image_cache/
-      location: E:\JavaProject\springboot\outofmemory\src\main\resources\static\common\image_cache
+      location: D:\outofmemory\resources\static\common\image_cache
       max-file-size: 8000000
 server:
   port: 8443

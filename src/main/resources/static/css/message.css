@@ -1,0 +1,295 @@
+.m-followlist{
+    position: relative;
+    top:10%;
+    float: left;
+    left: 4%;
+    width: 15%;
+    height: 80%;
+    background-color: white;
+    z-index: 1;
+}
+
+
+.m-chat-window{
+    position: relative;
+    top:10%;
+    left: 10%;
+    float: left;
+    width: 70%;
+    height: 80%;
+    background-color: white;
+    z-index: 1;
+}
+.m-recent{
+    box-sizing: border-box;
+    width: 100%;
+    height: 8%;
+    font-size: large;
+    text-align: center;
+    padding-top: 7%;
+    border-bottom: dotted black 1px;
+}
+.m-current-contact{
+    box-sizing: border-box;
+    padding-top: 5%;
+    width: 100%;
+    height: 8%;
+    font-size: large;
+    text-align: center;
+}
+.m-current{
+    box-sizing: border-box;
+    width: 100%;
+    height: 8%;
+    font-size: large;
+    text-align: center;
+    padding-top: 7%;
+    border-bottom: dotted black 1px;
+}
+.current-chat-image{
+
+    float: left;
+    width: 30%;
+    height: 80%;
+}
+.current-chat-image img{
+
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+}
+.current-chat-name{
+
+    float: left;
+    width: 70%;
+    height: 80%;
+    box-sizing: border-box;
+    padding-top:1%;
+    text-align: left;
+    padding-left: 8%;
+
+}
+.current-chat-name a{
+    color: black;
+    font-weight: bold;
+    font-size: large;
+}
+
+.m-current-contact:hover{
+    background-color:rgba(243,243,243,1.00);
+}
+.m-current-contact:hover div a{
+   color: red;
+}
+.m-recent-contact{
+    width: 100%;
+    height: 60%;
+    box-sizing: border-box;
+    padding-top: 5%;
+    font-size: large;
+    text-align: center;
+}
+.m-recent-item{
+    width: 100%;
+    height: 12%;
+}
+.m-recent-item:hover{
+    background-color:rgba(243,243,243,1.00);
+}
+
+.m-recent-item:hover div a{
+    color: red;
+}
+.recent-chat-image{
+    padding-top: 3%;
+    float: left;
+    width: 30%;
+    height: 80%;
+}
+.recent-chat-image img{
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+}
+
+.recent-chat-name{
+    float: left;
+    width: 70%;
+    height: 80%;
+    box-sizing: border-box;
+    padding-top:5%;
+    text-align: left;
+    padding-left: 8%;
+}
+.recent-chat-name a{
+    color: black;
+    font-weight: bold;
+    font-size: large;
+}
+.m-chat-follow{
+    width: 100%;
+    height: 8%;
+    border-bottom: 1px dotted black;
+    text-align: center;
+}
+.w-name{
+    width: 100%;
+    height: 50%;
+}
+.w-name a{
+    color: black;
+    font-size: medium;
+}
+.w-name a:hover{
+    color: darkred;
+}
+.w-isonline{
+    width: 100%;
+    height: 50%;
+}
+.w-isonline a{
+    color: black;
+    font-size: small;
+}
+.w-isonline a:hover{
+    color: darkred;
+}
+.m-chat-message{
+    box-sizing: border-box;
+    margin-left: 5%;
+    width: 90%;
+    margin-top: 1%;
+    height: 70%;
+    background-color: rgba(194, 192, 192, 0.17);
+    overflow-y: scroll;
+}
+.m-chat-editor{
+    box-sizing: border-box;
+    margin-top: 2%;
+    width: 100%;
+    height: 15%;
+}
+.me-image{
+    box-sizing: border-box;
+    float: left;
+    width: 12%;
+    height: 35%;
+    padding-left: 5%;
+}
+.me-image img{
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+}
+.m-send-content{
+    box-sizing: border-box;
+    padding-left: 1%;
+    float: left;
+    width: 75%;
+    height: 35%;
+    font-size: medium;
+    border: 1px solid black;
+
+}
+.m-send{
+    box-sizing: border-box;
+    margin-left: 2%;
+    float: left;
+    width: 10%;
+    height: 35%;
+}
+.m-send a{
+ font-size: medium;
+    color: black;
+}
+.m-chatobject-message{
+    box-sizing: border-box;
+   width: 100%;
+    height: 10%;
+    padding-left: 2%;
+    padding-top: 1%;
+
+}
+.m-chatobject-message div{
+    float: left;
+}
+.mc-image{
+    box-sizing: border-box;
+    width: 5%;
+    height: 100%;
+}
+.mc-image img{
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+}
+.mc-name{
+    box-sizing: border-box;
+    width:auto;
+    height: 100%;
+    padding-top: 0.8%;
+    font-size: medium;
+}
+.mc-content{
+    box-sizing: border-box;
+    width: auto;
+    height: 100%;
+    padding-top: 0.8%;
+    padding-left: 5px;
+    font-size: medium;
+    font-weight: bold;
+}
+.mc-time{
+    box-sizing: border-box;
+    width: auto;
+    height: 100%;
+    padding-top: 0.8%;
+    padding-left: 5px;
+    font-size: x-small;
+}
+.m-self-message{
+    width: 100%;
+    height: 10%;
+    padding-right: 2%;
+    padding-top: 1%;
+
+}
+.m-self-message div{
+    float: right;
+}
+
+.mr-image{
+    box-sizing: border-box;
+    width: 5%;
+    height: 100%;
+}
+.mr-image img{
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+}
+.mr-name{
+    box-sizing: border-box;
+    width:auto;
+    height: 100%;
+    padding-top: 0.8%;
+    font-size: medium;
+    padding-right: 1%;
+}
+.mr-content{
+    box-sizing: border-box;
+    width: auto;
+    height: 100%;
+    padding-top: 0.8%;
+    padding-right: 5px;
+    font-size: medium;
+    font-weight: bold;
+}
+.mr-time{
+    box-sizing: border-box;
+    width: auto;
+    height: 100%;
+    padding-top: 0.8%;
+    padding-right: 5px;
+    font-size: x-small;
+}

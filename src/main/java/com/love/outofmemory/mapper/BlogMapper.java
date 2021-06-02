@@ -138,14 +138,14 @@ public interface BlogMapper {
 
 
     @SelectProvider(value = DynamicSQLProvider.class,method ="dynamicindexblogSql")
-    List<Integer> getRecommandBlogIds(Integer page, Integer pageSize,Integer tag);
+    List<Integer> getRecommandBlogIds(Integer page, Integer pageSize,Integer tag,String keyword);
 
     @Update("update o_blog set good_count=good_count+1 where id=#{blogId}")
     int likesblogbyid(Integer blogId);
 
 
     @SelectProvider(value = DynamicSQLProvider.class,method ="dynamicblogTypeSql" )
-    Integer getTotalcountbyclassanduser(Integer classId, Integer userId,Integer tag);
+    Integer getTotalcountbyclassanduser(Integer classId, Integer userId,Integer tag,String keyword);
 
     @Update("update o_blog set views=#{views} where id=#{id}")
     int updateblogviewByid(String id, Integer views);

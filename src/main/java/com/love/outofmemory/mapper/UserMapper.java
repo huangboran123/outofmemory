@@ -68,4 +68,7 @@ public interface UserMapper {
 
     @Select("select count(*) from o_follow where user_id=#{userId}")
     Integer getFollowTotalcountByUserId(Integer userId);
+
+    @Select("select id,username,phone,image from o_user where id=#{followId}")
+    User getUserById(Integer followId);
 }
