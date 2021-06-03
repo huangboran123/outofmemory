@@ -314,7 +314,7 @@ public class BlogController {
    /* 首页博客默认查询分页*/
     @PostMapping(value = "/index/changeblogpage")
     @ResponseBody
-    public List<Blog> changeblogpage(Integer page,Integer pageSize,String tag) throws JSONException {
+    public List<Blog> changeblogpage(Integer page,Integer pageSize,String tag,String keyword) throws JSONException {
         Integer ptag;
         if(!Objects.isNull(page)&&!Objects.isNull(pageSize)){
             if("all".equals(tag)){
@@ -323,7 +323,7 @@ public class BlogController {
             {
                 ptag=Integer.valueOf(tag);
             }
-            return iBlogService.getIndexRecommandblogs(page,pageSize,ptag,null);
+            return iBlogService.getIndexRecommandblogs(page,pageSize,ptag,keyword);
         }
         else{
             return null;

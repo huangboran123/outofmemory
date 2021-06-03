@@ -160,6 +160,7 @@ $(document).on("click",'.blogs',function () {
 		let tottalcount=$("#indexblogtotalpage").text().replace(/s+/g,'');
 		let currentPage=$("#currentpage").text().replace(/s+/g,'');
 		var tag=$("#p-tag").val();
+		var keyword=$(".keyword_search input").val().replace(/s+/g,'');
 		let page;
 		switch (p) {
 
@@ -174,7 +175,7 @@ $(document).on("click",'.blogs',function () {
 					$.ajax({
 						url:'/index/changeblogpage',
 						dataType:"json",
-						data:{'page':page,'pageSize':5,'tag':tag},
+						data:{'page':page,'pageSize':5,'tag':tag,'keyword':keyword},
 						type:"post",
 						success: function (result) {
 
@@ -207,7 +208,7 @@ $(document).on("click",'.blogs',function () {
 					$.ajax({
 						url:'/index/changeblogpage',
 						dataType:"json",
-						data:{'page':page,'pageSize':5,'tag':tag},
+						data:{'page':page,'pageSize':5,'tag':tag,'keyword':keyword},
 						type:"post",
 						success: function (result) {
 
@@ -234,7 +235,7 @@ $(document).on("click",'.blogs',function () {
 					$.ajax({
 						url:'/index/changeblogpage',
 						dataType:"json",
-						data:{'page':page,'pageSize':5,'tag':tag},
+						data:{'page':page,'pageSize':5,'tag':tag,'keyword':keyword},
 						type:"post",
 						success: function (result) {
 
@@ -331,7 +332,22 @@ $(document).on("click",".keyword_search img",function (){
 			type:"get",
 			dataType:'json',
 			contentType:"application/x-www-form-urlencoded",
-			success:function (result){
+			success:function (results){
+				if(results.success==true)
+				{
+					let totalcount=results.totalcount;
+					let bloglist=results.blogresults;
+					$("#indexblogtotalpage").text(totalcount);
+					$("#currentpage").text(1);
+					$(".recommend_left").text('关于'+keyword+'的文章');
+					if(totalcount<1){
+						var blogcontainner=$("#blogcontainner");
+						blogcontainner.html("暂无文章");
+					}else{
+
+						showPageBlog(bloglist);
+					}
+				}
 
 			},
 			error:function (error){

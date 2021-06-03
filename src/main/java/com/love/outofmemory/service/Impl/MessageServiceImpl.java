@@ -22,4 +22,9 @@ public class MessageServiceImpl implements IMessageService {
     public List<Message> getMessageContactByUserIdAndFollowId(Integer page, Integer pageSize, Integer userId, Integer followId) {
         return messageMapper.getMessageContactByUserIdAndFollowId(page,pageSize,userId,followId);
     }
+
+    @Override
+    public Integer saveMessage(Message localmessage) {
+        return messageMapper.saveMessage(localmessage);
+    }
 }

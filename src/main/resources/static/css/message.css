@@ -139,6 +139,7 @@
 .w-name a{
     color: black;
     font-size: medium;
+    font-weight: bold;
 }
 .w-name a:hover{
     color: darkred;

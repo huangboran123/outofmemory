@@ -12,4 +12,7 @@ public interface IMessageService {
 
     /*获取交流双方聊天记录聊天*/
     List<Message> getMessageContactByUserIdAndFollowId(Integer page, Integer pageSize, Integer userId, Integer followId);
+
+    /*保存聊天记录*/
+    Integer saveMessage(Message localmessage);
 }
