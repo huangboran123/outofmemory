@@ -148,7 +148,7 @@ public class WebSocketServer {
         User touser=new User();
         touser.setId(Integer.valueOf(fromUserId));
         localmessage.setUser(user);
-        localmessage.setContext(content);
+        localmessage.setContent(content);
         localmessage.setSendto(touser);
         localmessage.setSend_time(sendtime);
         try {

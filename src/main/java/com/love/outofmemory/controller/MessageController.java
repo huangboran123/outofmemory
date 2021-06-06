@@ -34,7 +34,7 @@ public class MessageController {
             model.addAttribute("RecentContact",RecentContact);
             /*获取当前聊天对象历史记录*/
             List<Message> CurrentContactMessage=iMessageService.getMessageContactByUserIdAndFollowId(1,4,user.getId(),followId);
-
+            model.addAttribute("CurrentContactMessage",CurrentContactMessage);
             //判断用户是否在线
             if(WebSocketServer.webSocketMap.containsKey(followId.toString())){
                 model.addAttribute("isonline",true);

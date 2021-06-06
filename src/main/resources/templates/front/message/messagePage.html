@@ -59,6 +59,16 @@
             </div>
         </div>
         <div class="m-chat-message">
+    <!--        <div th:each="m:${CurrentContactMessage}" th:class="${ m.id==session.user.id }?'m-self-message':'m-chatobject-message'">
+
+                <div th:class="${ m.id==session.user.id }?'mr-image':'mc-image'">
+                    <img  th:src="@{/mycommon/getImage(image=${m.user.image})}">
+                </div>
+                <div th:class="${ m.id==session.user.id }?'mr-name':'mc-name'" th:text="${m.user.username}"></div>
+                <div th:class="${ m.id==session.user.id }?'mr-content':'mc-content'" th:text="${m.content}"></div>
+                <div th:class="${ m.id==session.user.id }?'mr-time':'mc-time'" th:text="${m.send_time}"></div>
+
+            </div>-->
  <!--           <div class="m-chatobject-message">
                 <div class="mc-image"><img th:src="@{/mycommon/getImage(image=${session.user.image})}"></div>
                 <div class="mc-name">黄博然</div>

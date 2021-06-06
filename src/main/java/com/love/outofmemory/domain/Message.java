@@ -11,6 +11,6 @@ public class Message {
     private User user;//user_id
     private User sendto;//sendto_id
     private Date send_time;
-    private String context;
+    private String content;
 
 }
